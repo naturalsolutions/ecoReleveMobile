@@ -1,0 +1,39 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{ title }}</ion-title>
+    </ion-navbar>
+
+    <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
+        <ion-segment [(ngModel)]="segment">
+            <ion-segment-button value="localisation">
+                Localisation
+            </ion-segment-button>
+            <ion-segment-button value="obligatoire">
+                Obligatoire
+            </ion-segment-button>
+            <ion-segment-button value="facultatif">
+                Facultatif
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <div [ngSwitch]="protocolName">
+
+        <avifaune [segment]="segment" *ngSwitchCase="'avifaune'"></avifaune>
+
+        <mammofaune [segment]="segment" *ngSwitchCase="'mammofaune'"></mammofaune>
+
+        <herpetofaune [segment]="segment" *ngSwitchCase="'herpetofaune'"></herpetofaune>
+
+
+    </div>
+
+
+
+</ion-content>

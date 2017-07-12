@@ -1,0 +1,20 @@
+[{
+        "name": "avifaune",
+        "label": "Avifaune",
+        "image": "./assets/icones_protocoles/avifaune.jpg",
+        "id": 1
+    },
+    {
+        "name": "herpetofaune",
+        "label": "Herpetofaune",
+        "image": "./assets/icones_protocoles/herpetofaune.jpg",
+        "id": 2
+    },
+    {
+        "name": "mammofaune",
+        "label": "Mammofaune",
+        "image": "./assets/icones_protocoles/mammofaune.jpg",
+        "id": 3
+    }
+
+]

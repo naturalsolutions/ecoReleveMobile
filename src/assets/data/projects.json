@@ -1,0 +1,20 @@
+[{
+        "Name": "Projet éolienne",
+        "ID": "1",
+        "Project_reference": "Prj_001",
+        "image": "./assets/icones_projects/notsync.jpg"
+    },
+    {
+        "Name": "Projet barrage",
+        "ID": "2",
+        "Project_reference": "Prj_002",
+        "image": "./assets/icones_projects/issync.jpg"
+    },
+    {
+        "Name": "Projet eolienne nord",
+        "ID": "3",
+        "Project_reference": "Prj_003",
+        "image": "./assets/icones_projects/issync.jpg"
+    }
+
+]

@@ -1,0 +1,59 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Projets</ion-title>
+    </ion-navbar>
+
+    <!-- segment -->
+    <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
+        <ion-segment [(ngModel)]="projectsSegment">
+            <ion-segment-button value="myproj">
+                Mes projets
+            </ion-segment-button>
+            <ion-segment-button value="allproj">
+                Tous les projets
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <div [ngSwitch]="projectsSegment">
+        <ion-list *ngSwitchCase="'myproj'">
+            <ion-item *ngFor="let project of projects" (click)="navToProtocols()">
+                <ion-thumbnail item-start>
+                    <img src={{project.image}} />
+                </ion-thumbnail>
+                <h2> {{project.Name}}</h2>
+                <p>ref : {{project.Project_reference}}
+                    <p>
+            </ion-item>
+
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase=" 'allproj' ">
+            <ion-item *ngFor="let project of projects ">
+                <ion-row>
+                    <ion-col width-75>
+                        <h2> {{project.Name}}</h2>
+                        <p>ref : {{project.Project_reference}}</p>
+                    </ion-col>
+                    <ion-col width-15>
+                        <ion-item>
+                            <ion-checkbox item-right secondary checked="false " [(ngModel)]="project.checked" (click)="checkedDone(project)"></ion-checkbox>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-item>
+            <button ion-button type="submit" block (click)="ImportProjects()" [disabled]="disabled">Importer</button>
+
+
+        </ion-list>
+
+    </div>
+
+</ion-content>

@@ -1,0 +1,94 @@
+<form [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
+    <div [ngSwitch]="segment">
+        <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
+            localisation
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'obligatoire'">
+
+            <ion-item>
+                <ion-label floating>Type d'inventaire</ion-label>
+                <ion-select formControlName="type_inventaire" interface="popover">
+                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="Plaque à reptiles">Plaque à reptiles</ion-option>
+                    <ion-option value="Recherche à vue">Recherche à vue</ion-option>
+                </ion-select>
+
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Nom vernaculaire</ion-label>
+                <ion-input type="text" formControlName="nom_vernaculaire"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Effectif</ion-label>
+                <ion-input type="number" formControlName="effectif"></ion-input>
+            </ion-item>
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'facultatif'">
+
+            <ion-item>
+                <ion-label floating>Type de milieu</ion-label>
+                <ion-select formControlName="type_milieu" interface="popover">
+                    <ion-option value="Autre">Autre</ion-option>
+                    <ion-option value="Cavité/Grotte">Cavité/Grotte</ion-option>
+                    <ion-option value="Etang/Mare/Marais">Etang/Mare/Marais</ion-option>
+                    <ion-option value="Forêt de conifères">Forêt de conifères</ion-option>
+                    <ion-option value="Forêt de feuillus">Forêt de feuillus</ion-option>
+                    <ion-option value="Forêt mixte">Forêt mixte</ion-option>
+                    <ion-option value="Haie/Friche/Lande">Haie/Friche/Lande</ion-option>
+                    <ion-option value="Mer/Océan">Mer/Océan</ion-option>
+                    <ion-option value="Milieu bocager">Milieu bocager</ion-option>
+                    <ion-option value="Milieu rupestre">Milieu rupestre</ion-option>
+                    <ion-option value="Milieu urbain/Bâtis">Milieu urbain/Bâtis</ion-option>
+                    <ion-option value="Plage/Vasière">Plage/Vasière</ion-option>
+                    <ion-option value="Plaine céréalière">Plaine céréalière</ion-option>
+                    <ion-option value="Prairie/Pâture">Prairie/Pâture</ion-option>
+                    <ion-option value="Rivière/Canal">Rivière/Canal</ion-option>
+                </ion-select>
+            </ion-item>
+
+
+
+            <ion-item>
+                <ion-label floating>Comportement/indice</ion-label>
+                <ion-select formControlName="comportement" interface="popover">
+                    <ion-option value="Accouplement">Accouplement</ion-option>
+                    <ion-option value="Autre">Autre</ion-option>
+                    <ion-option value="Déplacement">Déplacement</ion-option>
+                    <ion-option value="Hivernage">Hivernage</ion-option>
+                    <ion-option value="Mort">Mort</ion-option>
+                    <ion-option value="Mue">Mue</ion-option>
+                    <ion-option value="Ponte">Ponte</ion-option>
+                    <ion-option value="Repos/basking">Repos/basking</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Sexe</ion-label>
+                <ion-select formControlName="sexe" interface="popover">
+                    <ion-option value="mâle">mâle</ion-option>
+                    <ion-option value="femelle">femelle</ion-option>
+                    <ion-option value="juv/imm">juv/imm</ion-option>
+                    <ion-option value="?">?</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Reproduction</ion-label>
+                <ion-select formControlName="reproduction" interface="popover">
+                    <ion-option value="non">non</ion-option>
+                    <ion-option value="possible">possible</ion-option>
+                    <ion-option value="probable">probable</ion-option>
+                    <ion-option value="certain">certain</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+
+    </div>
+    <button ion-button type="submit" block>Terminer</button>
+</form>

@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <h3>Application Airele</h3>
+
+    <p>
+        Page d'accueil
+    </p>
+
+    <br/>
+    <button ion-button color="secondary" [navPush]="projectsPage">Projets</button>
+
+    <br/>
+    <button ion-button color="secondary" [navPush]="protocolsPage">Protocoles</button>
+
+
+</ion-content>

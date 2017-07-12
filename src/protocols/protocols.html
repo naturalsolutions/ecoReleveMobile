@@ -1,0 +1,28 @@
+<!--
+  Generated template for the ProtocolsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>protocoles</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let protocol of protocols" (click)="navToObs(protocol.id)">
+            <ion-avatar item-start>
+                <img src={{protocol.image}} />
+            </ion-avatar>
+            <p> {{protocol.name}}</p>
+
+        </ion-item>
+
+    </ion-list>
+
+</ion-content>
