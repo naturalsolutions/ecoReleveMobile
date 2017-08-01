@@ -13,7 +13,7 @@ import { ObservationPage} from '../observation/observation';
 import { AvifaunePage} from '../observation/proto-forms/avifaune/avifaune';  
 import { MammofaunePage} from '../observation/proto-forms/mammofaune/mammofaune';  
 import { HerpetofaunePage} from '../observation/proto-forms/herpetofaune/herpetofaune'; 
-//import { MapPage} from '../observation/map/map'; 
+import { MapPage} from '../observation/map/map'; 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -31,7 +31,7 @@ import { NetworkService } from '../shared/network.service';
     AvifaunePage,
     MammofaunePage,
     HerpetofaunePage,
-   // MapPage
+    MapPage
   ],
   imports: [
     HttpModule,
@@ -49,7 +49,7 @@ import { NetworkService } from '../shared/network.service';
     AvifaunePage,
     MammofaunePage,
     HerpetofaunePage,
-    //MapPage
+    MapPage
   ],
   providers: [
     StatusBar,

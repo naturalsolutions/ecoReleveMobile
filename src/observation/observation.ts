@@ -24,8 +24,8 @@ export class ObservationPage  {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ObservationPage');
-    console.log(this);
+    //console.log('ionViewDidLoad ObservationPage');
+    //console.log(this);
   }
    ionViewDidEnter() {
     this.title = this.protocolName;
@@ -33,10 +33,10 @@ export class ObservationPage  {
 
   onSubmit(value) {
     //console.log(this.todo)
-    alert('submit');
+
   }
   ngOnInit() {
-      console.log('pass');
+     // console.log('pass');
   }
 
 }

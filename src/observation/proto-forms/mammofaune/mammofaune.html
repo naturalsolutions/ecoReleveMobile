@@ -1,7 +1,7 @@
 <form [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'">
-            map
+            <map></map>
 
         </ion-list>
 
