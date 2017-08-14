@@ -27,6 +27,7 @@ plugins/
 plugins/android.json
 plugins/ios.json
 www/
+src/pages/
 $RECYCLE.BIN/
 tsconfig.json
 tslint.json

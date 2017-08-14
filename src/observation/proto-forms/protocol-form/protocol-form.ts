@@ -6,123 +6,71 @@ import {MapPage} from '../../map/map'
 import { ObservationsPage } from '../../../observations/observations';
 //import { Storage } from '@ionic/storage';
 import {ObsProvider} from '../../../providers/obs/obs'
-import {Avifaune} from '../../../models/avifaune-interface';
 import { CommonService } from '../../service';
 import { Subscription } from 'rxjs/Subscription';
 
-@IonicPage()
-@Component({
-  selector: 'avifaune',
-  templateUrl: 'avifaune.html',
-})
-export class AvifaunePage {
-@Input('segment') segment: string;
-@Input() obsId: number;
-public formModel: FormGroup;
-public dateObs : any;
-public latitude: any;
-public longitude: any;
-private subscription: Subscription;
-private obsSaved : boolean = false;
-private formChanged  : boolean = false;
 
-//latitude : number;
-//longitude:number;
+@Component({
+  selector: 'protocol-form',
+  templateUrl: 'protocol-form.html'
+})
+export class ProtocolFormComponent {
+
+    @Input('segment') segment: string;
+    @Input() obsId: number;
+    public formModel: FormGroup;
+    public dateObs : any;
+    public latitude: any;
+    public longitude: any;
+    private subscription: Subscription;
+    private obsSaved : boolean = false;
+    private formChanged  : boolean = false;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams ,
-    private  builder: FormBuilder, 
+    public  builder: FormBuilder, 
     //public storage : Storage,
-    private data : ObsProvider,
-    private commonService: CommonService
+    public data : ObsProvider,
+    public commonService: CommonService
    // , private geolocation: Geolocation
   ) {
 
     this.data.getObs();
   }
+    ngOnInit(protocolClass) {
 
-  ngOnInit() {
-
-    let avifaune 
+    let instance : any
       // update existing obs
       if(this.obsId){
-        avifaune = new Avifaune(this.obsId)
+        instance = new protocolClass(this.obsId)
         this.data.getObsById(this.obsId).then((obs)=>{
            for(var key in obs) {
-              avifaune[key] = obs[key];
+              instance[key] = obs[key];
 
           }
-            this.buildForm(avifaune)
+            console.log('old instance')
+            console.log(instance)
+            this.buildForm(instance)
         });
 
       } else {
-        avifaune = new Avifaune(null)
-        this.buildForm(avifaune)
+        instance = new protocolClass(null)
+        console.log('new instance')
+        console.log(instance)
+        this.buildForm(instance)
       }
+
 
       // subscription to notify exit view obsto store data
        this.subscription = this.commonService.notifyObservable$.subscribe((res) => {
-     //if (res.hasOwnProperty('option') && res.option === 'call_child') {
        if(!this.obsSaved && (!this.obsId) && (this.formChanged)) {
              this.saveCurrent()
        }
 
-        // perform your other action from here
-
-      //}
     });
-      
-
-
-      // get location
-      /*this.geolocation.getCurrentPosition().then((position)=> {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        console.log('latitude :' + this.latitude);
-      })*/
-
   }
-
-  buildForm(model){
-        this.formModel = this.builder.group({
-        'protocole':'avifaune',
-        'type_inventaire': [
-          model.type_inventaire, // default value
-          [Validators.required]
-        ],
-        'nom_vernaculaire': [
-           model.nom_vernaculaire,
-          [Validators.required]
-        ],
-        'effectif' : [
-           model.effectif,
-          [Validators.required]
-        ],
-        'type_milieu' : [
-          model.type_milieu
-        ],
-        'comportement'  : [
-           model.comportement
-        ],
-        'sexe': [
-           model.sexe
-        ],
-        'code_atlas' : [
-           model.code_atlas
-        ],
-        'hauteur_vol': [
-           model.hauteur_vol
-        ], 
-         'latitude' : [
-            model.latitude
-          ],
-         'longitude' : [
-           model.longitude
-          ],
-         'dateObs' : [
-           model.dateObs
-          ]
-      });
+    buildForm(model){
+        this.formModel = this.getFormModel(model);
       // set date value
       this.dateObs =  Date.now();
       this.formModel.value.dateObs = this.dateObs;
@@ -131,7 +79,12 @@ private formChanged  : boolean = false;
         this.formChanged = true;
     })
   }
+  getFormModel(model){
+    // to redefine
+     return this.builder.group({
 
+     });
+  }
   onSubmit(value) {
 
     // check if model is valid

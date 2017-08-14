@@ -25,12 +25,13 @@
 
     <div [ngSwitch]="protocolName">
 
-        <avifaune [segment]="segment" *ngSwitchCase="'avifaune'"></avifaune>
+        <avifaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'avifaune'"></avifaune>
 
-        <mammofaune [segment]="segment" *ngSwitchCase="'mammofaune'"></mammofaune>
+        <mammofaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'mammofaune'"></mammofaune>
 
-        <herpetofaune [segment]="segment" *ngSwitchCase="'herpetofaune'"></herpetofaune>
+        <herpetofaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'herpetofaune'"></herpetofaune>
 
+        <batrachofaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'batrachofaune'"></batrachofaune>
 
     </div>
 

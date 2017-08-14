@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ProjectsServiceProvider} from '../providers/projects-service';
-import { ProtocolsPage } from '../protocols/protocols';
+import { ProtocolsPage } from '../protocols/protocols'; // TODO to delete
+import { ObservationsPage } from '../observations/observations';
 
 @IonicPage()
 @Component({
@@ -37,7 +38,7 @@ export class ProjectsPage {
     // get selected protocol
     //let pro = this.protocols.find(x => x.id === id);
 
-    this.navCtrl.push(ProtocolsPage);
+    this.navCtrl.push(ObservationsPage);
   }
   checkedDone(proj) {
     if(proj.checked){

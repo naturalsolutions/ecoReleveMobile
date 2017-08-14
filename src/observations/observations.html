@@ -1,0 +1,53 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>observations</ion-title>
+    </ion-navbar>
+
+    <!-- segment -->
+    <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
+        <ion-segment [(ngModel)]="obsSegment">
+            <ion-segment-button value="listes">
+                Listes
+            </ion-segment-button>
+            <ion-segment-button value="stations">
+                Stations
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <div [ngSwitch]="obsSegment">
+        <ion-list *ngSwitchCase=" 'listes' ">
+            <ion-item *ngFor="let ob of obs | async" (click)="navigateToDetail(ob.protocole,ob.id)">
+                <ion-row>
+                    <ion-col width-25 class="iconObs">
+                        <ion-thumbnail item-start>
+                            <img src={{getImage(ob.protocole,ob.finished)}} />
+                        </ion-thumbnail>
+                    </ion-col>
+                    <ion-col width-75>
+                        <p> {{ob.protocole}} : {{ob.type_inventaire}}</p>
+                        <h2> {{ob.nom_vernaculaire}}</h2>
+                        <p>{{ob.dateObs | date :'shortDate'}}-{{ob.dateObs | date :'shortTime'}}</p>
+                    </ion-col>
+                </ion-row>
+            </ion-item>
+
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'stations'">
+            <map></map>
+        </ion-list>
+
+    </div>
+
+</ion-content>
+<ion-footer no-shadow>
+    <ion-toolbar position="bottom">
+        <button ion-button type="submit" block (click)="newObs()">Nouvelle observation</button>
+    </ion-toolbar>
+</ion-footer>

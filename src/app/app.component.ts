@@ -7,10 +7,10 @@ import { NetworkService } from '../shared/network.service';
 import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
+//import { PostsPage } from '../pages/posts/posts';
 //import { ProtocolsPage } from '../pages/protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
-//import { ObservationPage} from '../pages/observation/observation';
-
+import { LoginPage} from '../login/login';
 @Component({
   templateUrl: 'app.html'
 })
@@ -54,14 +54,14 @@ export class MyApp {
       this.splashScreen.hide();
       this.initialize()
         .then(() => {
-          this.rootPage = HomePage;
-          //this.rootPage = InformationPage;
+          this.rootPage = LoginPage;
+          //this.rootPage = PostsPage;
         }, (err) => {
           console.log(err);
           setTimeout(() => {
             //splashScreen.hide();
           },100);
-          this.rootPage = HomePage;
+          this.rootPage = LoginPage;
         })
 
       //Network Listerner
@@ -110,6 +110,7 @@ export class MyApp {
           console.log('Initialize Error:', err);
           if( !navigator.onLine || (this.platform.is('cordova') && this.network.type == 'none' )){
             this.rootPage = HomePage;
+            
             //this.needReload = 'needToReload';
             //this.networkStatus = 'hasErrorNetwork';
           }
