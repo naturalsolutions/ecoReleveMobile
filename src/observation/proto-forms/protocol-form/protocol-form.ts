@@ -1,14 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, Input,ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams,Events } from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 //import {Geolocation } from '@ionic-native/geolocation';
-import {MapPage} from '../../map/map'
+import {MapComponent} from '../../../components/map/map'
 import { ObservationsPage } from '../../../observations/observations';
 //import { Storage } from '@ionic/storage';
 import {ObsProvider} from '../../../providers/obs/obs'
-import { CommonService } from '../../service';
+import { CommonService } from '../../../shared/notification.service';
 import { Subscription } from 'rxjs/Subscription';
-
+import {GeoService} from '../../../shared/geolocation.notification.service';
 
 @Component({
   selector: 'protocol-form',
@@ -23,6 +23,7 @@ export class ProtocolFormComponent {
     public latitude: any;
     public longitude: any;
     private subscription: Subscription;
+    private geoSub :  Subscription;
     private obsSaved : boolean = false;
     private formChanged  : boolean = false;
 
@@ -31,14 +32,18 @@ export class ProtocolFormComponent {
     public  builder: FormBuilder, 
     //public storage : Storage,
     public data : ObsProvider,
-    public commonService: CommonService
+    public commonService: CommonService,
+    public geoServ : GeoService,
+    private el: ElementRef,
+    public events: Events
    // , private geolocation: Geolocation
   ) {
-
+    events.subscribe('formSubmit', (event, segment) => {
+      this.onSubmit(event, segment)
+    });
     this.data.getObs();
   }
     ngOnInit(protocolClass) {
-
     let instance : any
       // update existing obs
       if(this.obsId){
@@ -46,7 +51,6 @@ export class ProtocolFormComponent {
         this.data.getObsById(this.obsId).then((obs)=>{
            for(var key in obs) {
               instance[key] = obs[key];
-
           }
             console.log('old instance')
             console.log(instance)
@@ -60,14 +64,21 @@ export class ProtocolFormComponent {
         this.buildForm(instance)
       }
 
+      // get coordinates
+      this.geoSub = this.geoServ.notifyObservable$.subscribe((res) => {
+        console.log('geo service')
+        console.log('latitude : ' + res[0])
+        this.handleLatChange(res[0])
+        this.handleLonChange(res[1])
+       });
 
       // subscription to notify exit view obsto store data
-       this.subscription = this.commonService.notifyObservable$.subscribe((res) => {
+      this.subscription = this.commonService.notifyObservable$.subscribe((res) => {
        if(!this.obsSaved && (!this.obsId) && (this.formChanged)) {
              this.saveCurrent()
        }
 
-    });
+       });
   }
     buildForm(model){
         this.formModel = this.getFormModel(model);
@@ -85,14 +96,18 @@ export class ProtocolFormComponent {
 
      });
   }
-  onSubmit(value) {
-
-    // check if model is valid
+  onSubmit(value,segment) {
     
+    // check if model is valid
     if (!this.formModel.invalid) {
       value.finished = true;
       this.formUpdateData(value);
       this.navCtrl.push(ObservationsPage)
+    } else {
+      if(segment =='facultatif'){
+        alert('Merci de saisir les champs obligatoires.')
+      }
+      
     }
   }
 
@@ -135,6 +150,7 @@ export class ProtocolFormComponent {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.geoSub.unsubscribe();
+    this.events.unsubscribe('formSubmit');
   }
-
 }
