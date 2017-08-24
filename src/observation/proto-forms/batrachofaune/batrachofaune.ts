@@ -10,7 +10,6 @@ import {Batrachofaune} from '../../../models/batrachofaune-interface';
 export class BatrachofauneComponent extends ProtocolFormComponent {
 
    ngOnInit() {
-     console.log('nginit batra')
       super.ngOnInit(Batrachofaune);
 
    }
@@ -38,12 +37,9 @@ export class BatrachofauneComponent extends ProtocolFormComponent {
         'sexe': [
            model.sexe
         ],
-        'code_atlas' : [
-           model.code_atlas
+        'reproduction' : [
+           model.reproduction
         ],
-        'hauteur_vol': [
-           model.hauteur_vol
-        ], 
          'latitude' : [
             model.latitude
           ],

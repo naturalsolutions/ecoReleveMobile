@@ -1,90 +1,21 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
-//import {Geolocation } from '@ionic-native/geolocation';
-import {MapPage} from '../../map/map'
-import { ObservationsPage } from '../../../observations/observations';
-//import { Storage } from '@ionic/storage';
-import {ObsProvider} from '../../../providers/obs/obs'
-import {Avifaune} from '../../../models/avifaune-interface';
-import { CommonService } from '../../service';
-import { Subscription } from 'rxjs/Subscription';
 
-@IonicPage()
+import { Component } from '@angular/core';
+import {ProtocolFormComponent } from '../protocol-form/protocol-form';
+import { Validators } from '@angular/forms';
+import {Avifaune} from '../../../models/avifaune-interface';
+
 @Component({
   selector: 'avifaune',
   templateUrl: 'avifaune.html',
 })
-export class AvifaunePage {
-@Input('segment') segment: string;
-@Input() obsId: number;
-public formModel: FormGroup;
-public dateObs : any;
-public latitude: any;
-public longitude: any;
-private subscription: Subscription;
-private obsSaved : boolean = false;
-private formChanged  : boolean = false;
-
-//latitude : number;
-//longitude:number;
-
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams ,
-    private  builder: FormBuilder, 
-    //public storage : Storage,
-    private data : ObsProvider,
-    private commonService: CommonService
-   // , private geolocation: Geolocation
-  ) {
-
-    this.data.getObs();
-  }
+export class AvifauneComponent extends ProtocolFormComponent {
 
   ngOnInit() {
-
-    let avifaune 
-      // update existing obs
-      if(this.obsId){
-        avifaune = new Avifaune(this.obsId)
-        this.data.getObsById(this.obsId).then((obs)=>{
-           for(var key in obs) {
-              avifaune[key] = obs[key];
-
-          }
-            this.buildForm(avifaune)
-        });
-
-      } else {
-        avifaune = new Avifaune(null)
-        this.buildForm(avifaune)
-      }
-
-      // subscription to notify exit view obsto store data
-       this.subscription = this.commonService.notifyObservable$.subscribe((res) => {
-     //if (res.hasOwnProperty('option') && res.option === 'call_child') {
-       if(!this.obsSaved && (!this.obsId) && (this.formChanged)) {
-             this.saveCurrent()
-       }
-
-        // perform your other action from here
-
-      //}
-    });
-      
-
-
-      // get location
-      /*this.geolocation.getCurrentPosition().then((position)=> {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        console.log('latitude :' + this.latitude);
-      })*/
-
+    super.ngOnInit(Avifaune);
   }
 
-  buildForm(model){
-        this.formModel = this.builder.group({
+  getFormModel(model){
+        return this.builder.group({
         'protocole':'avifaune',
         'type_inventaire': [
           model.type_inventaire, // default value
@@ -124,14 +55,14 @@ private formChanged  : boolean = false;
           ]
       });
       // set date value
-      this.dateObs =  Date.now();
+      /*this.dateObs =  Date.now();
       this.formModel.value.dateObs = this.dateObs;
       // detect form changes to activate "save current obs"
       this.formModel.valueChanges.subscribe(data => {
         this.formChanged = true;
-    })
+    })*/
   }
-
+/*
   onSubmit(value) {
 
     // check if model is valid
@@ -182,6 +113,6 @@ private formChanged  : boolean = false;
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
+  }*/
 
 }

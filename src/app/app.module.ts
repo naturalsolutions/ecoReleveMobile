@@ -9,11 +9,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../home/home';
 import { ProtocolsPage } from '../protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
-import { ObservationPage} from '../observation/observation';
-import { AvifaunePage} from '../observation/proto-forms/avifaune/avifaune';  
+import { ObservationPage} from '../observation/observation'; 
 import { MammofaunePage} from '../observation/proto-forms/mammofaune/mammofaune';  
 import { HerpetofaunePage} from '../observation/proto-forms/herpetofaune/herpetofaune'; 
-import { MapPage} from '../observation/map/map'; 
 import { PostsPage } from '../pages/posts/posts';
 import { ObservationsPage } from '../observations/observations';
 import { LoginPage} from '../login/login';
@@ -25,9 +23,14 @@ import { Network } from '@ionic-native/network';
 import { NetworkService } from '../shared/network.service';
 import { PostsDataProvider } from '../providers/posts-data/posts-data';
 import { ObsProvider } from '../providers/obs/obs';
-import { CommonService } from '../observation/service';
+import { CommonService } from '../shared/notification.service';
+import {GeoService} from '../shared/geolocation.notification.service';
+import { MapNotificationService } from '../shared/map.notification.service'; 
 import { ProtocolFormComponent } from '../components/protocol-form/protocol-form';
 import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaune/batrachofaune';
+import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
+import {PopoverPage} from'../observation/popoverPage'
+import {  MapComponent} from '../components/map/map'; 
 
 @NgModule({
   declarations: [
@@ -36,15 +39,16 @@ import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaun
     ProtocolsPage,
     ProjectsPage,
     ObservationPage,
-    AvifaunePage,
     MammofaunePage,
     HerpetofaunePage,
-    MapPage,
     PostsPage,
     ObservationsPage,
     LoginPage,
     ProtocolFormComponent,
-    BatrachofauneComponent
+    BatrachofauneComponent,
+    AvifauneComponent,
+    MapComponent,
+    PopoverPage
   ],
   imports: [
     HttpModule,
@@ -59,13 +63,14 @@ import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaun
     ProtocolsPage,
     ProjectsPage,
     ObservationPage,
-    AvifaunePage,
     MammofaunePage,
     HerpetofaunePage,
-    MapPage,
     PostsPage,
     ObservationsPage,
-    LoginPage
+    LoginPage,
+    MapComponent,
+    PopoverPage
+
   ],
   providers: [
     StatusBar,
@@ -77,7 +82,9 @@ import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaun
     Geolocation,
     PostsDataProvider,
     ObsProvider,
-    CommonService 
+    CommonService,
+    MapNotificationService,
+    GeoService
   ]
 })
 export class AppModule {}

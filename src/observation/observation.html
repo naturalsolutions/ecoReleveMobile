@@ -5,7 +5,7 @@
     </ion-navbar>
 
     <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
-        <ion-segment [(ngModel)]="segment">
+        <ion-segment [(ngModel)]="segment" (ionChange)="onSegmentChanged($event)">
             <ion-segment-button value="localisation">
                 Localisation
             </ion-segment-button>
@@ -25,16 +25,22 @@
 
     <div [ngSwitch]="protocolName">
 
-        <avifaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'avifaune'"></avifaune>
+        <avifaune [(segment)]="segment" [obsId]="obsId" *ngSwitchCase="'avifaune'"></avifaune>
 
-        <mammofaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'mammofaune'"></mammofaune>
+        <mammofaune [(segment)]="segment" [obsId]="obsId" *ngSwitchCase="'mammofaune'"></mammofaune>
 
-        <herpetofaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'herpetofaune'"></herpetofaune>
+        <herpetofaune [(segment)]="segment" [obsId]="obsId" *ngSwitchCase="'herpetofaune'"></herpetofaune>
 
-        <batrachofaune [segment]="segment" [obsId]="obsId" *ngSwitchCase="'batrachofaune'"></batrachofaune>
+        <batrachofaune [(segment)]="segment" [obsId]="obsId" *ngSwitchCase="'batrachofaune'"></batrachofaune>
 
     </div>
 
 
 
 </ion-content>
+<ion-footer no-shadow>
+    <ion-toolbar position="bottom">
+        <button ion-button [class.hide]="actionsStatus" (click)="presentPopoverActions($event)" class="actionsBtn" color="light">Plus d'actions</button>
+        <button ion-button type="submit" class="btnsubmit" (click)="onSubmit($event)" [style.width]="getbtnSubmitWidth()">Suivant</button>
+    </ion-toolbar>
+</ion-footer>

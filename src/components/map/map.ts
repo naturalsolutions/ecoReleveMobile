@@ -1,21 +1,21 @@
 import { Component, ElementRef, Output, EventEmitter  } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
-
+import { NavController, NavParams } from 'ionic-angular'
+//import { Subscription } from 'rxjs/Subscription'
+import { MapNotificationService } from '../../shared/map.notification.service'
 //import { MapModel } from '../../shared/map.model'
 import {Geolocation } from '@ionic-native/geolocation'
 import L from "leaflet"
 import _ from 'lodash'
 
 
-@IonicPage()
 @Component({
   selector: 'map',
   templateUrl: 'map.html',
 })
-export class MapPage {
+export class MapComponent {
 
-  @Output() latEvent = new EventEmitter()
-  @Output() lonEvent = new EventEmitter()
+  /*@Output() latEvent = new EventEmitter()
+  @Output() lonEvent = new EventEmitter()*/
 
   //private mapModel: MapModel
    private _map: any
@@ -23,13 +23,15 @@ export class MapPage {
    //private _bounds: any
    latitude : number
   longitude:number
+  markers:any = []
 
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private el: ElementRef,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private NotificationService: MapNotificationService
   ) {
 
   }
@@ -37,19 +39,26 @@ export class MapPage {
   ngOnInit() {
 
     this.mapEl = this.el.nativeElement.querySelector('.map')
-              // get location
+    this._map = L
+    .map(this.mapEl, {
+      minZoom: 8,
+      maxZoom: 18
+
+      //maxBounds: this._bounds,
+    })
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //bounds: this._bounds,
+    minZoom: 8,
+    maxZoom: 18,
+   // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(this._map);
+      // get location
       this.geolocation.getCurrentPosition().then((position)=> {
         this.latitude = position.coords.latitude
         this.longitude = position.coords.longitude
-        this.latEvent.emit(this.latitude)
-        this.lonEvent.emit(this.longitude)
-        //console.log('location in map')
         this.onMapModelReady()
-        
       })
-    ////console.log('this.mapEl')
-    //console.log(this.mapEl)
-
   }
 
   /*loadMap() {
@@ -64,7 +73,9 @@ export class MapPage {
 }*/
     onMapModelReady() {
     let center = L.latLng(this.latitude, this.longitude)
-    this._map = L
+    this._map.setView(center, 14)
+    let marker = L.marker([this.latitude, this.longitude]).addTo(this._map);
+    /*this._map = L
       .map(this.mapEl, {
         minZoom: 8,
         maxZoom: 18
@@ -80,7 +91,10 @@ export class MapPage {
      // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this._map);
 
-    let marker = L.marker([this.latitude, this.longitude]).addTo(this._map);
+    // notify other that map is loaded
+    this.NotificationService.notifyOther({map :this._map });
+
+    let marker = L.marker([this.latitude, this.longitude]).addTo(this._map);*/
 
     //this.mapModel.tileLayer.addTo(this._map);
 
@@ -108,5 +122,4 @@ export class MapPage {
       this.onConnectionStatusChange()
     }*/
 }
-
 }

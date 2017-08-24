@@ -7,8 +7,7 @@ interface BatrachofauneInterface {
     type_milieu: string,
     comportement: string,
     sexe: string,
-    code_atlas: string,
-    hauteur_vol: string,
+    reproduction : string,
     latitude:number,
     longitude: number,
     dateObs: number
@@ -23,8 +22,7 @@ export   class Batrachofaune implements BatrachofauneInterface {
           public type_milieu ='',
           public comportement ='',
           public sexe ='',
-          public code_atlas ='',
-          public hauteur_vol ='',
+          public reproduction ='',
           public latitude= 0,
           public longitude=0,
           public dateObs =0

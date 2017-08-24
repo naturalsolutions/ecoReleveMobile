@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AvifaunePage } from './avifaune';
+import { AvifauneComponent } from './avifaune';
 
 @NgModule({
   declarations: [
-    AvifaunePage,
+    AvifauneComponent,
   ],
   imports: [
-    IonicPageModule.forChild(AvifaunePage),
+    IonicPageModule.forChild(AvifauneComponent),
   ],
   exports: [
-    AvifaunePage
+    AvifauneComponent
   ]
 })
 export class AvifaunePagePageModule {}

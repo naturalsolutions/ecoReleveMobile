@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 @Injectable()
 export class CommonService {
-  private notify = new Subject<any>();
+  protected notify = new Subject<any>();
   /**
    * Observable string streams
    */

@@ -15,13 +15,14 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
-                    <ion-option value="IPA">IPA</ion-option>
-                    <ion-option value="Point migration">Point migration</ion-option>
-                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
-                    <ion-option value="Transect">Transect</ion-option>
+                    <ion-option value="A vue">A vue</ion-option>
+                    <ion-option value="ADNe">ADNe</ion-option>
+                    <ion-option value="Crapaudrome/crapauduc">Crapaudrome/crapauduc</ion-option>
+                    <ion-option value="Nasse/piège aquatique">Nasse/piège aquatique</ion-option>
                     <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
+                    <ion-option value="Troubleau">Troubleau</ion-option>
                 </ion-select>
-
             </ion-item>
 
             <ion-item>
@@ -60,24 +61,17 @@
             </ion-item>
 
             <ion-item>
-                <ion-label floating>Comportement</ion-label>
+                <ion-label floating>Comportement/indice</ion-label>
                 <ion-select formControlName="comportement" interface="popover">
-                    <ion-option value="Accouplement">Accouplement</ion-option>
-                    <ion-option value="Alimentation">Alimentation</ion-option>
+                    <ion-option value="Amplexus">Amplexus</ion-option>
                     <ion-option value="Autre">Autre</ion-option>
-                    <ion-option value="Chant/Parade">Chant/Parade</ion-option>
-                    <ion-option value="Cri/Alerte">Cri/Alerte</ion-option>
+                    <ion-option value="Chant">Chant</ion-option>
+                    <ion-option value="Déplacement">Déplacement</ion-option>
+                    <ion-option value="Hivernage">Hivernage</ion-option>
                     <ion-option value="Mort">Mort</ion-option>
-                    <ion-option value="Pelotes/Traces">Pelotes/Traces</ion-option>
-                    <ion-option value="Repos/Halte">Repos/Halte</ion-option>
-                    <ion-option value="Vol (bifurcation)">Vol (bifurcation)</ion-option>
-                    <ion-option value="Vol (plongeon)">Vol (plongeon)</ion-option>
-                    <ion-option value="Vol (survol)">Vol (survol)</ion-option>
-                    <ion-option value="Vol (traversée)">Vol (traversée)</ion-option>
-                    <ion-option value="Vol ascendant">Vol ascendant</ion-option>
-                    <ion-option value="Vol de chasse">Vol de chasse</ion-option>
-
-
+                    <ion-option value="Ponte">Ponte</ion-option>
+                    <ion-option value="Repos">Repos</ion-option>
+                    <ion-option value="Têtard/larve">Têtard/larve</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
@@ -91,8 +85,8 @@
             </ion-item>
 
             <ion-item>
-                <ion-label floating>Code atlas</ion-label>
-                <ion-select formControlName="code_atlas" interface="popover">
+                <ion-label floating>Reproduction</ion-label>
+                <ion-select formControlName="reproduction" interface="popover">
                     <ion-option value="non">non</ion-option>
                     <ion-option value="possible">possible</ion-option>
                     <ion-option value="probable">probable</ion-option>
@@ -100,17 +94,8 @@
                 </ion-select>
             </ion-item>
 
-            <ion-item>
-                <ion-label floating>Hauteur du vol</ion-label>
-                <ion-select formControlName="hauteur_vol" interface="popover">
-                    <ion-option value="H0">H0</ion-option>
-                    <ion-option value="H1">H1</ion-option>
-                    <ion-option value="H2">H2</ion-option>
-                    <ion-option value="H3">H3</ion-option>
-                </ion-select>
-            </ion-item>
         </ion-list>
 
     </div>
-    <button ion-button type="submit" [disabled]="formModel.invalid" block>Terminer</button>
+    <!--<button ion-button type="submit" [disabled]="formModel.invalid" block>Terminer</button>-->
 </form>

@@ -6,7 +6,7 @@
 
     <!-- segment -->
     <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
-        <ion-segment [(ngModel)]="obsSegment">
+        <ion-segment [(ngModel)]="obsSegment" (ionChange)="onSegmentChanged($event)">
             <ion-segment-button value="listes">
                 Listes
             </ion-segment-button>
@@ -22,7 +22,7 @@
 <ion-content padding>
     <div [ngSwitch]="obsSegment">
         <ion-list *ngSwitchCase=" 'listes' ">
-            <ion-item *ngFor="let ob of obs | async" (click)="navigateToDetail(ob.protocole,ob.id)">
+            <ion-item *ngFor="let ob of obs " (click)="navigateToDetail(ob.protocole,ob.id)">
                 <ion-row>
                     <ion-col width-25 class="iconObs">
                         <ion-thumbnail item-start>
@@ -40,7 +40,8 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'stations'">
-            <map></map>
+            <!--<map (load)="addStations(waypoints)"></map>-->
+            <div id="map" style="width: 100%; height: 300px"></div>
         </ion-list>
 
     </div>
