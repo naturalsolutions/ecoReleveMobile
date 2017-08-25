@@ -8,7 +8,7 @@ import {Herpeto} from '../../../models/herpetofaune-interface';
   selector: 'herpetofaune',
   templateUrl: 'herpetofaune.html',
 })
-export class HerpetofaunePage extends ProtocolFormComponent {
+export class HerpetofauneComponent extends ProtocolFormComponent {
 
   ngOnInit() {
     super.ngOnInit(Herpeto);

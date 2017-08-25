@@ -8,7 +8,7 @@ import {Mammo} from '../../../models/mammofaune-interface';
   selector: 'mammofaune', 
   templateUrl: 'mammofaune.html',
 })
-export class MammofaunePage  extends ProtocolFormComponent{
+export class MammofauneComponent  extends ProtocolFormComponent{
 
   ngOnInit() {
     super.ngOnInit(Mammo);

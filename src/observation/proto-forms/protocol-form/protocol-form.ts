@@ -1,5 +1,5 @@
 import { Component, Input,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 //import {Geolocation } from '@ionic-native/geolocation';
 import {MapComponent} from '../../../components/map/map'
@@ -34,13 +34,12 @@ export class ProtocolFormComponent {
     public data : ObsProvider,
     public commonService: CommonService,
     public geoServ : GeoService,
-    private el: ElementRef,
-    public events: Events
+    private el: ElementRef
    // , private geolocation: Geolocation
   ) {
-    events.subscribe('formSubmit', (event, segment) => {
+    /*events.subscribe('formSubmit', (event, segment) => {
       this.onSubmit(event, segment)
-    });
+    });*/
     this.data.getObs();
   }
     ngOnInit(protocolClass) {
@@ -151,6 +150,6 @@ export class ProtocolFormComponent {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.geoSub.unsubscribe();
-    this.events.unsubscribe('formSubmit');
+    //this.events.unsubscribe('formSubmit');
   }
 }

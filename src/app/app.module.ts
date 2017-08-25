@@ -10,8 +10,6 @@ import { HomePage } from '../home/home';
 import { ProtocolsPage } from '../protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
 import { ObservationPage} from '../observation/observation'; 
-import { MammofaunePage} from '../observation/proto-forms/mammofaune/mammofaune';  
-import { HerpetofaunePage} from '../observation/proto-forms/herpetofaune/herpetofaune'; 
 import { PostsPage } from '../pages/posts/posts';
 import { ObservationsPage } from '../observations/observations';
 import { LoginPage} from '../login/login';
@@ -29,8 +27,13 @@ import { MapNotificationService } from '../shared/map.notification.service';
 import { ProtocolFormComponent } from '../components/protocol-form/protocol-form';
 import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaune/batrachofaune';
 import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
+import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
+import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
+
 import {PopoverPage} from'../observation/popoverPage'
 import {  MapComponent} from '../components/map/map'; 
+import { AdDirective }    from '../shared/ad.directive';
+import { AdFormService} from '../observation/proto-form-provider'
 
 @NgModule({
   declarations: [
@@ -39,16 +42,17 @@ import {  MapComponent} from '../components/map/map';
     ProtocolsPage,
     ProjectsPage,
     ObservationPage,
-    MammofaunePage,
-    HerpetofaunePage,
     PostsPage,
     ObservationsPage,
     LoginPage,
     ProtocolFormComponent,
     BatrachofauneComponent,
     AvifauneComponent,
+    MammofauneComponent,
+    HerpetofauneComponent,
     MapComponent,
-    PopoverPage
+    PopoverPage,
+    AdDirective
   ],
   imports: [
     HttpModule,
@@ -63,13 +67,16 @@ import {  MapComponent} from '../components/map/map';
     ProtocolsPage,
     ProjectsPage,
     ObservationPage,
-    MammofaunePage,
-    HerpetofaunePage,
     PostsPage,
     ObservationsPage,
     LoginPage,
     MapComponent,
-    PopoverPage
+    PopoverPage,
+    AvifauneComponent,
+    HerpetofauneComponent,
+    MammofauneComponent,
+    BatrachofauneComponent
+    
 
   ],
   providers: [
@@ -84,7 +91,9 @@ import {  MapComponent} from '../components/map/map';
     ObsProvider,
     CommonService,
     MapNotificationService,
-    GeoService
+    GeoService,
+    AdDirective,
+    AdFormService
   ]
 })
 export class AppModule {}
