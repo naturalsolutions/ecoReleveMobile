@@ -1,21 +1,27 @@
-import { Component, Output,ElementRef, ViewChild } from '@angular/core';
+import { Component, Output,ElementRef, ViewChild,ComponentFactoryResolver,AfterViewInit } from '@angular/core'
 //import { Validators } from '@angular/common';
-import { IonicPage, NavController, NavParams, Events,PopoverController } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
-import { Platform } from 'ionic-angular';
-import { CommonService } from '../shared/notification.service';   // notify exit view to childs
-import { Subscription } from 'rxjs/Subscription';
-import {GeoService} from '../shared/geolocation.notification.service';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular'
+import { Geolocation } from '@ionic-native/geolocation'
+import { Platform } from 'ionic-angular'
+import { CommonService } from '../shared/notification.service'  // notify exit view to childs
+import { Subscription } from 'rxjs/Subscription'
+import {GeoService} from '../shared/geolocation.notification.service'
 import {PopoverPage} from'./popoverPage'
+import { AdDirective } from '../shared/ad.directive'
+import{AdFormService} from './proto-form-provider'
+
 
 @IonicPage()
 @Component({
   selector: 'page-observation',
-  templateUrl: 'observation.html',
+  templateUrl: 'observation.html'
 })
 
 
 export class ObservationPage  {
+
+  @ViewChild(AdDirective) adForm: AdDirective;
+
   protocol : any;
   protocolName : any;
   segment: string= 'localisation';
@@ -23,6 +29,7 @@ export class ObservationPage  {
   obsId : number = null;
   actionsStatus : boolean = true;
   popover : any;
+  myProto : any;
 
 
   constructor(public navCtrl: NavController, 
@@ -32,8 +39,10 @@ export class ObservationPage  {
     private commonService: CommonService,
     private geoServ : GeoService,
     private el: ElementRef,
-    public events: Events,
-    private popoverCtrl: PopoverController
+    //public events: Events,
+    private popoverCtrl: PopoverController,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private adFormService : AdFormService
   ) {
     this.protocol = navParams.data.protoObj;
     this.obsId = navParams.data.obsId || 0;
@@ -49,8 +58,7 @@ export class ObservationPage  {
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad ObservationPage');
-    //console.log(this);
+
   }
    ionViewDidEnter() {
     this.title = this.protocolName;
@@ -59,17 +67,15 @@ export class ObservationPage  {
   }
 
   onSubmit(value) {
-    //console.log(this.todo)
-    //console.log(this.form)
-    this.events.publish('formSubmit', value, this.segment);
+    this.myProto.onSubmit(value,this.segment)
     this.switchToNextSegment()
 
   }
   ngOnInit() {
-     // console.log('pass');
+
   }
   ionViewWillLeave() {
-    //this.exitpage.emit()
+
     this.commonService.notifyOther({option: 'call', value: 'exit view'});
 
   }
@@ -88,6 +94,7 @@ export class ObservationPage  {
     if (($event._value == 'obligatoire')) {
       this.actionsStatus = false;
     }
+    this.myProto.segment = this.segment;
   }
   switchToNextSegment(){
     console.log('segment')
@@ -103,6 +110,7 @@ export class ObservationPage  {
     } else {
       this.actionsStatus = false;
     }
+    this.myProto.segment = this.segment
   }
 
   getbtnSubmitWidth(){
@@ -118,5 +126,24 @@ export class ObservationPage  {
         this.popover.present({
           ev: ev
         });
+  }
+  ngAfterViewInit() {
+    this.loadComponent();
+  }
+  loadComponent() {
+
+    let component = this.adFormService.getComponent(this.protocolName)
+
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+
+    let viewContainerRef = this.adForm.viewContainerRef;
+    viewContainerRef.clear();
+
+    let componentRef = viewContainerRef.createComponent(componentFactory);
+
+
+		this.myProto= componentRef.instance;
+		this.myProto.segment = this.segment;
+
   }
 }
