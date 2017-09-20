@@ -1,8 +1,7 @@
 import { Component, Output,ElementRef, ViewChild,ComponentFactoryResolver,AfterViewInit } from '@angular/core'
 //import { Validators } from '@angular/common';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, PopoverController,Platform,ToastController  } from 'ionic-angular'
 import { Geolocation } from '@ionic-native/geolocation'
-import { Platform } from 'ionic-angular'
 import { CommonService } from '../shared/notification.service'  // notify exit view to childs
 import { Subscription } from 'rxjs/Subscription'
 import {GeoService} from '../shared/geolocation.notification.service'
@@ -42,19 +41,15 @@ export class ObservationPage  {
     //public events: Events,
     private popoverCtrl: PopoverController,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private adFormService : AdFormService
+    private adFormService : AdFormService,
+    public toastCtrl: ToastController
+
   ) {
     this.protocol = navParams.data.protoObj;
     this.obsId = navParams.data.obsId || 0;
     //console.log('in obs page, onsId =' + this.obsId)
     this.protocolName = this.protocol.name;
-    /*   platform.ready().then(() => {
 
-      // get current position
-      geolocation.getCurrentPosition().then(pos => {
-        console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
-      });
-        });*/
   }
 
   ionViewDidLoad() {
@@ -62,8 +57,12 @@ export class ObservationPage  {
   }
    ionViewDidEnter() {
     this.title = this.protocolName;
-    // get coordinates
-    this.geoServ.notifyOther();
+    // get coordinates for new obs
+    if(this.obsId == 0){
+      this.getPosition();
+    }
+
+    //this.geoServ.notifyOther();
   }
 
   onSubmit(value) {
@@ -122,13 +121,14 @@ export class ObservationPage  {
   }
   presentPopoverActions(ev) {
     
-        this.popover = this.popoverCtrl.create(PopoverPage, {});
+        this.popover = this.popoverCtrl.create(PopoverPage, {obsId : this.obsId},{cssClass: 'obs-actions'});
         this.popover.present({
           ev: ev
         });
   }
   ngAfterViewInit() {
     this.loadComponent();
+
   }
   loadComponent() {
 
@@ -143,7 +143,33 @@ export class ObservationPage  {
 
 
 		this.myProto= componentRef.instance;
-		this.myProto.segment = this.segment;
+    this.myProto.segment = this.segment;
+    this.myProto.obsId = this.obsId;
 
+  }
+  getPosition(){
+      this.platform.ready().then(() => {
+      // get current position
+      //this.presentToast('get coordinates', 'top')
+      // TODO spinner get coordinates
+      this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 12000, maximumAge: 0}).then(pos => {
+        this.presentToast('lat: '+ pos.coords.latitude + ", lon: " +pos.coords.longitude, 'top' )
+        this.myProto.updatePosition(pos.coords.latitude ,pos.coords.longitude);
+
+      }, (err) => {
+        this.presentToast('erreur gps', 'top' )
+      });
+      }).catch((error) => {
+        //console.log('Error getting location', error);
+        this.presentToast('Error getting location : ' + error, 'top' )
+      });;
+  }
+  presentToast(message, position) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position : position
+    });
+    toast.present();
   }
 }

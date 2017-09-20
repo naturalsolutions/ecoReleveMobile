@@ -93,6 +93,21 @@ export class ObsProvider {
     });
 
   }
+  deleteObs(id){
+    this.storage.get('observations').then((data)=>{
+      if(data != null){
+        if(id) {
+          data.splice(_.findIndex(data, function(item) {
+          return item.id === id;
+        }), 1);
+        }
+        this.storage.set('observations', data);
+        console.log('****obs deleted****')
+        console.log(data)
+      }
+    });
+
+  }
   getLastObsId(data){
    let max =  _.maxBy(data, function(o) {
      console.log('--------calcul max---------')  

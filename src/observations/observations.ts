@@ -87,12 +87,12 @@ export class ObservationsPage {
           case "avifaune":
               src="avifaune.jpg";
               break;
-          case "herpetophaune":
+          case "herpetofaune":
               src="herpeto.jpg";   
               break;
-           case "mammophaune":
-             src="avifaune.jpg";  //TODO update picto 
-
+           case "mammofaune":
+             src="mammo.jpg";  //TODO update picto 
+            break;
           default:
               src="avifaune.jpg";  //TODO update picto 
       }
@@ -102,12 +102,12 @@ export class ObservationsPage {
           case "avifaune":
               src="avifaune_progress.jpg"; //TODO update picto 
               break;
-          case "herpetophaune":
+          case "herpetofaune":
               src="avifaune_progress.jpg";   //TODO update picto 
               break;
-           case "mammophaune":
-             src="avifaune_progress.jpg";  //TODO update picto 
-
+           case "mammofaune":
+             src="mammo_progress.jpg";  //TODO update picto 
+            break;
           default:
               src="avifaune_progress.jpg";  //TODO update picto 
       }

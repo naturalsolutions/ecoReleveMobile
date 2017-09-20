@@ -17,7 +17,7 @@ export class GeoService {
         this.latitude = position.coords.latitude
         this.longitude = position.coords.longitude
       })*/
-      
+      this.notifyOther()
   }
 
   public notifyOther() {

@@ -1,5 +1,5 @@
 import { Component, Input,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 //import {Geolocation } from '@ionic-native/geolocation';
 import {MapComponent} from '../../../components/map/map'
@@ -16,8 +16,8 @@ import {GeoService} from '../../../shared/geolocation.notification.service';
 })
 export class ProtocolFormComponent {
 
-    @Input('segment') segment: string;
-    @Input() obsId: number;
+    //@Input('segment') segment: string;
+    //@Input() obsId: number;
     public formModel: FormGroup;
     public dateObs : any;
     public latitude: any;
@@ -26,6 +26,8 @@ export class ProtocolFormComponent {
     private geoSub :  Subscription;
     private obsSaved : boolean = false;
     private formChanged  : boolean = false;
+    private segment: string;
+    private obsId: number;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams ,
@@ -34,7 +36,8 @@ export class ProtocolFormComponent {
     public data : ObsProvider,
     public commonService: CommonService,
     public geoServ : GeoService,
-    private el: ElementRef
+    private el: ElementRef,
+    private alertCtrl: AlertController
    // , private geolocation: Geolocation
   ) {
     /*events.subscribe('formSubmit', (event, segment) => {
@@ -54,6 +57,9 @@ export class ProtocolFormComponent {
             console.log('old instance')
             console.log(instance)
             this.buildForm(instance)
+            // display coordinates
+            this.latitude = instance.latitude;
+            this.longitude = instance.latitude;
         });
 
       } else {
@@ -64,16 +70,16 @@ export class ProtocolFormComponent {
       }
 
       // get coordinates
-      this.geoSub = this.geoServ.notifyObservable$.subscribe((res) => {
+      /*this.geoSub = this.geoServ.notifyObservable$.subscribe((res) => {
         console.log('geo service')
         console.log('latitude : ' + res[0])
         this.handleLatChange(res[0])
         this.handleLonChange(res[1])
-       });
+       });*/
 
       // subscription to notify exit view obsto store data
       this.subscription = this.commonService.notifyObservable$.subscribe((res) => {
-       if(!this.obsSaved && (!this.obsId) && (this.formChanged)) {
+       if(!this.obsSaved  && (this.formChanged)) {    // && (!this.obsId)
              this.saveCurrent()
        }
 
@@ -98,25 +104,34 @@ export class ProtocolFormComponent {
   onSubmit(value,segment) {
     
     // check if model is valid
-    if (!this.formModel.invalid) {
-      value.finished = true;
-      this.formUpdateData(value);
+    if ((!this.formModel.invalid) &&(segment =='facultatif')) {
+      this.formModel.value.finished = true;
+      this.formUpdateData();
       this.navCtrl.push(ObservationsPage)
     } else {
       if(segment =='facultatif'){
-        alert('Merci de saisir les champs obligatoires.')
+        this.presentAlert()
       }
       
     }
+  }
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Champs requis',
+      subTitle: 'Merci de saisir les champs obligatoires.',
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
   saveCurrent(){
     let value = this.formModel.value;
     value.finished = false;
-    this.formUpdateData(value);
+    this.formUpdateData();
   }
 
-  formUpdateData(value) {
+  formUpdateData() {
+    let value = this.formModel.value
     // set date value
     value.dateObs = this.dateObs;
     // set latitude & longitude
@@ -124,7 +139,7 @@ export class ProtocolFormComponent {
    value.longitude = this.longitude;
     // set id value if exists 
     if(this.obsId){
-        this.formModel.value.id = this.obsId;
+       value.id = this.obsId;
     }
     this.data.saveObs(value)
     this.obsSaved = true;
@@ -134,7 +149,6 @@ export class ProtocolFormComponent {
     console.log('form model latitude :')
     lat = lat.toFixed(5);
     this.formModel.value.latitude = lat;
-    console.log(this.formModel.value)
     this.latitude = lat;
   
   }
@@ -149,7 +163,11 @@ export class ProtocolFormComponent {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.geoSub.unsubscribe();
+    //this.geoSub.unsubscribe();
     //this.events.unsubscribe('formSubmit');
+  }
+  updatePosition(lat, lon) {
+    this.handleLatChange(lat)
+    this. handleLonChange(lon) 
   }
 }
