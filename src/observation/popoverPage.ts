@@ -17,9 +17,9 @@ import {ObsProvider} from '../providers/obs/obs'
       <ion-item class="actionItem">
       <ion-label>Prendre une photo</ion-label>
     </ion-item>
-    <!--<ion-item class=""  (click)="deleteObs()">
+    <ion-item class=""  (click)="deleteObs()">
     <ion-label>Supprimer cette observation</ion-label>
-    </ion-item>-->
+    </ion-item>
     <ion-item class="actionItem" (click)="closePopover()">
     <ion-label>Retour</ion-label>
     </ion-item>
@@ -29,7 +29,8 @@ import {ObsProvider} from '../providers/obs/obs'
 })
 export class PopoverPage {
   parent : any;
-  private obsId : number
+  private obsId : number;
+  private projId : number;
   constructor( 
     public navCtrl: NavController,
     private el: ElementRef,
@@ -40,6 +41,8 @@ export class PopoverPage {
   
   ) {
     this.obsId = navParams.data.obsId 
+    this.parent  = navParams.data.parent 
+    this.projId = navParams.data.projId
   }
 
   ngOnInit() {
@@ -51,14 +54,17 @@ export class PopoverPage {
   }
   changeProtocol(){
     this.viewCtrl.dismiss();
-    this.navCtrl.push(ProtocolsPage)
+    //this.navCtrl.push(ProtocolsPage)
+    this.parent.navCtrl.pop()
   }
   closePopover(){
     this.viewCtrl.dismiss();
   }
   displayObs(){
     this.viewCtrl.dismiss();
-    this.navCtrl.push(ObservationsPage)
+    //this.navCtrl.push(ObservationsPage)
+    this.parent.navCtrl.pop()
+    this.parent.navCtrl.pop()
   }
   deleteObs(){
     this.viewCtrl.dismiss()
@@ -79,14 +85,20 @@ export class PopoverPage {
         {
           text: 'OK',
           handler: () => {
-            this.viewCtrl.dismiss()
+            let data = {"action" : "removeObs", "protoId" :this.obsId  };
+            this.dismiss(data)
             this.data.deleteObs(this.obsId)
-            this.navCtrl.push(ObservationsPage)
+            this.parent.navCtrl.pop()
           }
         }
       ]
     });
     alert.present();
+  }
+
+  dismiss(data) {
+    //let data = { 'foo': 'bar' };
+    this.viewCtrl.dismiss(data);
   }
 
 }

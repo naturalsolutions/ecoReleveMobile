@@ -11,7 +11,8 @@ interface AvifauneInterface {
     hauteur_vol: string,
     latitude:number,
     longitude: number,
-    dateObs: number
+    dateObs: number,
+    projId : number
 }
 export   class Avifaune implements AvifauneInterface {  
         constructor(
@@ -27,7 +28,8 @@ export   class Avifaune implements AvifauneInterface {
           public hauteur_vol ='',
           public latitude= 0,
           public longitude=0,
-          public dateObs =0
+          public dateObs =0,
+          public projId
         ) {
         } 
 }

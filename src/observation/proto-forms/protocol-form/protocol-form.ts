@@ -1,5 +1,5 @@
 import { Component, Input,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 //import {Geolocation } from '@ionic-native/geolocation';
 import {MapComponent} from '../../../components/map/map'
@@ -9,10 +9,13 @@ import {ObsProvider} from '../../../providers/obs/obs'
 import { CommonService } from '../../../shared/notification.service';
 import { Subscription } from 'rxjs/Subscription';
 import {GeoService} from '../../../shared/geolocation.notification.service';
+import {PopoverAutocompPage} from'./popoverAutocompPage'
+
 
 @Component({
   selector: 'protocol-form',
-  templateUrl: 'protocol-form.html'
+  templateUrl: 'protocol-form.html',
+
 })
 export class ProtocolFormComponent {
 
@@ -28,6 +31,8 @@ export class ProtocolFormComponent {
     private formChanged  : boolean = false;
     private segment: string;
     private obsId: number;
+    private projId : number;
+    private hideEspBtn : boolean = true;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams ,
@@ -37,13 +42,15 @@ export class ProtocolFormComponent {
     public commonService: CommonService,
     public geoServ : GeoService,
     private el: ElementRef,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
+    //public completeTaxaService: CompleteTaxaService
    // , private geolocation: Geolocation
   ) {
     /*events.subscribe('formSubmit', (event, segment) => {
       this.onSubmit(event, segment)
     });*/
-    this.data.getObs();
+    this.data.getObs(this.projId);
   }
     ngOnInit(protocolClass) {
     let instance : any
@@ -54,8 +61,6 @@ export class ProtocolFormComponent {
            for(var key in obs) {
               instance[key] = obs[key];
           }
-            console.log('old instance')
-            console.log(instance)
             this.buildForm(instance)
             // display coordinates
             this.latitude = instance.latitude;
@@ -64,8 +69,6 @@ export class ProtocolFormComponent {
 
       } else {
         instance = new protocolClass(null)
-        console.log('new instance')
-        console.log(instance)
         this.buildForm(instance)
       }
 
@@ -102,12 +105,12 @@ export class ProtocolFormComponent {
      });
   }
   onSubmit(value,segment) {
-    
     // check if model is valid
     if ((!this.formModel.invalid) &&(segment =='facultatif')) {
       this.formModel.value.finished = true;
       this.formUpdateData();
-      this.navCtrl.push(ObservationsPage)
+      this.navCtrl.pop();
+      //this.navCtrl.push(ObservationsPage, {projId : this.projId})
     } else {
       if(segment =='facultatif'){
         this.presentAlert()
@@ -137,6 +140,7 @@ export class ProtocolFormComponent {
     // set latitude & longitude
    value.latitude = this.latitude;
    value.longitude = this.longitude;
+   value.projId = this.projId;
     // set id value if exists 
     if(this.obsId){
        value.id = this.obsId;
@@ -146,20 +150,17 @@ export class ProtocolFormComponent {
   }
 
   handleLatChange(lat){
-    console.log('form model latitude :')
     lat = lat.toFixed(5);
     this.formModel.value.latitude = lat;
     this.latitude = lat;
-  
   }
   handleLonChange(lon){
-      lon = lon.toFixed(5);
+    lon = lon.toFixed(5);
     this.formModel.value.longitude = lon;
     this.longitude = lon;
-
   }
   ionViewDidLoad() {
-    console.log('page chargée')
+
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -168,6 +169,23 @@ export class ProtocolFormComponent {
   }
   updatePosition(lat, lon) {
     this.handleLatChange(lat)
-    this. handleLonChange(lon) 
+    this.handleLonChange(lon) 
+  }
+  presentPopoverAutocomp(ev, protocole) {
+    ev.stopPropagation();
+    this.formModel.controls['nom_vernaculaire'].setValue('');
+    let popover = this.modalCtrl.create(PopoverAutocompPage, { parent : this, protocole : protocole},{cssClass: 'autocomp'});
+        /*popover.onDidDismiss(data => {
+          
+                    if(data && data.action == "removeObs") {
+                      let protoId= data.protoId
+                      this.data.deleteObs(this.obsId)
+                      this.navCtrl.pop()
+                    }
+                  });*/
+        popover.present({
+          ev: ev
+        });
+
   }
 }

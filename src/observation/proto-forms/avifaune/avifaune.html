@@ -1,7 +1,7 @@
 <form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
-            <map (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)"></map>
+            <map (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId"></map>
             <br/>
             <p><b>Date</b> : {{dateObs | date :'shortDate'}},<b>heure </b>: {{dateObs | date :'shortTime'}}</p>
             <p><b>Latitude </b>: {{latitude}} , <b>longitude </b>: {{longitude}}</p>
@@ -23,16 +23,19 @@
                 </ion-select>
 
             </ion-item>
-
-            <ion-item>
-                <ion-label floating>Nom vernaculaire</ion-label>
-                <ion-input type="text" formControlName="nom_vernaculaire"></ion-input>
-            </ion-item>
-
             <ion-item>
                 <ion-label floating>Effectif</ion-label>
                 <ion-input type="number" formControlName="effectif"></ion-input>
             </ion-item>
+            <ion-item>
+                <ion-label floating>Nom vernaculaire</ion-label><br/>
+
+                <ion-input readOnly formControlName="nom_vernaculaire" (click)="presentPopoverAutocomp($event, 'avifaune')"></ion-input>
+
+            </ion-item>
+
+
+
 
         </ion-list>
 
@@ -114,4 +117,7 @@
     </div>
     <!-- <button ion-button type="submit" block class="btnsubmit">Suivant</button>-->
     <!--[disabled]="formModel.invalid"-->
+    <div>
+        <button ion-button class="" [class.hide]="hideEspBtn" (click)="presentPopoverAutocomp($event, 'avifaune')" color="light">espece</button>
+    </div>
 </form>

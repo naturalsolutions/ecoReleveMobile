@@ -1,25 +1,25 @@
 [{
         "name": "avifaune",
         "label": "Avifaune",
-        "image": "./assets/icones_protocoles/avifaune.jpg",
+        "image": "./assets/icones_protocoles/avifaune.png",
         "id": 1
     },
     {
         "name": "herpetofaune",
         "label": "Herpetofaune",
-        "image": "./assets/icones_protocoles/herpetofaune.jpg",
+        "image": "./assets/icones_protocoles/herpeto.png",
         "id": 2
     },
     {
         "name": "mammofaune",
         "label": "Mammofaune",
-        "image": "./assets/icones_protocoles/mammofaune.jpg",
+        "image": "./assets/icones_protocoles/mammo.png",
         "id": 3
     },
     {
         "name": "batrachofaune",
         "label": "Batrachofaune",
-        "image": "./assets/icones_protocoles/batrachofaune2.jpg",
+        "image": "./assets/icones_protocoles/batracho.png",
         "id": 4
     }
 

@@ -1,3 +1,26 @@
-protocol-form {
+protocol-form {}
 
+page-autocompTaxa {
+    .spinner-container {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+    }
+}
+
+.settings-modal {
+    position: absolute;
+    width: 30%;
+    height: 60%;
+    top: 20%;
+    left: 35%;
+}
+
+.autocomp .popover-content {
+    /* width: 400px;*/
+    min-height: 200px;
+}
+
+.autocomp {
+    background-color: rgba(200, 200, 200, 0.5);
 }

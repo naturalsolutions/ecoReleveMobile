@@ -6,7 +6,7 @@ import {Avifaune} from '../../../models/avifaune-interface';
 
 @Component({
   selector: 'avifaune',
-  templateUrl: 'avifaune.html',
+  templateUrl: 'avifaune.html'
 })
 export class AvifauneComponent extends ProtocolFormComponent {
 

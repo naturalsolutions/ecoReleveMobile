@@ -1,10 +1,26 @@
 page-observations {
     .item-md ion-thumbnail ion-img,
     .item-md ion-thumbnail img {
-        width: 40px !important;
-        height: 40px !important;
+        width: 50px !important;
+        height: 50px !important;
     }
     .iconObs {
         max-width: 20%;
+        padding: 0;
+        padding-right: 5px;
+        padding-top: 5px;
     }
+}
+
+.item-md {
+    padding-left: 0!important;
+}
+
+.label-md {
+    margin: 10px 5px 0px 0px;
+    padding: 0px;
+}
+
+.item-md p {
+    margin: 5px 0 2px;
 }

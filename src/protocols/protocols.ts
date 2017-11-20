@@ -14,13 +14,24 @@ export class ProtocolsPage {
 
   protocols : any;
   projSelect :any = false;
+  public projId : any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public protocolsService : ProtocolsServiceProvider) {
+    this.projId = navParams.get("projId");
     this.loadProtocols()
   }
 
   ionViewDidLoad() {
 
+
+  }
+  ionViewWillEnter(){
+    console.log(' protocols  page will enter')
+
+  }
+
+  ionViewDidEnter(){
+    console.log(' protocols  page did enter')
 
   }
 
@@ -35,7 +46,7 @@ export class ProtocolsPage {
     // get selected protocol
     let protocol = this.protocols.find(x => x.id === id);
     console.log(protocol);
-    this.navCtrl.push(ObservationPage, {protoObj:protocol});
+    this.navCtrl.push(ObservationPage, {protoObj:protocol, projId : this.projId});
   }
 
 }

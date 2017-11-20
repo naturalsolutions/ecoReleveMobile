@@ -1,7 +1,8 @@
-import { Component, ElementRef, Output, EventEmitter  } from '@angular/core'
+import { Component, ElementRef, Output, EventEmitter, Input  } from '@angular/core'
 import { NavController, NavParams } from 'ionic-angular'
 //import { Subscription } from 'rxjs/Subscription'
 import { MapNotificationService } from '../../shared/map.notification.service'
+import {ProjectsServiceProvider} from '../../providers/projects-service'
 //import { MapModel } from '../../shared/map.model'
 import {Geolocation } from '@ionic-native/geolocation'
 import L from "leaflet"
@@ -11,9 +12,15 @@ import _ from 'lodash'
 @Component({
   selector: 'map',
   templateUrl: 'map.html',
+  providers : [
+    ProjectsServiceProvider
+  ]
 })
+
 export class MapComponent {
 
+  
+@Input() projId : number
   /*@Output() latEvent = new EventEmitter()
   @Output() lonEvent = new EventEmitter()*/
 
@@ -31,17 +38,19 @@ export class MapComponent {
     public navParams: NavParams,
     private el: ElementRef,
     private geolocation: Geolocation,
-    private NotificationService: MapNotificationService
+    private NotificationService: MapNotificationService,
+    public projectsService : ProjectsServiceProvider
   ) {
 
   }
 
   ngOnInit() {
 
+    console.log(' map : ' + this.projId)
     this.mapEl = this.el.nativeElement.querySelector('.map')
     this._map = L
     .map(this.mapEl, {
-      minZoom: 8,
+      minZoom: 2,
       maxZoom: 18
 
       //maxBounds: this._bounds,
@@ -49,7 +58,7 @@ export class MapComponent {
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //bounds: this._bounds,
-    minZoom: 8,
+    minZoom: 2,
     maxZoom: 18,
    // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(this._map);
@@ -59,7 +68,29 @@ export class MapComponent {
         this.longitude = position.coords.longitude
         this.onMapModelReady()
       })
+
+  let geometry;
+  // ajouter emprise de projet
+  this.projectsService.getProj().then(data =>{
+
+    for(let proj in data) {
+        console.log(data[proj])
+        if(data[proj]['ID'] == this.projId ) {
+          geometry = data[proj]['geometry'];
+          if(geometry) {
+            var myLayer = L.geoJSON().addTo(this._map);
+            myLayer.addData(geometry);
+          }
+        }
+      }
+      
+  })
+
+
   }
+
+
+
 
   /*loadMap() {
     console.log('loadind map')

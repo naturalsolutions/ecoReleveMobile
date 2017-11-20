@@ -8,6 +8,7 @@ import {GeoService} from '../shared/geolocation.notification.service'
 import {PopoverPage} from'./popoverPage'
 import { AdDirective } from '../shared/ad.directive'
 import{AdFormService} from './proto-form-provider'
+import {ObsProvider} from '../providers/obs/obs'
 
 
 @IonicPage()
@@ -29,6 +30,7 @@ export class ObservationPage  {
   actionsStatus : boolean = true;
   popover : any;
   myProto : any;
+  projId : any
 
 
   constructor(public navCtrl: NavController, 
@@ -42,10 +44,12 @@ export class ObservationPage  {
     private popoverCtrl: PopoverController,
     private componentFactoryResolver: ComponentFactoryResolver,
     private adFormService : AdFormService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public data : ObsProvider,
 
   ) {
     this.protocol = navParams.data.protoObj;
+    this.projId = navParams.get("projId");
     this.obsId = navParams.data.obsId || 0;
     //console.log('in obs page, onsId =' + this.obsId)
     this.protocolName = this.protocol.name;
@@ -53,9 +57,10 @@ export class ObservationPage  {
   }
 
   ionViewDidLoad() {
-
+    console.log('obs load')
   }
    ionViewDidEnter() {
+    console.log('obs load')
     this.title = this.protocolName;
     // get coordinates for new obs
     if(this.obsId == 0){
@@ -84,14 +89,17 @@ export class ObservationPage  {
        btn.innerText = 'Suivant';
        // display or hide btn "plus d'actions"
        this.actionsStatus = true;
+       this.myProto.hideEspBtn = true;
        
      }
     else {
       btn.innerText = 'Terminer';
       this.actionsStatus = false;
+      this.myProto.hideEspBtn = true;
     }
     if (($event._value == 'obligatoire')) {
       this.actionsStatus = false;
+      this.myProto.hideEspBtn = false;
     }
     this.myProto.segment = this.segment;
   }
@@ -101,13 +109,16 @@ export class ObservationPage  {
     if(this.segment == 'localisation') {
       this.segment = 'obligatoire'
       this.actionsStatus = true
+      this.myProto.hideEspBtn = true;
     } 
     else if(this.segment == 'obligatoire'){
       this.segment ='facultatif';
       btn.innerText = 'Terminer';
+      this.myProto.hideEspBtn = false;
       this.actionsStatus = false;
     } else {
       this.actionsStatus = false;
+      this.myProto.hideEspBtn = true;
     }
     this.myProto.segment = this.segment
   }
@@ -121,10 +132,19 @@ export class ObservationPage  {
   }
   presentPopoverActions(ev) {
     
-        this.popover = this.popoverCtrl.create(PopoverPage, {obsId : this.obsId},{cssClass: 'obs-actions'});
-        this.popover.present({
+        let popover = this.popoverCtrl.create(PopoverPage, {obsId : this.obsId, parent : this, projId : this.projId},{cssClass: 'obs-actions'});
+        /*popover.onDidDismiss(data => {
+          
+                    if(data && data.action == "removeObs") {
+                      let protoId= data.protoId
+                      this.data.deleteObs(this.obsId)
+                      this.navCtrl.pop()
+                    }
+                  });*/
+        popover.present({
           ev: ev
         });
+
   }
   ngAfterViewInit() {
     this.loadComponent();
@@ -145,6 +165,7 @@ export class ObservationPage  {
 		this.myProto= componentRef.instance;
     this.myProto.segment = this.segment;
     this.myProto.obsId = this.obsId;
+    this.myProto.projId = this.projId;
 
   }
   getPosition(){

@@ -25,6 +25,7 @@ export class ObservationsPage {
   obsSegment: string= 'listes';
   protocols : any;
   public map : any
+  public projId : any
   //private subscription: Subscription;
 
   constructor(
@@ -37,7 +38,7 @@ export class ObservationsPage {
   //private NotificationService: MapNotificationService
 
   ) {
-    console.log(' obs page constructor')
+    this.projId = navParams.get("projId")
     this.loadProtocols()
   }
 
@@ -47,10 +48,15 @@ export class ObservationsPage {
   ionViewDidEnter(){
     console.log(' obs page enter')
     //this.drawMap()
-    this.data.getObs().then((data)=> {
-      this.obs = data
+    this.data.getObs(this.projId).then((data)=> {
+      // set label to display for each obs
       let points= [];
       for (let dt in data) {
+        let label = data[dt]['protocole'] + ': ' +  data[dt]['type_inventaire'] 
+        if(label.length>32) {
+          label = label.substring(0,28) + '...';
+        }
+        data[dt]['label'] = label
         let pos = {}
         pos['latitude'] = parseFloat(data[dt]['latitude'])
         pos['longitude'] = parseFloat(data[dt]['longitude'])
@@ -59,6 +65,7 @@ export class ObservationsPage {
         pos['espece'] = data[dt]['nom_vernaculaire'] 
         points.push(pos)
       }
+      this.obs = data
       this.waypoints = points
      }
 
@@ -74,25 +81,39 @@ export class ObservationsPage {
   navigateToDetail(protocole,id){
     // get selected protocol
     let protocol = this.protocols.find(x => x.name === protocole);
-    console.log(protocol);
+    console.log(protocol, id);
     this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id});
   }
   newObs(){
-    this.navCtrl.push(ProtocolsPage)
+    console.log('new obs');
+    this.navCtrl.push(ProtocolsPage, {'projId' : this.projId}).then(
+      response => {
+        console.log('Response ' + response);
+      },
+      error => {
+        console.log('Error: ' + error);
+      }
+    ).catch(exception => {
+      console.log('Exception ' + exception);
+    });
   }
   getImage(protocole,finished){
     let src="";
     if(finished){
       switch(protocole) {
           case "avifaune":
-              src="avifaune.jpg";
+              src="avifaune.png";
               break;
           case "herpetofaune":
-              src="herpeto.jpg";   
+              src="herpeto.png";   
               break;
            case "mammofaune":
-             src="mammo.jpg";  //TODO update picto 
+             src="mammo.png";  //TODO update picto 
             break;
+            case "batrachofaune":
+            src="batracho.png";  //TODO update picto 
+            break;
+
           default:
               src="avifaune.jpg";  //TODO update picto 
       }
@@ -100,16 +121,20 @@ export class ObservationsPage {
     } else {
       switch(protocole) {
           case "avifaune":
-              src="avifaune_progress.jpg"; //TODO update picto 
+              src="avifaune_progress.png"; //TODO update picto 
               break;
           case "herpetofaune":
-              src="avifaune_progress.jpg";   //TODO update picto 
+              src="herpeto_progress.png";   //TODO update picto 
               break;
            case "mammofaune":
-             src="mammo_progress.jpg";  //TODO update picto 
+             src="mammo_progress.png";  //TODO update picto 
             break;
+            case "batrachofaune":
+            src="batracho_progress.png";  //TODO update picto 
+            break;
+
           default:
-              src="avifaune_progress.jpg";  //TODO update picto 
+              src="avifaune_progress.png";  //TODO update picto 
       }
 
     }

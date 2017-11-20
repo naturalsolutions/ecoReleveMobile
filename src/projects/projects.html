@@ -6,7 +6,7 @@
 
     <!-- segment -->
     <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
-        <ion-segment [(ngModel)]="projectsSegment">
+        <ion-segment [(ngModel)]="projectsSegment" (ionChange)="onSegmentChanged($event)">
             <ion-segment-button value="myproj">
                 Mes projets
             </ion-segment-button>
@@ -23,13 +23,25 @@
 
     <div [ngSwitch]="projectsSegment">
         <ion-list *ngSwitchCase="'myproj'">
-            <ion-item *ngFor="let project of projects" (click)="navToProtocols()">
-                <ion-thumbnail item-start>
-                    <img src={{project.image}} />
-                </ion-thumbnail>
-                <h2> {{project.Name}}</h2>
-                <p>ref : {{project.Project_reference}}
-                    <p>
+            <ion-item *ngFor="let project of loadedProjects" (click)="navToProtocols(project.ID)">
+                <ion-row>
+                    <ion-col width-25>
+                        <ion-thumbnail item-start>
+                            <img src={{project.image}} />
+                        </ion-thumbnail>
+                    </ion-col>
+                    <ion-col width-50>
+                        <br/>
+                        <h2> {{project.Name}}</h2>
+                        <p>ref : {{project.Project_reference}}</p>
+                    </ion-col>
+                    <ion-col width-25>
+                        <ion-item>
+                            <br/>
+                            <ion-checkbox item-right secondary checked={{project.checked}} [(ngModel)]="project.checked" (click)="checkedDone(project, 'local')"></ion-checkbox>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
             </ion-item>
 
 
@@ -43,17 +55,20 @@
                         <p>ref : {{project.Project_reference}}</p>
                     </ion-col>
                     <ion-col width-15>
-                        <ion-item>
-                            <ion-checkbox item-right secondary checked="false " [(ngModel)]="project.checked" (click)="checkedDone(project)"></ion-checkbox>
+                        <ion-item *ngIf="!project.isLoaded">
+                            <ion-checkbox item-right secondary checked="false" [(ngModel)]="project.checked" (click)="checkedDone(project, null)"></ion-checkbox>
                         </ion-item>
                     </ion-col>
                 </ion-row>
             </ion-item>
-            <button ion-button type="submit" block (click)="ImportProjects()" [disabled]="disabled">Importer</button>
-
-
         </ion-list>
 
     </div>
 
 </ion-content>
+<ion-footer no-shadow>
+    <ion-toolbar position="bottom">
+        <button ion-button [class.hide]="!displayMyProjs" (click)="deleteSelected($event)" type="submit" [disabled]="myProjdisabled" color="danger" block>Supprimer</button>
+        <button ion-button [class.hide]="displayMyProjs" type="submit" block (click)="ImportProjects()" [disabled]="disabled">Importer</button>
+    </ion-toolbar>
+</ion-footer>

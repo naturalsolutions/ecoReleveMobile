@@ -13,7 +13,7 @@ export class ObsProvider {
 
   }
 
-  getObs(){
+  getObs(projId){
     /*   this.storage.get('avifauneObs').then((data)=>{
     //// console.log('avifaune data');
     //  console.log(data)
@@ -26,10 +26,15 @@ export class ObsProvider {
     return new Promise(resolve =>{
       this.storage.get('observations').then((data)=>{
         console.log('obs chargés');
-        this.data = data;
-        console.log(data);
+        let projData = _.filter(data, function(obs) { 
+          return obs.projId == projId; 
+       });
+
+
+        this.data = projData;
+        console.log(projData);
         // order by date
-        const myOrderedArray = _.orderBy(data, obs => obs.dateObs, ['desc'])
+        const myOrderedArray = _.orderBy(projData, obs => obs.dateObs, ['desc'])
         console.log(myOrderedArray);
         resolve(myOrderedArray);
       });

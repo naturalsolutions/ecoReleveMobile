@@ -2,19 +2,19 @@
         "Name": "Projet éolienne",
         "ID": "1",
         "Project_reference": "Prj_001",
-        "image": "./assets/icones_projects/notsync.jpg"
+        "image": "./assets/icones_projects/pas_synchro.png"
     },
     {
         "Name": "Projet barrage",
         "ID": "2",
         "Project_reference": "Prj_002",
-        "image": "./assets/icones_projects/issync.jpg"
+        "image": "./assets/icones_projects/synchro.png"
     },
     {
         "Name": "Projet eolienne nord",
         "ID": "3",
         "Project_reference": "Prj_003",
-        "image": "./assets/icones_projects/issync.jpg"
+        "image": "./assets/icones_projects/synchro.png"
     }
 
 ]

@@ -30,10 +30,14 @@ import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune'
 import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
 import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
 
-import {PopoverPage} from'../observation/popoverPage'
+import {PopoverPage} from'../observation/popoverPage';
+import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
+
 import {  MapComponent} from '../components/map/map'; 
 import { AdDirective }    from '../shared/ad.directive';
 import { AdFormService} from '../observation/proto-form-provider'
+
+import { AutoCompleteModule } from 'ionic2-auto-complete';
 
 @NgModule({
   declarations: [
@@ -52,10 +56,12 @@ import { AdFormService} from '../observation/proto-form-provider'
     HerpetofauneComponent,
     MapComponent,
     PopoverPage,
+    PopoverAutocompPage,
     AdDirective
   ],
   imports: [
     HttpModule,
+    AutoCompleteModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule .forRoot()
@@ -72,6 +78,7 @@ import { AdFormService} from '../observation/proto-form-provider'
     LoginPage,
     MapComponent,
     PopoverPage,
+    PopoverAutocompPage,
     AvifauneComponent,
     HerpetofauneComponent,
     MammofauneComponent,

@@ -3,4 +3,17 @@ page-projects {
         width: 60px !important;
         height: 60px !important;
     }
+    .list .row {
+        height: 90px;
+    }
+    button.item-md.item-block .item-inner {
+        border-bottom: 0px;
+    }
+    .checkbox-md .checkbox-icon {
+        border-radius: 4px;
+        position: relative;
+        width: 25px;
+        height: 25px;
+        border-width: 2px;
+    }
 }
