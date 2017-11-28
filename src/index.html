@@ -5,16 +5,17 @@
     <meta charset="UTF-8">
     <title>Ionic App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src gap://ready file://* *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *">-->
+    <meta name=" format-detection " content="telephone=no ">
+    <meta name="msapplication-tap-highlight " content="no ">
 
-    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4e8ef7">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <link rel="icon " type="image/x-icon " href="assets/icon/favicon.ico ">
+    <link rel="manifest " href="manifest.json ">
+    <meta name="theme-color " content="#4e8ef7 ">
+    <link rel="stylesheet " href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css " />
 
     <!-- cordova.js required for cordova apps -->
-    <script src="cordova.js"></script>
+    <script src="cordova.js "></script>
 
     <!-- un-comment this code to enable service worker
   <script>
@@ -25,7 +26,7 @@
     }
   </script>-->
 
-    <link href="build/main.css" rel="stylesheet">
+    <link href="build/main.css " rel="stylesheet ">
 
 </head>
 
@@ -35,10 +36,13 @@
     <ion-app></ion-app>
 
     <!-- The polyfills js is generated during the build process -->
-    <script src="build/polyfills.js"></script>
+    <script src="build/polyfills.js "></script>
+
+    <!-- all code from node_modules directory is here -->
+    <script src="build/vendor.js "></script>
 
     <!-- The bundle js is generated during the build process -->
-    <script src="build/main.js"></script>
+    <script src="build/main.js "></script>
 
 </body>
 

@@ -1,5 +1,5 @@
 import { Component, Input,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController, ModalController,ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 //import {Geolocation } from '@ionic-native/geolocation';
 import {MapComponent} from '../../../components/map/map'
@@ -33,6 +33,9 @@ export class ProtocolFormComponent {
     private obsId: number;
     private projId : number;
     private hideEspBtn : boolean = true;
+    private image : any;
+    private instance : any;
+    public parent;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams ,
@@ -44,6 +47,7 @@ export class ProtocolFormComponent {
     private el: ElementRef,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
+    public toastCtrl: ToastController,
     //public completeTaxaService: CompleteTaxaService
    // , private geolocation: Geolocation
   ) {
@@ -53,24 +57,26 @@ export class ProtocolFormComponent {
     this.data.getObs(this.projId);
   }
     ngOnInit(protocolClass) {
-    let instance : any
+    //let instance : any
       // update existing obs
       if(this.obsId){
-        instance = new protocolClass(this.obsId)
+        this.instance = new protocolClass(this.obsId)
         this.data.getObsById(this.obsId).then((obs)=>{
            for(var key in obs) {
-              instance[key] = obs[key];
+            this.instance[key] = obs[key];
           }
-            this.buildForm(instance)
+            this.buildForm(this.instance)
             // display coordinates
-            this.latitude = instance.latitude;
-            this.longitude = instance.latitude;
+            this.latitude = this.instance.latitude;
+            this.longitude = this.instance.latitude;
         });
 
       } else {
-        instance = new protocolClass(null)
-        this.buildForm(instance)
+        this.instance = new protocolClass(null)
+        this.buildForm(this.instance)
       }
+
+      this.projId = this.navParams.data.projId;
 
       // get coordinates
       /*this.geoSub = this.geoServ.notifyObservable$.subscribe((res) => {
@@ -91,13 +97,15 @@ export class ProtocolFormComponent {
     buildForm(model){
         this.formModel = this.getFormModel(model);
       // set date value
-      this.dateObs =  Date.now();
+      this.dateObs = Date.now();//  Date.now().getTime();
+   
       this.formModel.value.dateObs = this.dateObs;
       // detect form changes to activate "save current obs"
       this.formModel.valueChanges.subscribe(data => {
         this.formChanged = true;
     })
   }
+
   getFormModel(model){
     // to redefine
      return this.builder.group({
@@ -108,8 +116,12 @@ export class ProtocolFormComponent {
     // check if model is valid
     if ((!this.formModel.invalid) &&(segment =='facultatif')) {
       this.formModel.value.finished = true;
+      this.formModel.value.projId = this.projId;
       this.formUpdateData();
-      this.navCtrl.pop();
+      //this.navCtrl.pop();
+      this.presentToast('Observation enregistrée.', 'top' )
+      this.reinitform();
+
       //this.navCtrl.push(ObservationsPage, {projId : this.projId})
     } else {
       if(segment =='facultatif'){
@@ -117,6 +129,16 @@ export class ProtocolFormComponent {
       }
       
     }
+  }
+  reinitform(){
+    this.parent.segment = 'localisation';
+    this.buildForm(this.instance);
+    this.parent.getPosition();
+    console.log(' initialisation form ')
+    console.log(this.formModel.value)
+    // display coordinates
+    this.latitude = this.instance.latitude;
+    this.longitude = this.instance.latitude;
   }
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -187,5 +209,13 @@ export class ProtocolFormComponent {
           ev: ev
         });
 
+  }
+  presentToast(message, position) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position : position
+    });
+    toast.present();
   }
 }

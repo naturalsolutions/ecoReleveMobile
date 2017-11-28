@@ -16,7 +16,7 @@ export class MammofauneComponent  extends ProtocolFormComponent{
 
     getFormModel(model){
         return this.builder.group({
-        'protocole':'mammofaune',
+        'protocole':'Mammo',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]

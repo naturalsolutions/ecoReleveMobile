@@ -69,6 +69,11 @@ export class MapComponent {
         this.onMapModelReady()
       })
 
+
+  // add edit control
+  
+  //TODO
+
   let geometry;
   // ajouter emprise de projet
   this.projectsService.getProj().then(data =>{

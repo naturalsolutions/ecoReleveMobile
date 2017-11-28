@@ -82,7 +82,7 @@ export class ObservationsPage {
     // get selected protocol
     let protocol = this.protocols.find(x => x.name === protocole);
     console.log(protocol, id);
-    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id});
+    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId});
   }
   newObs(){
     console.log('new obs');

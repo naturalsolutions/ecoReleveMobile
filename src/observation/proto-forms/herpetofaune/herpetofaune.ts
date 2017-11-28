@@ -15,7 +15,7 @@ export class HerpetofauneComponent extends ProtocolFormComponent {
   }
   getFormModel(model){
        return this.builder.group({
-        'protocole':'herpetofaune',
+        'protocole':'Herpeto',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]

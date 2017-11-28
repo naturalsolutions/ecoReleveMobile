@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import {ProjectsServiceProvider} from '../providers/projects-service';
-import { ProtocolsPage } from '../protocols/protocols'; // TODO to delete
+import {ObsProvider} from '../providers/obs/obs'
 import { ObservationsPage } from '../observations/observations';
 import _ from 'lodash';
 import 'rxjs/add/observable/forkJoin';
-
-
+import * as moment from 'moment';
 
 
 @IonicPage()
@@ -24,16 +23,20 @@ export class ProjectsPage {
   projectsSegment: string= 'myproj';
   disabled:any = 'disabled';
   myProjdisabled:any = 'disabled';
+  syncdisabled:any = 'disabled';
   displayMyProjs : boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public projectsService : ProjectsServiceProvider, private alertCtrl: AlertController
+    public projectsService : ProjectsServiceProvider, private alertCtrl: AlertController,
+    public data : ObsProvider
   ) {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProjectsPage');
     this.loadProjects();
+    console.log(this.navCtrl)
   }
 
   loadProjects (){
@@ -149,6 +152,7 @@ export class ProjectsPage {
                     this.projectsSegment = 'allproj';
                     this.displayMyProjs = false;
                     this.myProjdisabled = false;
+                    this.syncdisabled = false;
                   } else {
                     this.displayMyProjs = true;
                   }
@@ -190,6 +194,8 @@ export class ProjectsPage {
   onSegmentChanged($event){
     if (($event._value == 'myproj')) {
       this.displayMyProjs = true;
+      this.myProjdisabled = 'disabled';
+      this.syncdisabled = 'disabled';
     } else {
       this.displayMyProjs = false;
       if(!this.projects) {
@@ -227,14 +233,17 @@ export class ProjectsPage {
     if(proj.checked){
       this.disabled = false;
       this.myProjdisabled = false;
+      this.syncdisabled = false;
     } else {
       this.disabled = "disabled";
       this.myProjdisabled = "disabled";
+      this.syncdisabled ="disabled";
 
       for (let proj of projects) {
         if(proj.checked) {
           this.disabled = false;
           this.myProjdisabled = false;
+          this.syncdisabled =false;
         }
       }
     }
@@ -340,25 +349,165 @@ export class ProjectsPage {
           text: 'Oui',
           handler: () => {
              //supprimer proj en local, mettre à jour liste et update local storage
-            let list = [];
+            let listProj = [];
+            let listObs = [];
+            let promises = [];
             for (let proj of this.loadedProjects) {
               if(proj.checked) {
-               list.push(proj.ID)  
+                listProj.push(proj.ID)  
               }
             }
-            for(let i=0;i<list.length;i++){
-              _.remove(this.loadedProjects, function(prj) {
-                  return prj.ID == list[i];
-              });
-            }
-            // persistance
+            promises.push(this.data.deleteObsByProjIdList(listProj));
+            
+
+            
+            // fin de suppression
+            Promise.all(promises).then(value => {
+              
+              for(let i=0;i<listProj.length;i++){
+                  _.remove(this.loadedProjects, function(prj) {
+                    return prj.ID == listProj[i];
+                 });
+
+              }
+              // persistance
             this.projectsService.update(this.loadedProjects);
+            this.myProjdisabled = 'disabled';
+            this.syncdisabled = 'disabled';
+              
+              this.informAlert('Suppression de données', 'Le(s) projet(s) sélectionnées et leurs donnée(s) associée(s) ont bien été supprimé(s) avec succès.')
+
+            })
           }
         }
       ]
     });
     alert.present();
 
+  }
+  pushData(event){
+    let  alert = this.alertCtrl.create({
+      title: 'Synchronisation de données',
+      message: 'Etes vous sur(e) de vouloir synchroniser les données pour le(s) projet(s) sélectionné(s)?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Oui',
+          handler: () => {
+             //supprimer proj en local, mettre à jour liste et update local storage
+            let list = [];
+            for (let proj of this.loadedProjects) {
+              if(proj.checked) {
+               list.push(proj.ID)  
+              }
+            }
+            /*for(let i=0;i<list.length;i++){
+              _.remove(this.loadedProjects, function(prj) {
+                  return prj.ID == list[i];
+              });
+            }*/
+            for(let projID of list ){
+              // promises for all selected  projects
+              let projPromises = [];
+              // for each id proj load data
+              this.data.getObs(projID).then((obs)=> {
+                // set label to display for each obs
+                
+                let promises = [];
+
+                for (let dt in obs) {
+                      if(! obs[dt]['serverId']){
+                      let observation = obs[dt];
+                      observation['station'] = {}
+
+                    observation['station']['LAT'] = parseFloat(obs[dt]['latitude']);
+                    observation['station']['LON'] = parseFloat(obs[dt]['longitude']);
+                    observation['station']['FK_Project'] = obs[dt]['projId'];
+                    observation['type_name'] = obs[dt]['protocole'];
+                    let dateObs =  obs[dt]['dateObs'];
+                    var obsdate = moment(dateObs);
+                    var day = obsdate.date();
+                    var month = obsdate.month (); 
+                    var year = obsdate.year();
+                    observation['station']['StationDate'] =  day + "/"+ (month+1) + "/"  + year;
+                    observation['station']['Name'] = 'test';
+
+                    let p= new Promise((resolve, reject) => {
+                      this.data.pushObs(observation).then(data =>{
+                        console.log('*** id serveur obs :');
+                        console.log(data);
+                          obs[dt]['serverId']= data['id']; 
+                          obs[dt]['pushed']= true; 
+                          console.log(obs);
+                          this.data.saveObsById(obs[dt]['id'],obs[dt]);
+                            resolve(data['id']);
+                        })
+                      })
+                      promises.push(p);
+                      projPromises.push(p);
+
+                    }
+                }
+
+                Promise.all(promises).then(value => {
+                  console.log('promises');
+                  console.log(value);
+                  let projName ;
+                  for(let j=0; j<this.loadedProjects.length;j++) {
+                    if(this.loadedProjects[j]['ID'] == projID){
+                      this.projects[j]['isLoaded'] = true;
+                      projName = this.projects[j]['Name'];
+                      this.projects[j]['image'] = "./assets/icones_projects/synchro.png";
+                    }
+                  }
+                  // persistance, MAJ
+                  this.projectsService.update(this.loadedProjects);
+                  if(value.length){
+                    this.informAlert('Envoi de données', 'Le(s)' + value.length + ' observations du projet  "' + projName + '" ont été envoyées avec succès.')
+                  } else {
+                    this.informAlert('Envoi de données', 'Pas d\' observations à envoyer pour le projet  "' + projName + '".')
+                  }
+                })
+
+               })
+
+               Promise.all(projPromises).then(value => {
+                this.syncdisabled = 'disabled';
+                //this.informAlert('Envoi de données', 'fin de synchronisation avec succès.')
+
+              })   
+
+
+            }
+
+          }
+        }
+      ]
+    });
+    alert.present();
+    
+  }
+  informAlert(tite, data){
+    let alert = this.alertCtrl.create({
+      title: tite,
+      subTitle: data,
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+
+  deleteObs(id){
+    return new Promise(resolve =>{
+      this.data.deleteObs(id).then((data)=>{
+        resolve(1);  
+      });
+    });
   }
 
 }

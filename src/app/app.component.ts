@@ -10,7 +10,8 @@ import { HomePage } from '../home/home';
 //import { PostsPage } from '../pages/posts/posts';
 //import { ProtocolsPage } from '../pages/protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
-import { LoginPage} from '../login/login';
+//import { LoginPage} from '../login/login';
+import { LoginPage2} from '../login2/login2';
 @Component({
   templateUrl: 'app.html'
 })
@@ -54,14 +55,16 @@ export class MyApp {
       this.splashScreen.hide();
       this.initialize()
         .then(() => {
-          this.rootPage = LoginPage;
+          //this.rootPage = LoginPage2;
+          this.rootPage = ProjectsPage;
           //this.rootPage = PostsPage;
         }, (err) => {
           console.log(err);
           setTimeout(() => {
             //splashScreen.hide();
           },100);
-          this.rootPage = LoginPage;
+          //this.rootPage = LoginPage2;
+          this.rootPage = ProjectsPage;
         })
 
       //Network Listerner

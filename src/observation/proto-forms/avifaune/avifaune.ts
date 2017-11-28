@@ -16,7 +16,7 @@ export class AvifauneComponent extends ProtocolFormComponent {
 
   getFormModel(model){
         return this.builder.group({
-        'protocole':'avifaune',
+        'protocole':'Avifaune',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]

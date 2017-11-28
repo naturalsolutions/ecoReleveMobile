@@ -1,23 +1,23 @@
 [{
-        "name": "avifaune",
+        "name": "Avifaune",
         "label": "Avifaune",
         "image": "./assets/icones_protocoles/avifaune.png",
         "id": 1
     },
     {
-        "name": "herpetofaune",
+        "name": "Herpeto",
         "label": "Herpetofaune",
         "image": "./assets/icones_protocoles/herpeto.png",
         "id": 2
     },
     {
-        "name": "mammofaune",
+        "name": "Mammo",
         "label": "Mammofaune",
         "image": "./assets/icones_protocoles/mammo.png",
         "id": 3
     },
     {
-        "name": "batrachofaune",
+        "name": "Batracho",
         "label": "Batrachofaune",
         "image": "./assets/icones_protocoles/batracho.png",
         "id": 4

@@ -11,16 +11,16 @@ export class AdFormService {
     getComponent(protoname) {
     let component : any 
     switch (protoname) {
-        case 'avifaune':
+        case 'Avifaune':
             component = AvifauneComponent
             break
-        case 'batrachofaune':
+        case 'Batracho':
             component = BatrachofauneComponent
             break
-        case 'herpetofaune':
+        case 'Herpeto':
             component = HerpetofauneComponent
             break
-        case 'mammofaune':
+        case 'Mammo':
             component = MammofauneComponent
             break
     }

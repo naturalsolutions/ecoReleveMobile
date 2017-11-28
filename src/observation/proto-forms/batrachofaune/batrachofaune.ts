@@ -15,7 +15,7 @@ export class BatrachofauneComponent extends ProtocolFormComponent {
    }
   getFormModel(model){
          return  this.builder.group({
-        'protocole':'batrachofaune',
+        'protocole':'Batracho',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]

@@ -14,7 +14,7 @@ import {ObsProvider} from '../providers/obs/obs'
       <ion-item class="" (click)="displayObs()">
         <ion-label>Mes observations</ion-label>
       </ion-item>
-      <ion-item class="actionItem">
+      <ion-item class="actionItem"   (click)="takePicture()">
       <ion-label>Prendre une photo</ion-label>
     </ion-item>
     <ion-item class=""  (click)="deleteObs()">
@@ -49,8 +49,9 @@ export class PopoverPage {
 
 
   }
-  getPhoto(){
-
+  takePicture(){
+    this.parent.takePicture();
+    this.viewCtrl.dismiss();
   }
   changeProtocol(){
     this.viewCtrl.dismiss();

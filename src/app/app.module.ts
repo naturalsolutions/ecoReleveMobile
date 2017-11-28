@@ -12,7 +12,8 @@ import { ProjectsPage } from '../projects/projects';
 import { ObservationPage} from '../observation/observation'; 
 import { PostsPage } from '../pages/posts/posts';
 import { ObservationsPage } from '../observations/observations';
-import { LoginPage} from '../login/login';
+//import { LoginPage} from '../login/login';
+//import { LoginPage2} from '../login2/login2';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +22,7 @@ import { Network } from '@ionic-native/network';
 import { NetworkService } from '../shared/network.service';
 import { PostsDataProvider } from '../providers/posts-data/posts-data';
 import { ObsProvider } from '../providers/obs/obs';
+//import {AuthService} from "../providers/auth";;
 import { CommonService } from '../shared/notification.service';
 import {GeoService} from '../shared/geolocation.notification.service';
 import { MapNotificationService } from '../shared/map.notification.service'; 
@@ -36,8 +38,9 @@ import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popov
 import {  MapComponent} from '../components/map/map'; 
 import { AdDirective }    from '../shared/ad.directive';
 import { AdFormService} from '../observation/proto-form-provider'
+import { LoginPage2 } from '../login2/login2';
 
-import { AutoCompleteModule } from 'ionic2-auto-complete';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     ObservationPage,
     PostsPage,
     ObservationsPage,
-    LoginPage,
+    //LoginPage,
+    LoginPage2,
     ProtocolFormComponent,
     BatrachofauneComponent,
     AvifauneComponent,
@@ -61,7 +65,7 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
   ],
   imports: [
     HttpModule,
-    AutoCompleteModule,
+
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule .forRoot()
@@ -75,7 +79,8 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     ObservationPage,
     PostsPage,
     ObservationsPage,
-    LoginPage,
+    //LoginPage,
+    LoginPage2,
     MapComponent,
     PopoverPage,
     PopoverAutocompPage,
@@ -100,7 +105,8 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
     MapNotificationService,
     GeoService,
     AdDirective,
-    AdFormService
+    AdFormService,
+    //AuthService
   ]
 })
 export class AppModule {}
