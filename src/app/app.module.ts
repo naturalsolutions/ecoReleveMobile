@@ -9,8 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../home/home';
 import { ProtocolsPage } from '../protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
-import { ObservationPage} from '../observation/observation'; 
-import { PostsPage } from '../pages/posts/posts';
+import { ObservationPage} from '../observation/observation';
 import { ObservationsPage } from '../observations/observations';
 //import { LoginPage} from '../login/login';
 //import { LoginPage2} from '../login2/login2';
@@ -49,7 +48,6 @@ import { LoginPage2 } from '../login2/login2';
     ProtocolsPage,
     ProjectsPage,
     ObservationPage,
-    PostsPage,
     ObservationsPage,
     //LoginPage,
     LoginPage2,
@@ -77,7 +75,6 @@ import { LoginPage2 } from '../login2/login2';
     ProtocolsPage,
     ProjectsPage,
     ObservationPage,
-    PostsPage,
     ObservationsPage,
     //LoginPage,
     LoginPage2,
