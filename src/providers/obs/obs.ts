@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http,RequestOptions,Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
+import {AuthService} from "../../providers/auth";
 import _ from 'lodash';
 
 
@@ -10,7 +11,7 @@ import _ from 'lodash';
 export class ObsProvider {
     data:any;
 
-  constructor(public http: Http, public storage : Storage,private alertCtrl: AlertController) {
+  constructor(public http: Http, public storage : Storage,private alertCtrl: AlertController,private auth: AuthService) {
 
   }
 
@@ -160,6 +161,8 @@ export class ObsProvider {
           this.storage.set('observations', data).then((data) => {
               resolve(1);
           })
+        } else {
+          resolve(1);
         }
       })
 
@@ -179,31 +182,14 @@ export class ObsProvider {
 
 
     return new Promise((resolve,reject) => {
-      var json = JSON.stringify(obs);
-      /*
+      var jsonData = JSON.stringify(obs);
 
-      {"station": {"Name":"test5",
-             "StationDate":"21/02/2018",
-             "LAT" : "35.00000",
-             "LON": "10.5455",
-             "FK_Project":10
-            },
-      "Comments":"this is a test",
-      "type_name":"Mammo",
-      "nom_vernaculaire":"lapin",
-      "comportement": "chasse"
-      }
-
-
-
-      */
-      var params =  obs;
-      console.log(params)
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/json');
+      var contentHeader = new Headers();
+      contentHeader.append('Content-Type', 'application/json');
+      //contentHeader.append('Cookie', 'ecoReleve-Core='+this.auth.AuthToken);
+      let options = new RequestOptions({ headers: contentHeader,  withCredentials: true });
       
-      this.http.post('http://vps471185.ovh.net/ecoReleve-Core/protocols',
-      params)
+      this.http.post('http://vps471185.ovh.net/ecoReleve-Core/protocols', jsonData, options  )
       .map(res => res.json())
       .subscribe(data => {
       this.data = data;

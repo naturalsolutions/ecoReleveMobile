@@ -22,7 +22,7 @@ import { Network } from '@ionic-native/network';
 import { NetworkService } from '../shared/network.service';
 import { PostsDataProvider } from '../providers/posts-data/posts-data';
 import { ObsProvider } from '../providers/obs/obs';
-//import {AuthService} from "../providers/auth";;
+import {AuthService} from "../providers/auth";;
 import { CommonService } from '../shared/notification.service';
 import {GeoService} from '../shared/geolocation.notification.service';
 import { MapNotificationService } from '../shared/map.notification.service'; 
@@ -106,7 +106,7 @@ import { LoginPage2 } from '../login2/login2';
     GeoService,
     AdDirective,
     AdFormService,
-    //AuthService
+    AuthService
   ]
 })
 export class AppModule {}

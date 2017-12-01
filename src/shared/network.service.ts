@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,HostBinding } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -14,13 +14,32 @@ import 'rxjs/add/operator/filter';
 @Injectable()
 export class NetworkService {
 
-  // public _networkType$: BehaviorSubject<any> = new BehaviorSubject(null);
 
+  // public _networkType$: BehaviorSubject<any> = new BehaviorSubject(null);
+  private networkStatus: string;
+  
+    @HostBinding('class.error-network') get isErrorNetwork() {
+      return this.networkStatus == 'hasErrorNetwork'
+    }
   constructor(
     public alertCtrl: AlertController,
     private platform: Platform,
-    private network: Network,
-  ) {}
+    private network: Network
+  ) {
+/*
+          //Network Listerner
+          this.renderer.listenGlobal('window', 'online', (evt) => {
+            console.log('online');
+            this.networkStatus = 'hasNetwork';
+
+          });
+          this.renderer.listenGlobal('window', 'offline', (evt) => {
+            console.log('offline');
+
+            this.networkStatus = 'hasErrorNetwork';
+          })
+          */
+  }
 
   // get networkType$() {
   //   return this._networkType$.asObservable();

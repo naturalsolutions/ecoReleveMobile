@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http,Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import {AuthService} from "../providers/auth";
+import { MapModel } from '../shared/map.model'
 import _ from 'lodash';
+import * as geojsonBounds from 'geojson-bounds';
+
 
 @Injectable()
 export class ProjectsServiceProvider {
   data:any;
-
-  constructor(public http: Http, public storage : Storage) {
+ mapModel = new MapModel()
+  contentHeader = new Headers({'Content-Type': 'application/json'});
+  constructor(public http: Http, public storage : Storage,private auth: AuthService) {
 
   }
   load(){
@@ -17,8 +22,12 @@ export class ProjectsServiceProvider {
     }
 
     return new Promise((resolve , reject) =>{
+      //let headers = new Headers({});
+      //this.contentHeader.append('Authorization', this.auth.AuthToken);
+      //this.contentHeader.append('Cookie', 'ecoReleve-Core='+this.auth.AuthToken);
+      //console.log(headers);
       //this.http.get('assets/data/projects.json')
-      this.http.get('http://vps471185.ovh.net/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1')
+      this.http.get('http://vps471185.ovh.net/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1', { headers: this.contentHeader , withCredentials: true })
       .map(res => res.json())
       .subscribe(data => {
         this.data = data[1];
@@ -38,15 +47,23 @@ export class ProjectsServiceProvider {
   }
 
   loadGeometry(id){
+
     return new Promise(resolve =>{
       //this.http.get('assets/data/projects.json')
-      this.http.get('http://vps471185.ovh.net/ecoReleve-Core/projects/'+ id)
+      this.http.get('http://vps471185.ovh.net/ecoReleve-Core/projects/'+ id, { headers: this.contentHeader , withCredentials: true })
       .map(res => res.json())
       .subscribe(data => {
         //console.log('**** geo data data from ovh********');
         //console.log(data["poly"]);
-        let geo = data["poly"];
+        let geo = data["geom"];
         //console.log('passed in projects service');
+
+        // Mise en cache des tuiles
+        // get bounds for emprise
+       /* var extent = geojsonBounds.extent(geo);
+        this.mapModel.initialize();
+        this.mapModel.downloadTiles(extent)*/
+
         resolve(geo);
       });
 

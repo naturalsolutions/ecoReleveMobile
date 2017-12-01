@@ -5,6 +5,10 @@ import {JwtHelper} from "angular2-jwt";
 import * as JsSHA from 'jssha';
 import 'rxjs/add/operator/map';
 
+
+
+@Injectable()
+
 export class AuthService {
   isLoggedin: boolean;
   AuthToken;
@@ -30,13 +34,28 @@ export class AuthService {
   }
   
   useCredentials(token) {
-      this.isLoggedin = true;
-      this.AuthToken = token;
+
+      if(token) {
+        this.isLoggedin = true;
+        this.AuthToken = token;
+      } 
+      return  this.isLoggedin;
   }
   
   loadUserCredentials() {
-      var token = window.localStorage.getItem('token');
-      this.useCredentials(token);
+      //var token = this.storage.get('token');
+      return new Promise(resolve => {  
+      this.storage.get('token')
+      .then(
+          (value) => { 
+              resolve(this.useCredentials(value));
+            },
+          (error) => { 
+              resolve (false); 
+        }
+       );
+      //return this.useCredentials(token);
+    });
   }
   
   destroyUserCredentials() {
@@ -76,7 +95,7 @@ export class AuthService {
         .map(res => res.json())
         .subscribe(
           data => {
-            this.storeUserCredentials(data.json().token);
+            this.storeUserCredentials(data.token);
             resolve(data);
             //this.login(credentials)
     

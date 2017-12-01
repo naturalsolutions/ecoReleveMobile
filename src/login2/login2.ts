@@ -5,7 +5,7 @@ import { ProjectsPage } from '../projects/projects';
 //import {Headers, Http, RequestOptions} from "@angular/http";
 //import {JwtHelper} from "angular2-jwt";
 //import {Storage} from "@ionic/storage";
-//import {AuthService} from "../providers/auth";
+import {AuthService} from "../providers/auth";
 //import {JsSHA} from "../../node_modules/jssha"
 //import * as JsSHA from 'jssha';
 import 'rxjs/add/operator/map';
@@ -29,7 +29,7 @@ export class LoginPage2 {
   private checkuser_url = "http://vps471185.ovh.net/portal/checkUser";*/
   //private SIGNUP_URL = "http://localhost:3001/users";
 
-  //auth: AuthService;
+  
   // When the page loads, we want the Login segment to be selected
   //authType: string = "login";
   // We need to set the content type for the server
@@ -45,6 +45,7 @@ export class LoginPage2 {
     // added to auth
     //private http: Http, private storage: Storage,
     private alertCtrl: AlertController,
+    private auth: AuthService
   ) {
 
     
@@ -70,14 +71,14 @@ export class LoginPage2 {
 
 //**********************************
 
-  /*authenticate(credentials) {
+  authenticate(credentials) {
     this.auth.checkuser(credentials).then(data =>{
       this.auth.login(data).then(data=>{
         this.navCtrl.setRoot(ProjectsPage);
       })
     });
 
-  }*/
+  }
 //****************************************************** */
   /*checkuser(credentials) {
 

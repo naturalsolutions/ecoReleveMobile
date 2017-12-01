@@ -1,15 +1,10 @@
 import * as _ from 'lodash'
 import * as L from 'leaflet'
-//import sphericalmercator from '@mapbox/sphericalmercator'
+import sphericalmercator from '@mapbox/sphericalmercator'
 
 declare let tileLayerCordova: any
 
-/*
-  Generated class for the MapModel provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 export class MapModel {
 
   public tileLayer
@@ -32,8 +27,9 @@ export class MapModel {
     return new Promise((resolve, reject) => {
       tileLayerCordova(L)
       this.tileLayer = L['tileLayerCordova'](_.get(options, 'layerUrl', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'), {
-        folder: _.get(options, 'folder', 'natureaveyron'),
+        folder: _.get(options, 'folder', 'ecoreleve'),
         name: 'tile',
+        autocache : true
       }, () => {
         resolve()
       })
@@ -160,9 +156,26 @@ export class MapModel {
     }
   }
 
-  downloadTiles() {
+  downloadTiles(options=null, minZoom=null,maxZoom=null) {
     return new Promise((resolve, reject) => {
-      let cacheBounds = this.getCacheBounds()
+      let cacheBounds,minZoomLoad, maxZoomLoad
+      if(options) {
+        cacheBounds = options
+      } else {
+        cacheBounds = this.getCacheBounds()
+      }
+      if(minZoom){
+        minZoomLoad = minZoom
+      }else {
+        minZoomLoad = this.cacheZoom
+      }
+
+      if(maxZoom){
+        maxZoomLoad = maxZoom
+      }else {
+        maxZoomLoad = this.cacheZoom
+      }
+
       let tileList = this.tileLayer.calculateXYZListFromBounds({
         getNorthWest: function () {
           return {
@@ -176,7 +189,7 @@ export class MapModel {
             lng: cacheBounds.maxLng
           }
         }
-      }, this.cacheZoom, this.cacheZoom)
+      }, minZoomLoad, maxZoomLoad)
       this.tileLayer.downloadXYZList(tileList,
         // Overwrite existing tiles on disk? if no then a tile already on disk will be kept, which can be a big time saver
         false,

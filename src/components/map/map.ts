@@ -1,10 +1,15 @@
 import { Component, ElementRef, Output, EventEmitter, Input  } from '@angular/core'
-import { NavController, NavParams } from 'ionic-angular'
+import { NavController, NavParams,Platform } from 'ionic-angular'
 //import { Subscription } from 'rxjs/Subscription'
 import { MapNotificationService } from '../../shared/map.notification.service'
 import {ProjectsServiceProvider} from '../../providers/projects-service'
+import { MapModel } from '../../shared/map.model'
 //import { MapModel } from '../../shared/map.model'
 import {Geolocation } from '@ionic-native/geolocation'
+import * as geojsonBounds from 'geojson-bounds'
+import { Storage } from '@ionic/storage'
+//import { NetworkService } from '../../shared/network.service';
+import { Network } from '@ionic-native/network'
 import L from "leaflet"
 import _ from 'lodash'
 
@@ -31,6 +36,8 @@ export class MapComponent {
    latitude : number
   longitude:number
   markers:any = []
+  mapModel :any
+  public connectionStatus: String = 'online'
 
 
   constructor(
@@ -39,12 +46,49 @@ export class MapComponent {
     private el: ElementRef,
     private geolocation: Geolocation,
     private NotificationService: MapNotificationService,
-    public projectsService : ProjectsServiceProvider
+    public projectsService : ProjectsServiceProvider,
+    public storage : Storage,
+    private network :Network,
+    public platform :Platform
   ) {
 
   }
 
   ngOnInit() {
+
+
+    this.mapModel = new MapModel()
+    this.mapModel.initialize({
+    })
+      .then(() => {
+        this.onMapReady()
+      })
+
+      this.network.onConnect().subscribe(data =>{
+        this.connectionStatus = 'online';
+        if(this.mapModel.tileLayer) {
+          this.onConnectionStatusChange()
+        }
+    
+      }, error=> {
+        console.log(error)
+      });
+    
+      this.network.onDisconnect().subscribe(data =>{
+        this.connectionStatus = 'offline';
+        if(this.mapModel.tileLayer) {
+          this.onConnectionStatusChange()
+        }
+      }, error=> {
+        console.log(error)
+      });
+}
+
+ionViewDidEnter(){
+  
+
+}
+onMapReady() {
 
     console.log(' map : ' + this.projId)
     this.mapEl = this.el.nativeElement.querySelector('.map')
@@ -55,13 +99,21 @@ export class MapComponent {
 
       //maxBounds: this._bounds,
     })
+    this.mapModel.tileLayer.addTo(this._map);
 
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    if (this.platform.is('cordova')) {
+      this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online'
+      if(this.network.type =='unknown'){
+        this.connectionStatus = 'offline';
+      }
+      this.onConnectionStatusChange()
+}
+   /* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //bounds: this._bounds,
     minZoom: 2,
     maxZoom: 18,
    // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(this._map);
+  }).addTo(this._map);*/
       // get location
       this.geolocation.getCurrentPosition().then((position)=> {
         this.latitude = position.coords.latitude
@@ -83,8 +135,26 @@ export class MapComponent {
         if(data[proj]['ID'] == this.projId ) {
           geometry = data[proj]['geometry'];
           if(geometry) {
+            this.storage.get(''+this.projId).then((data)=>{
+                if(!data){
+                  var extent = geojsonBounds.extent(geometry);
+                  console.log('extent');
+                  console.log(extent);
+                  let bbox = {}
+                  bbox['minLng'] = extent[0];
+                  bbox['minLat'] = extent[1];
+                  bbox['maxLng'] = extent[2];
+                  bbox['maxLat'] = extent[3];
+                  console.log('minLng: ' + extent[0] + ",minLat: " + extent[1] + " ,maxLng : " +  extent[2] + " ,maxLat: " + extent[3])
+                  this.mapModel.downloadTiles(bbox,10,17);
+                  this.storage.set(''+this.projId, true);
+
+                }
+            });
+
             var myLayer = L.geoJSON().addTo(this._map);
             myLayer.addData(geometry);
+
           }
         }
       }
@@ -157,5 +227,32 @@ export class MapComponent {
       this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online'
       this.onConnectionStatusChange()
     }*/
+}
+goOnline() {
+  //this._map.setMinZoom(14)
+  //this._map.setMaxZoom(17)
+  if (this.platform.is('cordova')) {
+    this.mapModel.tileLayer.goOnline()
+    //this._map.setMaxBounds(this.mapModel.getCacheTileBounds())
+  }
+}
+
+goOffline() {
+  //this._map.setView([this.mapModel.center.lat, this.mapModel.center.lng], this.mapModel.cacheZoom)
+  //this._map.setMinZoom(this.mapModel.cacheZoom)
+  //this._map.setMaxZoom(this.mapModel.cacheZoom)
+  if (this.platform.is('cordova')) {
+   // this._map.setMaxBounds(this.mapModel.getCacheTileBounds())
+    setTimeout(() => {
+      this.mapModel.tileLayer.goOffline()
+    }, 1000)
+  }
+}
+onConnectionStatusChange() {
+  if (this.connectionStatus == 'online') {
+    this.goOnline()
+  } else {
+    this.goOffline()
+  }
 }
 }

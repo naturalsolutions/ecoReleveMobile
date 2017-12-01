@@ -12,6 +12,7 @@ import { HomePage } from '../home/home';
 import { ProjectsPage } from '../projects/projects';
 //import { LoginPage} from '../login/login';
 import { LoginPage2} from '../login2/login2';
+import {AuthService} from "../providers/auth";
 @Component({
   templateUrl: 'app.html'
 })
@@ -33,7 +34,8 @@ export class MyApp {
               private network: Network, 
               private renderer: Renderer,
               private networkService: NetworkService,
-              public storage: Storage
+              public storage: Storage,
+              private auth: AuthService
               ) {
     this.initializeApp();
 
@@ -55,19 +57,19 @@ export class MyApp {
       this.splashScreen.hide();
       this.initialize()
         .then(() => {
-          //this.rootPage = LoginPage2;
-          this.rootPage = ProjectsPage;
-          //this.rootPage = PostsPage;
+          this.navigateTostartPage()
+
         }, (err) => {
           console.log(err);
           setTimeout(() => {
             //splashScreen.hide();
           },100);
-          //this.rootPage = LoginPage2;
-          this.rootPage = ProjectsPage;
+          
+          this.navigateTostartPage()
+          //this.rootPage = ProjectsPage;
         })
 
-      //Network Listerner
+      /*//Network Listerner
       this.renderer.listenGlobal('window', 'online', (evt) => {
         console.log('online');
         this.networkStatus = 'hasNetwork';
@@ -75,7 +77,7 @@ export class MyApp {
       this.renderer.listenGlobal('window', 'offline', (evt) => {
         console.log('offline');
         this.networkStatus = 'hasErrorNetwork';
-      })
+      })*/
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -112,7 +114,7 @@ export class MyApp {
           //loader.dismiss();
           console.log('Initialize Error:', err);
           if( !navigator.onLine || (this.platform.is('cordova') && this.network.type == 'none' )){
-            this.rootPage = HomePage;
+            this.navigateTostartPage()
             
             //this.needReload = 'needToReload';
             //this.networkStatus = 'hasErrorNetwork';
@@ -131,4 +133,13 @@ export class MyApp {
     console.log('catch loading projects')
   });
 }
+  navigateTostartPage(){
+    this.auth.loadUserCredentials().then(data => {
+      if(data){
+      this.rootPage = ProjectsPage;
+    } else {
+      this.rootPage = LoginPage2;
+    }
+  });
+  }
 }
