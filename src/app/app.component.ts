@@ -13,6 +13,7 @@ import { ProjectsPage } from '../projects/projects';
 //import { LoginPage} from '../login/login';
 import { LoginPage2} from '../login2/login2';
 import {AuthService} from "../providers/auth";
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 @Component({
   templateUrl: 'app.html'
 })
@@ -35,7 +36,8 @@ export class MyApp {
               private renderer: Renderer,
               private networkService: NetworkService,
               public storage: Storage,
-              private auth: AuthService
+              private auth: AuthService,
+              private sqlite : SQLite
               ) {
     this.initializeApp();
 
@@ -48,15 +50,43 @@ export class MyApp {
     ];
 
   }
+  initAllDatabases(dataBasesNameArray) {
+
+    return new Promise( (resolve, reject) => {
+      for(var i =0 ; i < dataBasesNameArray.length ; i++ ) {
+        this.initDb(dataBasesNameArray[i]);
+      }
+      resolve();
+    });
+    
+  }
+
+
+  initDb(dataBaseName) {
+    var _this = this;
+ 
+    if ((<any>window).sqlitePlugin) {
+      (<any>window).plugins.sqlDB.copy(dataBaseName,'default', function () {
+        console.log("La base "+dataBaseName+" a bien été créée !");      
+      }, function (e) {
+        console.log("La base "+dataBaseName+" n'a pu être créée. Erreur :",e.code,e.message); 
+      });
+    }
+  }
 
   initializeApp() {
+    // let dataBasesNameArray = ['Amphibia.db','Bird.db','Chiroptera.db','Insect.db','Mammal.db','Reptil.db'];
+    let dataBasesNameArray = ['Sydoni.db'];
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.initialize()
+      this.initAllDatabases(dataBasesNameArray)
+      .then( () => {
+        this.initialize()
         .then(() => {
+         
           this.navigateTostartPage()
 
         }, (err) => {
@@ -68,6 +98,18 @@ export class MyApp {
           this.navigateTostartPage()
           //this.rootPage = ProjectsPage;
         })
+
+      }, (err) => {
+        console.log(err);
+        setTimeout(() => {
+          //splashScreen.hide();
+        },100);
+        
+        this.navigateTostartPage()
+        //this.rootPage = ProjectsPage;
+      })
+      
+
 
       /*//Network Listerner
       this.renderer.listenGlobal('window', 'online', (evt) => {

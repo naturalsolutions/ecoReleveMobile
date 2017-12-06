@@ -38,6 +38,7 @@ import {  MapComponent} from '../components/map/map';
 import { AdDirective }    from '../shared/ad.directive';
 import { AdFormService} from '../observation/proto-form-provider'
 import { LoginPage2 } from '../login2/login2';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 
 
@@ -103,7 +104,9 @@ import { LoginPage2 } from '../login2/login2';
     GeoService,
     AdDirective,
     AdFormService,
-    AuthService
+    AuthService,
+    SQLite
+
   ]
 })
 export class AppModule {}
