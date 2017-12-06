@@ -72,5 +72,3 @@ export class CompleteTaxaService {
           });
       }
 }
-Lacerta vivipara vivipara
-Lacerta vivipara pannonica
