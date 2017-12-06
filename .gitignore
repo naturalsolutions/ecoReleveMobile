@@ -33,7 +33,7 @@ $RECYCLE.BIN/
 tsconfig.json
 tslint.json
 typings/
-.sourcemaps
+.sourcemaps/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
