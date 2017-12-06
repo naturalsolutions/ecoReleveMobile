@@ -2,13 +2,17 @@
 import { Http } from '@angular/http';
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map'
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 @Injectable()
 export class CompleteTaxaService {
   //labelAttribute = "name";
   items: any;
   protocole : any;
-  constructor(private http:Http) {
+  constructor(
+    private http:Http,
+    private sqlite : SQLite
+  ) {
     this.items = [
       {title: 'one'},
       {title: 'two'},
@@ -19,57 +23,54 @@ export class CompleteTaxaService {
   ]
   }
   getResults(item:string, protocole) {
-   /* return this.items.filter((item) => {
-      return item.title.indexOf(item) > -1;
-  }); */
-    
-    //return this.http.get("https://restcountries.eu/rest/v1/name/"+item)
-    /*return this.http.get("http://vps471185.ovh.net/ecoReleve-Core/autocomplete/taxon?protocol=insecte&type=vernaculaire&term="+item)
-      .map(
-        result =>
-        {
-          return result.json()
-            .filter(item => item.vernaculaire.toLowerCase().startsWith(item.toLowerCase()) )
-        });*/
-        let proto ;
+    var _that = this;
+        let tableName ;
         switch(protocole) {
           case 'avifaune':
-          proto = 'oiseau'
+          tableName = 'Bird'
               break;
           case 'batrachofaune':
-          proto = 'amphibien'
+          tableName = 'Amphibia'
               break;
           case 'herpetofaune':
-          proto = 'reptile'
+          tableName = 'Reptil'
                   break;
           case 'mammofaune':
-            proto = 'mammal'
+          tableName = 'Mammal'
             break;
+          case 'insect' :
+          tableName = 'Insect'
           default:
                  'avifaune'
       }
-      /*  valeurs de proto :
-      reptile
-      oiseau
-      amphibien
-      mammal
-      insecte
-      chiroptera  */
 
           return new Promise((resolve , reject) =>{
-            //this.http.get('assets/data/projects.json')
-            this.http.get("http://vps471185.ovh.net/ecoReleve-Core/autocomplete/taxon?type=vernaculaire&term="+item + "&protocol=" + proto)
-            .map(res => res.json())
-            .subscribe(data => {
-              console.log('****data from ovh********');
-              
-              resolve(data);
-            },
-            err => {
-                //reject(err);
-                resolve([]);
-            });
+
+              _that.sqlite.create({
+                name: 'Sydoni.db',
+                location: 'default'
+              })
+                .then((db: SQLiteObject) => { 
+                  console.log('open SQL');
+                  db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE LB_NOM LIKE "%'+item+'%" ORDER BY LB_NOM ASC', {})
+                    .then((res) => {
+                      db.close();
+                      var data = []
+                      for (var i =0 ; i < res.rows.length ; i++ ) {
+                        data.push (res.rows.item(i));
+                      }
+                      resolve(data)
+                    }
+                  )
+                  .catch(e => {
+                    db.close();
+                    resolve([]);
+                    console.log(e);
+                  });
+                })
       
           });
       }
 }
+Lacerta vivipara vivipara
+Lacerta vivipara pannonica
