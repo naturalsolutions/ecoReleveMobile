@@ -8,24 +8,26 @@ import { PopoverController, NavController,ViewController, NavParams,AlertControl
 
 @Component({
     selector: 'page-autocompTaxa',
-  template: `
-  <div class="autocomp">
-  <ion-searchbar
-  [(ngModel)]="searchTerm"
-  [showCancelButton]="shouldShowCancel"
-  (ionInput)="onSearchInput($event)"
-  (ionCancel)="onCancel($event)">
-</ion-searchbar>
-<div *ngIf="searching" class="spinner-container">
-<ion-spinner></ion-spinner>
+ template: `
+<div class="autocomp">
+  <ion-searchbar [(ngModel)]="searchTerm" [showCancelButton]="shouldShowCancel" (ionInput)="onSearchInput($event)" (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <div *ngIf="searching" class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <ion-list>
+    <ion-item class="text-center" *ngFor="let item of items" (click)="getSelected($event)">
+      <span item-start>
+        {{item.Rang}}
+      </span>
+      {{item.latin}}
+      <br/>
+      <i class="js-vernaculaire">{{item.vernaculaire}}</i>
+    </ion-item>
+  </ion-list>
 </div>
 
-<ion-list>
-<ion-item *ngFor="let item of items" (click)="getSelected($event)">
-    {{item.vernaculaire}}
-</ion-item>  
-</ion-list>
-</div>
 
 
   <!--
