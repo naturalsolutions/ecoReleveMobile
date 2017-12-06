@@ -52,7 +52,7 @@ export class CompleteTaxaService {
               })
                 .then((db: SQLiteObject) => { 
                   console.log('open SQL');
-                  db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE LB_NOM LIKE "%'+item+'%" ORDER BY LB_NOM ASC', {})
+                  db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_VERN LIKE "%'+item+'%" ORDER BY NOM_VERN ASC', {})
                     .then((res) => {
                       db.close();
                       var data = []

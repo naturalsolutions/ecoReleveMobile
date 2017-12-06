@@ -21,9 +21,9 @@ import { PopoverController, NavController,ViewController, NavParams,AlertControl
       <span item-start>
         {{item.Rang}}
       </span>
-      {{item.latin}}
+      {{item.vernaculaire}}
       <br/>
-      <i class="js-vernaculaire">{{item.vernaculaire}}</i>
+      <i class="js-nomlatin">{{item.latin}}</i>
     </ion-item>
   </ion-list>
 </div>
