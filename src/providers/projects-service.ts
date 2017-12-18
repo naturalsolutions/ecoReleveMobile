@@ -7,13 +7,14 @@ import { MapModel } from '../shared/map.model'
 import _ from 'lodash';
 import * as geojsonBounds from 'geojson-bounds';
 import { ToastController  } from 'ionic-angular'
-
+import {config }  from '../config';
 
 @Injectable()
 export class ProjectsServiceProvider {
   data:any;
  mapModel = new MapModel()
  toastinstance : any
+ serverUrl : any
   contentHeader = new Headers({'Content-Type': 'application/json'});
   constructor(public http: Http, public storage : Storage,private auth: AuthService,  public toastCtrl: ToastController) {
 
@@ -24,13 +25,9 @@ export class ProjectsServiceProvider {
     }
 
     return new Promise((resolve , reject) =>{
-      //let headers = new Headers({});
-      //this.contentHeader.append('Authorization', this.auth.AuthToken);
-      //this.contentHeader.append('token', this.auth.AuthToken);
-      //this.contentHeader.append('Cookie', 'ecoReleve-Core='+this.auth.AuthToken);
-      //console.log(headers);
-      //this.http.get('assets/data/projects.json')
-      this.http.get('http://vps471185.ovh.net/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1', { headers: this.contentHeader , withCredentials: true })
+      let url = config.serverUrl;
+      url+= 'ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1';
+      this.http.get(url, { headers: this.contentHeader , withCredentials: true })
       .map(res => res.json())
       .subscribe(data => {
         this.data = data[1];
@@ -41,6 +38,14 @@ export class ProjectsServiceProvider {
       },
       err => {
           //reject(err);
+          // Manage authorization if application is killed 
+          if(err.status == 403){
+            this.auth.authorize(this.auth.AuthToken).then(data=>{
+              if(data){
+                this.load();
+              }
+            });
+          }
           resolve(null);
       });
 
@@ -50,22 +55,15 @@ export class ProjectsServiceProvider {
   }
 
   loadGeometry(id){
+    let url = config.serverUrl;
+    url += 'ecoReleve-Core/projects/'+ id ;
 
     return new Promise(resolve =>{
       //this.http.get('assets/data/projects.json')
-      this.http.get('http://vps471185.ovh.net/ecoReleve-Core/projects/'+ id, { headers: this.contentHeader , withCredentials: true })
+      this.http.get(url , { headers: this.contentHeader , withCredentials: true })
       .map(res => res.json())
       .subscribe(data => {
-        //console.log('**** geo data data from ovh********');
-        //console.log(data["poly"]);
         let geo = data["geom"];
-        //console.log('passed in projects service');
-
-        // Mise en cache des tuiles
-        // get bounds for emprise
-       /* var extent = geojsonBounds.extent(geo);
-        this.mapModel.initialize();
-        this.mapModel.downloadTiles(extent)*/
         this.getTiles(id, geo['geometry']);
         resolve(geo);
       });
@@ -76,8 +74,6 @@ export class ProjectsServiceProvider {
 
     return new Promise(resolve =>{
       this.storage.get('projects').then((data)=>{
-       /* const myOrderedArray = _.orderBy(data, proj => proj.ID, ['desc'])
-        console.log(myOrderedArray);*/
         resolve(data);
       });
     });
@@ -88,31 +84,6 @@ export class ProjectsServiceProvider {
     return new Promise(resolve =>{
     this.storage.get('projects').then((data)=>{
       let toStore ; 
-      /*if(data != null){
-        // some obs exisits
-
-        // update existing obs
-        if(proj.ID) {
-
-          _.remove(data, function(prj) {
-            return prj.ID == proj.ID;
-        });
-
-
-
-        }
-        data.push(proj);
-        toStore = data;
-        //this.storage.set('projects', data);
-
-      } else {
-        // storage is empty
-        let array = [];
-        array.push(proj);
-        toStore = array;
-        //this.storage.set('projects', array);
-      }
-      */
       let array = [];
       array.push(proj);
       toStore = array;

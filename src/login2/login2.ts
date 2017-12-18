@@ -30,18 +30,6 @@ export class LoginPage2 {
   public formModel: FormGroup;
   connectionStatus : any
   loading : any
-  /*private LOGIN_URL = "http://vps471185.ovh.net/portal/security/login";
-  private checkuser_url = "http://vps471185.ovh.net/portal/checkUser";*/
-  //private SIGNUP_URL = "http://localhost:3001/users";
-
-  
-  // When the page loads, we want the Login segment to be selected
-  //authType: string = "login";
-  // We need to set the content type for the server
-  //contentHeader = new Headers({"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"});
-  //error: string;
-  //jwtHelper = new JwtHelper();
-  //user: string;
 
   constructor(
     public navCtrl: NavController, 

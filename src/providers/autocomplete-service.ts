@@ -1,7 +1,8 @@
 //import {AutoCompleteService} from 'ionic2-auto-complete';
 import { Http } from '@angular/http';
 import {Injectable} from "@angular/core";
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+import {config }  from '../config';
 
 @Injectable()
 export class CompleteTaxaService {
@@ -19,18 +20,8 @@ export class CompleteTaxaService {
   ]
   }
   getResults(item:string, protocole) {
-   /* return this.items.filter((item) => {
-      return item.title.indexOf(item) > -1;
-  }); */
+      let url = config.serverUrl;
     
-    //return this.http.get("https://restcountries.eu/rest/v1/name/"+item)
-    /*return this.http.get("http://vps471185.ovh.net/ecoReleve-Core/autocomplete/taxon?protocol=insecte&type=vernaculaire&term="+item)
-      .map(
-        result =>
-        {
-          return result.json()
-            .filter(item => item.vernaculaire.toLowerCase().startsWith(item.toLowerCase()) )
-        });*/
         let proto ;
         switch(protocole) {
           case 'avifaune':
@@ -58,11 +49,9 @@ export class CompleteTaxaService {
 
           return new Promise((resolve , reject) =>{
             //this.http.get('assets/data/projects.json')
-            this.http.get("http://vps471185.ovh.net/ecoReleve-Core/autocomplete/taxon?type=vernaculaire&term="+item + "&protocol=" + proto)
+            this.http.get(url + "ecoReleve-Core/autocomplete/taxon?type=vernaculaire&term="+item + "&protocol=" + proto)
             .map(res => res.json())
             .subscribe(data => {
-              console.log('****data from ovh********');
-              
               resolve(data);
             },
             err => {

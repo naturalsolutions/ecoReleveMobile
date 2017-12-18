@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
 import {AuthService} from "../../providers/auth";
 import _ from 'lodash';
+import {config }  from '../../config';
 
 
 @Injectable()
@@ -178,6 +179,7 @@ export class ObsProvider {
     return max.id || 0 ;
   }
   pushObs(obs){
+    let url = config.serverUrl;
 
 
 
@@ -189,7 +191,7 @@ export class ObsProvider {
       //contentHeader.append('Cookie', 'ecoReleve-Core='+this.auth.AuthToken);
       let options = new RequestOptions({ headers: contentHeader,  withCredentials: true });
       
-      this.http.post('http://vps471185.ovh.net/ecoReleve-Core/protocols', jsonData, options  )
+      this.http.post(url +'ecoReleve-Core/protocols', jsonData, options  )
       .map(res => res.json())
       .subscribe(data => {
       this.data = data;

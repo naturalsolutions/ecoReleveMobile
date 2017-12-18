@@ -5,6 +5,7 @@ import {Storage} from "@ionic/storage";
 import {JwtHelper} from "angular2-jwt";
 import * as JsSHA from 'jssha';
 import 'rxjs/add/operator/map';
+import {config }  from '../config';
 
 
 
@@ -17,8 +18,9 @@ export class AuthService {
   error: string;
   jwtHelper = new JwtHelper();
 
-  private LOGIN_URL = "http://vps471185.ovh.net/portal/security/login";
-  private checkuser_url = "http://vps471185.ovh.net/portal/checkUser";
+  private LOGIN_URL = config.serverUrl +    "portal/security/login";
+  private checkuser_url = config.serverUrl +  "portal/checkUser";
+  private authorizeUrl = config.serverUrl + "portal/authorize";
 
   
   constructor(public http: Http,private storage: Storage, private alertCtrl: AlertController) {
@@ -30,17 +32,59 @@ export class AuthService {
   storeUserCredentials(token) {
       //window.localStorage.setItem('token', token);
       this.storage.set('token', token);
-      this.useCredentials(token);
+      this.isLoggedin = true;
+      this.AuthToken = token;
+     // this.useCredentials(token);
       
   }
   
   useCredentials(token) {
 
       if(token) {
-        this.isLoggedin = true;
-        this.AuthToken = token;
-      } 
-      return  this.isLoggedin;
+            this.isLoggedin = true;
+            this.AuthToken = token;
+        } else {
+                this.isLoggedin = false;
+        }
+
+          return this.isLoggedin;
+  }
+ /* useCredentials(token) {
+    
+          if(token) {
+              this.authorize(token).then(data => {
+                if(data) {
+                    this.isLoggedin = true;
+                    this.AuthToken = token;
+                } else {
+                    this.isLoggedin = false;
+                }
+                return this.isLoggedin;
+    
+              });
+          } else {
+              return false;
+          }
+  }*/
+  authorize(token){
+     // let contentHeader = new Headers({"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"});
+    let options = new RequestOptions({ headers: this.contentHeader, withCredentials: true });
+    return new Promise(resolve => {
+        this.http.post(this.authorizeUrl,  'token=' + token, options)
+        .map(res => res.json())
+        .subscribe(
+          data => {
+            this.isLoggedin = true;
+            this.AuthToken = token;
+            resolve(true);
+  
+          },
+          err => {
+            this.alertError();
+            resolve(false);
+          }
+        );
+    });
   }
   
   loadUserCredentials() {
@@ -112,22 +156,6 @@ export class AuthService {
         });
       }
   
-  authenticate(user) {
-      var creds = "name=" + user.name + "&password=" + user.password;
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      
-      return new Promise(resolve => {
-          this.http.post('http://localhost:3333/authenticate', creds, {headers: headers}).subscribe(data => {
-              if(data.json().success){
-                  this.storeUserCredentials(data.json().token);
-                  resolve(true);
-              }
-              else
-                  resolve(false);
-          });
-      });
-  }
   alertError(){
     let alert = this.alertCtrl.create({
       title: "Erreur d'authentification",
@@ -139,36 +167,6 @@ export class AuthService {
       ]
     });
   }
-  /*adduser(user) {
-      var creds = "name=" + user.name + "&password=" + user.password;
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      
-      return new Promise(resolve => {
-          this.http.post('http://localhost:3333/adduser', creds, {headers: headers}).subscribe(data => {
-              if(data.json().success){
-                  resolve(true);
-              }
-              else
-                  resolve(false);
-          });
-      });
-  }
-  
-  getinfo() {
-      return new Promise(resolve => {
-          var headers = new Headers();
-          this.loadUserCredentials();
-          console.log(this.AuthToken);
-          headers.append('Authorization', 'Bearer ' +this.AuthToken);
-          this.http.get('http://localhost:3333/getinfo', {headers: headers}).subscribe(data => {
-              if(data.json().success)
-                  resolve(data.json());
-              else
-                  resolve(false);
-          });
-      })
-  }*/
   
   logout() {
       this.destroyUserCredentials();
