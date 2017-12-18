@@ -63,9 +63,20 @@ export class ProjectsServiceProvider {
       this.http.get(url , { headers: this.contentHeader , withCredentials: true })
       .map(res => res.json())
       .subscribe(data => {
-        let geo = data["geom"];
-        this.getTiles(id, geo['geometry']);
-        resolve(geo);
+        if(data){
+          let geo = data["geom"];
+          if(geo) {
+            this.getTiles(id, geo['geometry']);
+            resolve(geo);
+          } else {
+            resolve(false);
+          }
+        }
+        else {
+          resolve(false);
+        }
+
+
       });
 
     });
