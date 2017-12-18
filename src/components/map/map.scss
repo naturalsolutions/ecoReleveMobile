@@ -2,4 +2,28 @@ page-map {
     map {
         display: block;
     }
+    .map-container {
+        height: 250px;
+    }
+    .map-full {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+    .fullmapbtn {
+        position: absolute;
+        float: right;
+        z-index: 100000;
+        right: 0px;
+        width: 50px;
+        height: 50px;
+        background: url('assets/icon/fullMap1.jpg') no-repeat right bottom;
+    }
+    .smallmapbtn {
+        height: 40px;
+        width: 50px;
+        margin-top: -50px;
+        z-index: 20000;
+        position: fixed;
+    }
 }

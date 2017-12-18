@@ -1,5 +1,5 @@
-import { Component, ElementRef, Output, EventEmitter, Input  } from '@angular/core'
-import { NavController, NavParams,Platform } from 'ionic-angular'
+import { Component, ElementRef, Output, EventEmitter, Input,Renderer } from '@angular/core'
+import { NavController, NavParams,Platform,ViewController } from 'ionic-angular'
 //import { Subscription } from 'rxjs/Subscription'
 import { MapNotificationService } from '../../shared/map.notification.service'
 import {ProjectsServiceProvider} from '../../providers/projects-service'
@@ -42,6 +42,7 @@ export class MapComponent {
 
   constructor(
     public navCtrl: NavController, 
+    private viewCtrl: ViewController,
     public navParams: NavParams,
     private el: ElementRef,
     private geolocation: Geolocation,
@@ -49,7 +50,9 @@ export class MapComponent {
     public projectsService : ProjectsServiceProvider,
     public storage : Storage,
     private network :Network,
-    public platform :Platform
+    public platform :Platform,
+    private renderer : Renderer
+
   ) {
 
   }
@@ -58,8 +61,8 @@ export class MapComponent {
 
 
     this.mapModel = new MapModel()
-    this.mapModel.initialize({
-    })
+    let folderName = 'tuilesProj-' + this.projId;
+    this.mapModel.initialize({'folder' : folderName })
       .then(() => {
         this.onMapReady()
       })
@@ -88,24 +91,35 @@ ionViewDidEnter(){
   
 
 }
+displayfull(){
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'height', '100%');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'width', '100%');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'position', 'fixed');
+  this._map._onResize();
+}
+displaysmall(){
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'width', '100%');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'height', '250px');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'position', 'relative');
+  this._map._onResize();
+}
 onMapReady() {
-
+  
     console.log(' map : ' + this.projId)
     this.mapEl = this.el.nativeElement.querySelector('.map')
     this._map = L
     .map(this.mapEl, {
       minZoom: 2,
-      maxZoom: 18
+      maxZoom: 18,
+
 
       //maxBounds: this._bounds,
     })
+
     this.mapModel.tileLayer.addTo(this._map);
 
     if (this.platform.is('cordova')) {
       this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online'
-      if(this.network.type =='unknown'){
-        this.connectionStatus = 'offline';
-      }
       this.onConnectionStatusChange()
 }
    /* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -135,114 +149,39 @@ onMapReady() {
         if(data[proj]['ID'] == this.projId ) {
           geometry = data[proj]['geometry'];
           if(geometry) {
-            this.storage.get(''+this.projId).then((data)=>{
-                if(!data){
-                  var extent = geojsonBounds.extent(geometry);
-                  console.log('extent');
-                  console.log(extent);
-                  let bbox = {}
-                  bbox['minLng'] = extent[0];
-                  bbox['minLat'] = extent[1];
-                  bbox['maxLng'] = extent[2];
-                  bbox['maxLat'] = extent[3];
-                  console.log('minLng: ' + extent[0] + ",minLat: " + extent[1] + " ,maxLng : " +  extent[2] + " ,maxLat: " + extent[3])
-                  this.mapModel.downloadTiles(bbox,10,17);
-                  this.storage.set(''+this.projId, true);
-
-                }
-            });
-
             var myLayer = L.geoJSON().addTo(this._map);
             myLayer.addData(geometry);
 
           }
         }
       }
-      
   })
-
-
   }
 
-
-
-
-  /*loadMap() {
-    console.log('loadind map')
-    //this.mapModel = new MapModel()
-    //this.mapModel.initialize({
-      //layerUrl: this.ignService.layer
-    })
-      .then(() => {
-        this.onMapModelReady()
-      })
-}*/
-    onMapModelReady() {
+onMapModelReady() {
     let center = L.latLng(this.latitude, this.longitude)
     this._map.setView(center, 14)
-    let marker = L.marker([this.latitude, this.longitude]).addTo(this._map);
-    /*this._map = L
-      .map(this.mapEl, {
-        minZoom: 8,
-        maxZoom: 18
+    var icon = L.icon({
+      iconUrl: 'assets/icon/picto.png',
+      iconSize:     [40, 40], // size of the icon
+      //shadowSize:   [50, 64], // size of the shadow
+      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      //shadowAnchor: [4, 62],  // the same for the shadow
+      //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
 
-        //maxBounds: this._bounds,
-      })
-      .setView(center, 8)
-
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      //bounds: this._bounds,
-      minZoom: 8,
-      maxZoom: 12,
-     // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this._map);
-
-    // notify other that map is loaded
-    this.NotificationService.notifyOther({map :this._map });
-
-    let marker = L.marker([this.latitude, this.longitude]).addTo(this._map);*/
-
-    //this.mapModel.tileLayer.addTo(this._map);
-
-    /*L.marker(center, { icon: this._icon })
-      .bindPopup('Départ')
-      .openPopup()
-      .addTo(this._map);*/
-
-    /*this._trace = L.geoJSON(this._trace, {
-      style: function (feature) {
-        return {
-          "color": "#4928d9",
-          "weight": 8,
-          "opacity": 0.8 };
-      }*/
-        //,
-      // onEachFeature: function (feature, layer) {
-      //     layer.bindPopup(this.tours[0].title);
-      // }
-   // }).addTo(this._map)
-    //this._map.fitBounds(this._trace.getBounds());
-
-    /*if (this.platform.is('cordova')) {
-      this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online'
-      this.onConnectionStatusChange()
-    }*/
+    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(this._map);
 }
 goOnline() {
-  //this._map.setMinZoom(14)
-  //this._map.setMaxZoom(17)
+
   if (this.platform.is('cordova')) {
     this.mapModel.tileLayer.goOnline()
-    //this._map.setMaxBounds(this.mapModel.getCacheTileBounds())
   }
 }
 
 goOffline() {
-  //this._map.setView([this.mapModel.center.lat, this.mapModel.center.lng], this.mapModel.cacheZoom)
-  //this._map.setMinZoom(this.mapModel.cacheZoom)
-  //this._map.setMaxZoom(this.mapModel.cacheZoom)
+
   if (this.platform.is('cordova')) {
-   // this._map.setMaxBounds(this.mapModel.getCacheTileBounds())
     setTimeout(() => {
       this.mapModel.tileLayer.goOffline()
     }, 1000)

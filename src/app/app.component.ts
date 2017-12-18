@@ -1,16 +1,13 @@
 import { Component, ViewChild, HostBinding,Renderer } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform,LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
 import { NetworkService } from '../shared/network.service';
 import { Storage } from '@ionic/storage';
 
-import { HomePage } from '../home/home';
-//import { PostsPage } from '../pages/posts/posts';
-//import { ProtocolsPage } from '../pages/protocols/protocols';
+
 import { ProjectsPage } from '../projects/projects';
-//import { LoginPage} from '../login/login';
 import { LoginPage2} from '../login2/login2';
 import {AuthService} from "../providers/auth";
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
@@ -26,6 +23,7 @@ export class MyApp {
   }
 
   rootPage: any;
+  loading : any;
 
   pages: Array<{title: string, component: any}>;
 
@@ -37,16 +35,15 @@ export class MyApp {
               private networkService: NetworkService,
               public storage: Storage,
               private auth: AuthService,
-              private sqlite : SQLite
+              private sqlite : SQLite,
+              public loadingCtrl: LoadingController
               ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      //{ title: 'Protocoles', component: ProtocolsPage },
       { title: 'Projets', component: ProjectsPage},
-      //{ title: 'Observation', component: ObservationPage}
+      { title: 'Déconnexion', component: LoginPage2},
     ];
 
   }
@@ -82,9 +79,15 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.loading = this.loadingCtrl.create({
+        content: 'Chargement en cours...'
+      });
+      this.loading.present();
       this.initAllDatabases(dataBasesNameArray)
       .then( () => {
         this.initialize()
+        this.navigateTostartPage();
+     /* this.initialize()
         .then(() => {
          
           this.navigateTostartPage()
@@ -97,7 +100,7 @@ export class MyApp {
           
           this.navigateTostartPage()
           //this.rootPage = ProjectsPage;
-        })
+        })*/
 
       }, (err) => {
         console.log(err);
@@ -105,7 +108,7 @@ export class MyApp {
           //splashScreen.hide();
         },100);
         
-        this.navigateTostartPage()
+      //  this.navigateTostartPage()
         //this.rootPage = ProjectsPage;
       })
       
@@ -132,11 +135,12 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
-  initialize(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      /*let loader = this.loadingCtrl.create({
+  initialize(){
+    //initialize(): Promise<any> {
+    /*return new Promise((resolve, reject) => {
+      let loader = this.loadingCtrl.create({
         content: "Initialisation"
-      });*/
+      });
       //loader.present();
       let initializers = [
         this.loadProjects()
@@ -165,15 +169,15 @@ export class MyApp {
         .catch(reason => {
           console.log(reason)
         });
-    })
+    })*/
   }
   loadProjects() {
-  this.storage.get('projects ').then((value) => {
+  /*this.storage.get('projects ').then((value) => {
     console.log('projects loaded !')
     
   }).catch(() => {
     console.log('catch loading projects')
-  });
+  });*/
 }
   navigateTostartPage(){
     this.auth.loadUserCredentials().then(data => {
@@ -182,6 +186,7 @@ export class MyApp {
     } else {
       this.rootPage = LoginPage2;
     }
+    this.loading.dismiss();
   });
   }
 }

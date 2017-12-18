@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,Platform ,LoadingController} from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { Network } from '@ionic-native/network'
 import { ProjectsPage } from '../projects/projects';
 //import {Headers, Http, RequestOptions} from "@angular/http";
 //import {JwtHelper} from "angular2-jwt";
@@ -9,6 +10,8 @@ import {AuthService} from "../providers/auth";
 //import {JsSHA} from "../../node_modules/jssha"
 //import * as JsSHA from 'jssha';
 import 'rxjs/add/operator/map';
+import { errorHandler } from '@angular/platform-browser/src/browser';
+import {Storage} from "@ionic/storage";
 
 
 
@@ -25,27 +28,20 @@ import 'rxjs/add/operator/map';
 export class LoginPage2 {
 
   public formModel: FormGroup;
-  /*private LOGIN_URL = "http://vps471185.ovh.net/portal/security/login";
-  private checkuser_url = "http://vps471185.ovh.net/portal/checkUser";*/
-  //private SIGNUP_URL = "http://localhost:3001/users";
-
-  
-  // When the page loads, we want the Login segment to be selected
-  //authType: string = "login";
-  // We need to set the content type for the server
-  //contentHeader = new Headers({"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"});
-  //error: string;
-  //jwtHelper = new JwtHelper();
-  //user: string;
+  connectionStatus : any
+  loading : any
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private  builder: FormBuilder,
     // added to auth
-    //private http: Http, private storage: Storage,
+    private storage: Storage,
     private alertCtrl: AlertController,
-    private auth: AuthService
+    private auth: AuthService,
+    public platform :Platform,
+    private network :Network,
+    public loadingCtrl: LoadingController
   ) {
 
     
@@ -72,78 +68,49 @@ export class LoginPage2 {
 //**********************************
 
   authenticate(credentials) {
-    this.auth.checkuser(credentials).then(data =>{
-      this.auth.login(data).then(data=>{
-        this.navCtrl.setRoot(ProjectsPage);
-      })
+    
+    if (this.platform.is('cordova')) {
+      this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online';
+      if(this.connectionStatus == 'offline') {
+        this.alertError();
+        return;
+      }
+    }
+    this.loading = this.loadingCtrl.create({
+      content: 'Authentification en cours...',
+      spinner: 'bubbles'
     });
 
-  }
-//****************************************************** */
-  /*checkuser(credentials) {
+    this.auth.checkuser(credentials).then(data =>{
+      this.auth.login(data).then(data=>{
+        this.loading.dismiss();
+        this.navCtrl.setRoot(ProjectsPage);
+      }), error=> {
+        this.alertError();
 
-    this.http.post(this.checkuser_url,  'login='+credentials.login, { headers: this.contentHeader })
-    .map(res => res.json())
-    .subscribe(
-      data => {
-        credentials.userId = data;
-        this.login(credentials)
+      }
+    }, error=> {
+      this.alertError();
 
-      },
-      err => this.error = err
-    );
-  }
-  login(credentials) {
-    let password = credentials.password;
-    let userId =  parseInt(credentials.userId);
-    credentials.userId = userId;
-    credentials.password = this.pwd(password);
-    let strParams = 'userId='+userId+'&password='+this.pwd(password);
-    let options = new RequestOptions({ headers: this.contentHeader, withCredentials: true });
-    
-    
-    
-    this.http.post(this.LOGIN_URL, strParams, options).toPromise()
-    .then(response=>{
-       console.log(response);
-       let headers = response.headers;
-       console.log(headers);
-       this.navCtrl.setRoot(ProjectsPage)
-    })
-    .catch(err=>console.log(err));
+    }
+  );
 
   }
-
-  signup(credentials) {
-    this.http.post(this.SIGNUP_URL, JSON.stringify(credentials), { headers: this.contentHeader })
-      .map(res => res.json())
-      .subscribe(
-        data => this.authSuccess(data.id_token),
-        err => this.error = err
-      );
+  alertError(){
+    let alert = this.alertCtrl.create({
+      title: "Erreur d'authentification",
+      message: "L'authentification' a échoué. Merci de vérifier votre connexion internet ou de contacter l'administrateur.",
+      buttons: [
+        {
+          text: 'OK'
+        }
+      ]
+    });
+    alert.present();
+    this.loading.dismiss();
   }
-
- /* logout() {
+  logout() {
     this.storage.remove('token');
-    this.user = null;
+    this.auth.isLoggedin = false;
   }
-
-  authSuccess(token) {
-    this.error = null;
-    this.storage.set('token', token);
-    this.user = this.jwtHelper.decodeToken(token).username;
-    this.storage.set('profile', this.user);
-  }
-  pwd(pwd) {
-    
-    pwd = window.btoa(decodeURI(decodeURIComponent( pwd )));
-    var hashObj = new JsSHA('SHA-1', 'B64', 1);
-    
-    hashObj.update(pwd);
-    pwd = hashObj.getHash('HEX');
-    return pwd;
-  }*/
-
-
-
 }
