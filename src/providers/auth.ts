@@ -1,5 +1,6 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers,RequestOptions} from '@angular/http';
+import { AlertController } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import {JwtHelper} from "angular2-jwt";
 import * as JsSHA from 'jssha';
@@ -20,7 +21,7 @@ export class AuthService {
   private checkuser_url = "http://vps471185.ovh.net/portal/checkUser";
 
   
-  constructor(public http: Http,private storage: Storage) {
+  constructor(public http: Http,private storage: Storage, private alertCtrl: AlertController) {
       this.http = http;
       this.isLoggedin = false;
       this.AuthToken = null;
@@ -75,6 +76,7 @@ export class AuthService {
   
           },
           err => {
+            this.alertError();
             resolve(false);
           }
         );
@@ -101,6 +103,7 @@ export class AuthService {
     
           },
           err => {
+            this.alertError();
             resolve(false);
 
           }
@@ -124,6 +127,17 @@ export class AuthService {
                   resolve(false);
           });
       });
+  }
+  alertError(){
+    let alert = this.alertCtrl.create({
+      title: "Erreur d'authentification",
+      message: "L'authentification' a échoué. Merci de vérifier votre connexion internet et/ou de contacter l'administrateur.",
+      buttons: [
+        {
+          text: 'OK'
+        }
+      ]
+    });
   }
   /*adduser(user) {
       var creds = "name=" + user.name + "&password=" + user.password;

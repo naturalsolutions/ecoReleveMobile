@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import * as L from 'leaflet'
 import sphericalmercator from '@mapbox/sphericalmercator'
+import { ToastController  } from 'ionic-angular'
 
 declare let tileLayerCordova: any
 
@@ -14,7 +15,8 @@ export class MapModel {
   private centerBounds: any
   public trace
   public traceBounds: any
-
+  public toastCtrl: ToastController
+  
   constructor(options: any = {}) {
 
     /*this.sphericalMercator = new sphericalmercator({
@@ -215,5 +217,13 @@ export class MapModel {
         }
       )
     })
+  }
+    presentToast(message, position) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position : position
+    });
+    toast.present();
   }
 }

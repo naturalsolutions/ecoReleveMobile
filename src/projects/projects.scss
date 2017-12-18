@@ -16,4 +16,10 @@ page-projects {
         height: 25px;
         border-width: 2px;
     }
+    .tuilesToastOk {
+        background: green;
+    }
+    .tuilesToastError {
+        background: rgb(209, 71, 71);
+    }
 }

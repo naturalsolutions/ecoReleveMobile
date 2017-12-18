@@ -46,6 +46,7 @@ export class ObservationPage  {
   projId : any
   lastImage: string = null;
   image : any;
+  nbRelances= 0
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -62,6 +63,7 @@ export class ObservationPage  {
     public data : ObsProvider,
     private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath ,
     public storage : Storage,
+    
 
   ) {
     this.protocol = navParams.data.protoObj;
@@ -198,7 +200,13 @@ export class ObservationPage  {
         this.myProto.updatePosition(pos.coords.latitude ,pos.coords.longitude);
 
       }, (err) => {
-        this.presentToast('erreur gps', 'top' )
+        this.nbRelances +=1;
+        this.presentToast('erreur gps', 'top' );
+        if(this.nbRelances < 4 ) {
+          this.getPosition();
+        }
+        
+        //this.getPosition();
       });
       }).catch((error) => {
         //console.log('Error getting location', error);

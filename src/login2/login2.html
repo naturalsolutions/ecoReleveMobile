@@ -1,13 +1,13 @@
-<!--<ion-header>
+<ion-header>
 
     <ion-navbar>
-        <ion-title>login</ion-title>
+        <ion-title>Authentification</ion-title>
     </ion-navbar>
 
-</ion-header>-->
+</ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="!auth.isLoggedin" class="loginContent">
     <form #signForm="ngForm" (ngSubmit)="authenticate(signForm.value)">
         <ion-item>
             <ion-label>Username</ion-label>
@@ -20,7 +20,7 @@
         </ion-item>
 
         <div padding>
-            <button block type="submit">Log In</button>
+            <button ion-button type="submit">Valider</button>
         </div>
     </form>
 
@@ -38,6 +38,13 @@
             <button ion-button type="submit" block>Valider</button>
         </ion-list>
     </form>  -->
+</ion-content>
+
+<ion-content *ngIf="auth.isLoggedin" class="loginContent">
+
+    <div padding>
+        <button ion-button (click)="logout()">Se déconnecter</button>
+    </div>
 </ion-content>
 
 

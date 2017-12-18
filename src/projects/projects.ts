@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import {ProjectsServiceProvider} from '../providers/projects-service';
 import {ObsProvider} from '../providers/obs/obs'
 import { ObservationsPage } from '../observations/observations';
+import { MapModel } from '../shared/map.model';
+import { Storage } from '@ionic/storage';
 import _ from 'lodash';
 import 'rxjs/add/observable/forkJoin';
 import * as moment from 'moment';
@@ -25,10 +27,13 @@ export class ProjectsPage {
   myProjdisabled:any = 'disabled';
   syncdisabled:any = 'disabled';
   displayMyProjs : boolean = false;
-
+  
+  mapModel :any
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public projectsService : ProjectsServiceProvider, private alertCtrl: AlertController,
-    public data : ObsProvider
+    public data : ObsProvider,
+    public storage : Storage
+
   ) {
 
   }
@@ -257,6 +262,7 @@ export class ProjectsPage {
     let loaded = 0 ;
     for (let proj of this.projects) {
       if(proj.checked) {
+        this.disabled = "disabled";
         nbToload+=1;
       }
     }
@@ -331,6 +337,7 @@ export class ProjectsPage {
       ]
     });
     alert.present();
+    this.disabled = false;
   }
   deleteSelected(){
 
@@ -368,8 +375,14 @@ export class ProjectsPage {
                   _.remove(this.loadedProjects, function(prj) {
                     return prj.ID == listProj[i];
                  });
+                 // vider le cache des tuiles pour chaque projet
+                 this.emptyTuilesCache(listProj[i]);
+                 
 
               }
+              this.updateStatus(listProj);
+
+
               // persistance
             this.projectsService.update(this.loadedProjects);
             this.myProjdisabled = 'disabled';
@@ -509,5 +522,25 @@ export class ProjectsPage {
       });
     });
   }
+  emptyTuilesCache(projId){
+     let mapModel = new MapModel()
+    let folderName = 'tuilesProj-' + projId;
+    mapModel.initialize({'folder' : folderName })
+      .then(() => {
+        mapModel.tileLayer.emptyCache();
+        let name = 'tilesLoadedForProj-'+ projId;
+        this.storage.remove(name);
+    });
+  }
+  updateStatus(list){
+    for(let i=0;i<list.length;i++){
+      for (let serverProj in this.projects) {
+        if(this.projects[serverProj]['ID'] == list[i]){
+          this.projects[serverProj]['isLoaded'] = false;
+          this.projects[serverProj]['checked'] = false;
+        }
+      }
+  }
 
+  }
 }

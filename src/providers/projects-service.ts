@@ -6,14 +6,16 @@ import {AuthService} from "../providers/auth";
 import { MapModel } from '../shared/map.model'
 import _ from 'lodash';
 import * as geojsonBounds from 'geojson-bounds';
+import { ToastController  } from 'ionic-angular'
 
 
 @Injectable()
 export class ProjectsServiceProvider {
   data:any;
  mapModel = new MapModel()
+ toastinstance : any
   contentHeader = new Headers({'Content-Type': 'application/json'});
-  constructor(public http: Http, public storage : Storage,private auth: AuthService) {
+  constructor(public http: Http, public storage : Storage,private auth: AuthService,  public toastCtrl: ToastController) {
 
   }
   load(){
@@ -24,6 +26,7 @@ export class ProjectsServiceProvider {
     return new Promise((resolve , reject) =>{
       //let headers = new Headers({});
       //this.contentHeader.append('Authorization', this.auth.AuthToken);
+      //this.contentHeader.append('token', this.auth.AuthToken);
       //this.contentHeader.append('Cookie', 'ecoReleve-Core='+this.auth.AuthToken);
       //console.log(headers);
       //this.http.get('assets/data/projects.json')
@@ -63,7 +66,7 @@ export class ProjectsServiceProvider {
        /* var extent = geojsonBounds.extent(geo);
         this.mapModel.initialize();
         this.mapModel.downloadTiles(extent)*/
-
+        this.getTiles(id, geo['geometry']);
         resolve(geo);
       });
 
@@ -126,5 +129,58 @@ export class ProjectsServiceProvider {
   update(projects){
     this.storage.set('projects', projects).then((data)=>{
     });
+  }
+  getTiles(id, geo) {
+    let folderName = 'tuilesProj-' + id;
+    this.mapModel.initialize({'folder' : folderName })
+      .then(() => {
+         
+        if(geo) {
+          this.storage.get('tilesLoadedForProj-'+ id).then((data)=>{
+              if(!data){
+                var extent = geojsonBounds.extent(geo);
+                console.log('extent');
+                console.log(extent);
+                let bbox = {}
+                bbox['minLng'] = extent[0] - 0.02;
+                bbox['minLat'] = extent[1] -0.02;
+                bbox['maxLng'] = extent[2] + 0.01 ;
+                bbox['maxLat'] = extent[3] + 0.01 ;
+                console.log('minLng: ' + extent[0] + ",minLat: " + extent[1] + " ,maxLng : " +  extent[2] + " ,maxLat: " + extent[3])
+                this.toastCreate();
+                this.mapModel.downloadTiles(bbox,10,17).then(val =>{
+                  this.toastDismisser();
+                  this.toastinstance = this.toastCtrl.create({
+                    message: 'Téléchargement réussi.',
+                    duration: 3000,
+                    position : 'top',
+                    cssClass: "tuilesToastOk"
+                  }).present();
+                  this.storage.set('tilesLoadedForProj-'+id, true);
+                }, error=> {
+                  this.toastDismisser();
+                  this.toastinstance = this.toastCtrl.create({
+                    message: 'Erreur de téléchargement de tuiles carto.',
+                    duration: 3000,
+                    position : 'top',
+                    cssClass: "tuilesToastError"
+                  }).present();
+                });
+              }
+          });
+        }
+      })
+  }
+  toastCreate(){
+      this.toastinstance = this.toastCtrl.create({
+        message: 'Téléchargement des tuiles carto en cours...',
+        position : 'top'
+        
+      });
+      this.toastinstance.present();
+  }
+    
+  toastDismisser(){
+      this.toastinstance.dismiss();
   }
 }
