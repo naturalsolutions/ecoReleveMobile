@@ -36,4 +36,4 @@ typings/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-src/config.js
+src/config.ts

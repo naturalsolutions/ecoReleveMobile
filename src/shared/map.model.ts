@@ -16,6 +16,7 @@ export class MapModel {
   public trace
   public traceBounds: any
   public toastCtrl: ToastController
+  parent : any
   
   constructor(options: any = {}) {
 
@@ -197,8 +198,20 @@ export class MapModel {
         false,
         // Progress callback
         (done, total) => {
-          var percent = Math.round(100 * done / total)
-          console.log('downloadTiles Progress', done + " / " + total + " = " + percent + "%")
+          var percent = Math.round(100 * done / total);
+          //console.log('downloadTiles Progress', done + " / " + total + " = " + percent + "%")
+          let message ='Progression ' +  done + " / " + total + " = " + percent + "%";
+          this.parent.toastinstance = this.parent.toastCtrl.create({
+            message: message ,
+            duration: 3000,
+            position : 'top',
+            cssClass: "tuilesToastError"
+          }).present();
+          
+          
+          
+         //setMessage( 'downloadTiles Progress'+ done + " / " + total + " = " + percent + "%");
+          //this.presentToast('downloadTiles Progress'+ done + " / " + total + " = " + percent + "%" , 'top');
         },
         // Complete callback
         () => {
@@ -219,11 +232,11 @@ export class MapModel {
     })
   }
     presentToast(message, position) {
-    let toast = this.toastCtrl.create({
+    this.toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
       position : position
     });
-    toast.present();
+    this.toast.present();
   }
 }

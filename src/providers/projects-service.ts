@@ -17,7 +17,7 @@ export class ProjectsServiceProvider {
  serverUrl : any
   contentHeader = new Headers({'Content-Type': 'application/json'});
   constructor(public http: Http, public storage : Storage,private auth: AuthService,  public toastCtrl: ToastController) {
-
+    this.mapModel.parent = this;
   }
   load(){
     if(this.data){
@@ -131,14 +131,30 @@ export class ProjectsServiceProvider {
                 console.log('minLng: ' + extent[0] + ",minLat: " + extent[1] + " ,maxLng : " +  extent[2] + " ,maxLat: " + extent[3])
                 this.toastCreate();
                 this.mapModel.downloadTiles(bbox,10,17).then(val =>{
+
                   this.toastDismisser();
-                  this.toastinstance = this.toastCtrl.create({
-                    message: 'Téléchargement réussi.',
-                    duration: 3000,
-                    position : 'top',
-                    cssClass: "tuilesToastOk"
-                  }).present();
-                  this.storage.set('tilesLoadedForProj-'+id, true);
+                  if(val) {
+                    this.toastinstance = this.toastCtrl.create({
+                      message: 'Téléchargement réussi.',
+                      duration: 3000,
+                      position : 'top',
+                      cssClass: "tuilesToastOk"
+                    }).present();
+                    this.storage.set('tilesLoadedForProj-'+id, true);
+
+                  } else {
+                    this.toastinstance = this.toastCtrl.create({
+                      message: 'Erreur de téléchargement de tuiles carto.',
+                      duration: 3000,
+                      position : 'top',
+                      cssClass: "tuilesToastError"
+                    }).present();
+
+                    this.storage.set('tilesToLoadForProj-'+id, bbox);
+
+                  }
+                  
+
                 }, error=> {
                   this.toastDismisser();
                   this.toastinstance = this.toastCtrl.create({
@@ -147,6 +163,7 @@ export class ProjectsServiceProvider {
                     position : 'top',
                     cssClass: "tuilesToastError"
                   }).present();
+                  this.storage.set('tilesToLoadForProj-'+id, bbox);
                 });
               }
           });
