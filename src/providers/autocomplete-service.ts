@@ -1,15 +1,18 @@
 //import {AutoCompleteService} from 'ionic2-auto-complete';
 import { Http } from '@angular/http';
 import {Injectable} from "@angular/core";
-import 'rxjs/add/operator/map';
-import {config }  from '../config';
+import 'rxjs/add/operator/map'
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 @Injectable()
 export class CompleteTaxaService {
   //labelAttribute = "name";
   items: any;
   protocole : any;
-  constructor(private http:Http) {
+  constructor(
+    private http:Http,
+    private sqlite : SQLite
+  ) {
     this.items = [
       {title: 'one'},
       {title: 'two'},
@@ -20,44 +23,51 @@ export class CompleteTaxaService {
   ]
   }
   getResults(item:string, protocole) {
-      let url = config.serverUrl;
-    
-        let proto ;
+    var _that = this;
+        let tableName ;
         switch(protocole) {
           case 'avifaune':
-          proto = 'oiseau'
+          tableName = 'Bird'
               break;
           case 'batrachofaune':
-          proto = 'amphibien'
+          tableName = 'Amphibia'
               break;
           case 'herpetofaune':
-          proto = 'reptile'
+          tableName = 'Reptil'
                   break;
           case 'mammofaune':
-            proto = 'mammal'
+          tableName = 'Mammal'
             break;
+          case 'insect' :
+          tableName = 'Insect'
           default:
                  'avifaune'
       }
-      /*  valeurs de proto :
-      reptile
-      oiseau
-      amphibien
-      mammal
-      insecte
-      chiroptera  */
 
           return new Promise((resolve , reject) =>{
-            //this.http.get('assets/data/projects.json')
-            this.http.get(url + "ecoReleve-Core/autocomplete/taxon?type=vernaculaire&term="+item + "&protocol=" + proto)
-            .map(res => res.json())
-            .subscribe(data => {
-              resolve(data);
-            },
-            err => {
-                //reject(err);
-                resolve([]);
-            });
+
+              _that.sqlite.create({
+                name: 'Sydoni.db',
+                location: 'default'
+              })
+                .then((db: SQLiteObject) => { 
+                  console.log('open SQL');
+                  db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_VERN LIKE "%'+item+'%" ORDER BY NOM_VERN ASC', {})
+                    .then((res) => {
+                      db.close();
+                      var data = []
+                      for (var i =0 ; i < res.rows.length ; i++ ) {
+                        data.push (res.rows.item(i));
+                      }
+                      resolve(data)
+                    }
+                  )
+                  .catch(e => {
+                    db.close();
+                    resolve([]);
+                    console.log(e);
+                  });
+                })
       
           });
       }

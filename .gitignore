@@ -26,13 +26,14 @@ platforms/
 plugins/
 plugins/android.json
 plugins/ios.json
-www/
+www/*
+!www/Sydoni.db
 src/pages/
 $RECYCLE.BIN/
 tsconfig.json
 tslint.json
 typings/
-
+.sourcemaps/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
