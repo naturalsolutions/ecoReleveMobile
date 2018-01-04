@@ -1,7 +1,7 @@
 <form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
-            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId"></map>
+            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude"></map>
             <br/>
             <p><b>Date</b> : {{dateObs | date :'shortDate'}},<b>heure </b>: {{dateObs | date :'shortTime'}}</p>
             <p><b>Latitude </b>: {{latitude}} , <b>longitude </b>: {{longitude}}</p>

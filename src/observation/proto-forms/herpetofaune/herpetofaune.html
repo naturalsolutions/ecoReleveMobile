@@ -2,7 +2,7 @@
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'">
 
-            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId"></map>
+            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude"></map>
             <br/>
             <p><b>Date</b> : {{dateObs | date :'shortDate'}},<b>heure </b>: {{dateObs | date :'shortTime'}}</p>
             <p><b>Latitude </b>: {{latitude}} , <b>longitude </b>: {{longitude}}</p>
