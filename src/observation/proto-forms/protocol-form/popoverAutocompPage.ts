@@ -9,52 +9,39 @@ import { PopoverController, NavController,ViewController, NavParams,AlertControl
 @Component({
     selector: 'page-autocompTaxa',
  template: `
-<div class="autocomp">
-  <ion-searchbar [(ngModel)]="searchTerm" [showCancelButton]="shouldShowCancel" (ionInput)="onSearchInput($event)" (ionCancel)="onCancel($event)">
-  </ion-searchbar>
-  <div *ngIf="searching" class="spinner-container">
-    <ion-spinner></ion-spinner>
-  </div>
 
-  <ion-list>
-    <ion-item class="text-center" *ngFor="let item of items" (click)="getSelected($event)">
-      <span item-start>
-        {{item.Rang}}
-      </span>
-      {{item.vernaculaire}}
-      <br/>
-      <i class="js-nomlatin">{{item.latin}}</i>
-    </ion-item>
-  </ion-list>
-</div>
-
-
-
-  <!--
-  
   <ion-header>
   <ion-navbar color="primary">
     <ion-title>
       Recherche d'espèce
     </ion-title>
   </ion-navbar>
+
+  <ion-toolbar no-border-top>
+  <ion-searchbar [(ngModel)]="searchTerm" [showCancelButton]="shouldShowCancel" (ionInput)="onSearchInput($event)" (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <div *ngIf="searching" class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  </ion-toolbar>
 </ion-header>
  
 <ion-content>
  
-    <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
- 
-    <div *ngIf="searching" class="spinner-container">
-        <ion-spinner></ion-spinner>
-    </div>
+
  
     <ion-list>
-        <ion-item *ngFor="let item of items">
-            {{item.name}}
-        </ion-item>
-    </ion-list>
+    <ion-item class="text-center" *ngFor="let item of items" (click)="getSelected(item)">
+      <span item-start>
+        {{item.Rang}}
+      </span>
+      {{item.vernaculaire}}
+      <br>
+      <i class="js-nomlatin">{{item.latin}}</i>
+    </ion-item>
+  </ion-list>
  
-</ion-content>  -->
+</ion-content>  
   `,
   providers : [
     CompleteTaxaService
@@ -66,7 +53,7 @@ export class PopoverAutocompPage {
     items: any;
     searching: any = false;
     protocole : any;
-  
+    
   
     parent : any;
 
@@ -85,6 +72,7 @@ export class PopoverAutocompPage {
     this.searchControl = new FormControl();
     this.parent  = navParams.data.parent
     this.protocole = navParams.data.protocole
+    
 
   }
 
@@ -163,9 +151,14 @@ onCancel(e){
    // this.searching = true;
 }
 getSelected(e){
-  console.log(e.target.innerText)
-  this.parent.formModel.value.nom_vernaculaire = e.target.innerText
-  this.parent.formModel.controls['nom_vernaculaire'].setValue(e.target.innerText);
+  let verna = e.label
+  let scientifique = e.latin
+
+  this.parent.formModel.value.nom_vernaculaire = verna
+  this.parent.formModel.value.nom_scientifique = scientifique
+
+  this.parent.formModel.controls['nom_vernaculaire'].setValue(verna);
+  this.parent.formModel.controls['nom_scientifique'].setValue(scientifique);
   this.viewCtrl.dismiss();
 }
 

@@ -1,4 +1,4 @@
-import { Component, Output,ElementRef, ViewChild,ComponentFactoryResolver,AfterViewInit } from '@angular/core'
+import { Component, Output,ElementRef, ViewChild,ComponentFactoryResolver,AfterViewInit,Renderer } from '@angular/core'
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -63,6 +63,7 @@ export class ObservationPage  {
     public data : ObsProvider,
     private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath ,
     public storage : Storage,
+    private renderer : Renderer
     
 
   ) {
@@ -254,6 +255,19 @@ export class ObservationPage  {
 
 })
 
+}
+handleMapSize(size) {
+  if(size){
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', 'none' );   
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.footer'), 'display', 'none' ); 
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'margin-top', '0px' );
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'padding', '0px' );
+  } else {
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', '' );
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'margin-top', '112px' );
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.footer'), 'display', '' ); 
+    this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'padding', '16px' );
+  }
 }
 
 /*private copyFileToLocalDir(namePath, currentName, newFileName) {

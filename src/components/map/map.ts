@@ -11,6 +11,7 @@ import { Storage } from '@ionic/storage'
 //import { NetworkService } from '../../shared/network.service';
 import { Network } from '@ionic-native/network'
 import L from "leaflet"
+import  Draw  from 'leaflet-draw';
 import _ from 'lodash'
 
 
@@ -26,15 +27,19 @@ export class MapComponent {
 
   
 @Input() projId : number
-  /*@Output() latEvent = new EventEmitter()
-  @Output() lonEvent = new EventEmitter()*/
+@Input() latitude : number
+@Input() longitude:number
+
+@Output() fullsize = new EventEmitter()
+  @Output() latEvent = new EventEmitter()
+  @Output() lonEvent = new EventEmitter()
 
   //private mapModel: MapModel
    private _map: any
    public mapEl
    //private _bounds: any
-   latitude : number
-  longitude:number
+  // latitude : number
+  //longitude:number
   markers:any = []
   mapModel :any
   public connectionStatus: String = 'online'
@@ -92,15 +97,24 @@ ionViewDidEnter(){
 
 }
 displayfull(){
+  //this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', 'none' );
+  this.fullsize.emit(true);
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'height', '100%');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'width', '100%');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'position', 'fixed');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.fullmap'), 'display', 'none');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.smallmap'), 'display', 'block');
+
   this._map._onResize();
 }
 displaysmall(){
+  //this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', '' );
+  this.fullsize.emit(false);
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'width', '100%');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'height', '250px');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'position', 'relative');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.fullmap'), 'display', 'block');
+  this.renderer.setElementStyle(this.el.nativeElement.querySelector('.smallmap'), 'display', 'none');
   this._map._onResize();
 }
 onMapReady() {
@@ -129,11 +143,18 @@ onMapReady() {
    // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(this._map);*/
       // get location
-      this.geolocation.getCurrentPosition().then((position)=> {
-        this.latitude = position.coords.latitude
-        this.longitude = position.coords.longitude
+      
+      if(!this.latitude && (!this.longitude)) {
+        this.geolocation.getCurrentPosition().then((position)=> {
+          this.latitude = position.coords.latitude
+          this.longitude = position.coords.longitude
+          this.onMapModelReady()
+        })
+
+      } else {
         this.onMapModelReady()
-      })
+      }
+
 
 
   // add edit control
@@ -170,7 +191,35 @@ onMapModelReady() {
       //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
-    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(this._map);
+    let  drawnItems =  L.featureGroup();
+    drawnItems['name']= 'markeur';
+    this._map.addLayer(drawnItems);
+    
+    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems);
+    console.log(Draw)
+    var drawControl =  new L.Control.Draw({
+      edit: {
+      featureGroup: drawnItems,
+      remove: false
+    },
+    draw: false
+  });
+    
+  this._map.addControl(drawControl);
+  let that = this;
+  this._map.on('draw:edited', function (e) {
+    var layers = e.layers;
+    layers.eachLayer(function (layer) {
+      console.log(layer);
+      if(layer['_latlng']){
+        let latitude = layer['_latlng'].lat
+        let longitude = layer['_latlng'].lng
+        that.latEvent.emit(latitude)
+        that.lonEvent.emit(longitude)
+      }
+      //do whatever you want, most likely save back to db
+    });
+  });
 }
 goOnline() {
 

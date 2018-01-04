@@ -25,6 +25,10 @@ export class AvifauneComponent extends ProtocolFormComponent {
            model.nom_vernaculaire,
           [Validators.required]
         ],
+        'nom_scientifique': [
+          model.nom_scientifique,
+         []
+       ],
         'effectif' : [
            model.effectif,
           [Validators.required]
@@ -54,65 +58,5 @@ export class AvifauneComponent extends ProtocolFormComponent {
            model.dateObs
           ]
       });
-      // set date value
-      /*this.dateObs =  Date.now();
-      this.formModel.value.dateObs = this.dateObs;
-      // detect form changes to activate "save current obs"
-      this.formModel.valueChanges.subscribe(data => {
-        this.formChanged = true;
-    })*/
   }
-/*
-  onSubmit(value) {
-
-    // check if model is valid
-    
-    if (!this.formModel.invalid) {
-      value.finished = true;
-      this.formUpdateData(value);
-      this.navCtrl.push(ObservationsPage)
-    }
-  }
-
-  saveCurrent(){
-    let value = this.formModel.value;
-    value.finished = false;
-    this.formUpdateData(value);
-  }
-
-  formUpdateData(value) {
-    // set date value
-    value.dateObs = this.dateObs;
-    // set latitude & longitude
-   value.latitude = this.latitude;
-   value.longitude = this.longitude;
-    // set id value if exists 
-    if(this.obsId){
-        this.formModel.value.id = this.obsId;
-    }
-    this.data.saveObs(value)
-    this.obsSaved = true;
-  }
-
-  handleLatChange(lat){
-    console.log('form model latitude :')
-    lat = lat.toFixed(5);
-    this.formModel.value.latitude = lat;
-    console.log(this.formModel.value)
-    this.latitude = lat;
-  
-  }
-  handleLonChange(lon){
-      lon = lon.toFixed(5);
-    this.formModel.value.longitude = lon;
-    this.longitude = lon;
-
-  }
-  ionViewDidLoad() {
-    console.log('page chargée')
-  }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }*/
-
 }

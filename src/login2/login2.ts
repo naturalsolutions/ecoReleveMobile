@@ -86,10 +86,16 @@ export class LoginPage2 {
         this.loading.dismiss();
         this.navCtrl.setRoot(ProjectsPage);
       }), error=> {
+        if(error.status == 401){
+            alert('401');
+        }
         this.alertError();
 
       }
     }, error=> {
+      if(error.status == 401){
+        alert('401');
+      }
       this.alertError();
 
     }

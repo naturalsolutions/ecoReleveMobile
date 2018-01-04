@@ -80,7 +80,7 @@ export class AuthService {
   
           },
           err => {
-            this.alertError();
+            this.alertError("Erreur d'authentification","Merci de vérifier votre login et/ou mot de passe");
             resolve(false);
           }
         );
@@ -118,12 +118,16 @@ export class AuthService {
             credentials.userId = data;
             resolve(credentials);
   
-          },
-          err => {
-            this.alertError();
-            resolve(false);
           }
-        );
+        ),
+        err=> {
+          //reject(err);
+          // Manage authorization if application is killed 
+          if(err.status == 401){
+            this.alertError("Erreur d'authentification","Merci de vérifier votre login et/ou mot de passe")
+          }
+          resolve(null);
+      }
     });
   }
   login(credentials) {
@@ -147,7 +151,7 @@ export class AuthService {
     
           },
           err => {
-            this.alertError();
+            this.alertError("Erreur d'authentification", "L'authentification' a échoué. Merci de vérifier votre connexion internet et/ou de contacter l'administrateur.");
             resolve(false);
 
           }
@@ -156,10 +160,10 @@ export class AuthService {
         });
       }
   
-  alertError(){
+  alertError(title, message){
     let alert = this.alertCtrl.create({
-      title: "Erreur d'authentification",
-      message: "L'authentification' a échoué. Merci de vérifier votre connexion internet et/ou de contacter l'administrateur.",
+      title: title,
+      message: message,
       buttons: [
         {
           text: 'OK'

@@ -201,11 +201,12 @@ export class MapModel {
           var percent = Math.round(100 * done / total);
           //console.log('downloadTiles Progress', done + " / " + total + " = " + percent + "%")
           let message ='Progression ' +  done + " / " + total + " = " + percent + "%";
+          
+
           this.parent.toastinstance = this.parent.toastCtrl.create({
             message: message ,
-            duration: 3000,
-            position : 'top',
-            cssClass: "tuilesToastError"
+            duration: 2000,
+            position : 'top'
           }).present();
           
           
@@ -231,12 +232,12 @@ export class MapModel {
       )
     })
   }
-    presentToast(message, position) {
+    /*presentToast(message, position) {
     this.toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
       position : position
     });
     this.toast.present();
-  }
+    }*/
 }

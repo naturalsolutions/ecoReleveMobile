@@ -1,4 +1,4 @@
-import { Component, Input,ElementRef } from '@angular/core';
+import { Component, Input,ElementRef,EventEmitter,Output } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController, ModalController,ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 //import {Geolocation } from '@ionic-native/geolocation';
@@ -21,6 +21,7 @@ export class ProtocolFormComponent {
 
     //@Input('segment') segment: string;
     //@Input() obsId: number;
+    @Output() mapfullsize = new EventEmitter()
     public formModel: FormGroup;
     public dateObs : any;
     public latitude: any;
@@ -67,8 +68,8 @@ export class ProtocolFormComponent {
           }
             this.buildForm(this.instance)
             // display coordinates
-            this.latitude = this.instance.latitude;
-            this.longitude = this.instance.latitude;
+            this.latitude = parseFloat(this.instance.latitude);
+            this.longitude = parseFloat(this.instance.longitude);
         });
 
       } else {
@@ -116,6 +117,7 @@ export class ProtocolFormComponent {
     // check if model is valid
     if ((!this.formModel.invalid) &&(segment =='facultatif')) {
       this.formModel.value.finished = true;
+      console.log(this.formModel.value)
       this.formModel.value.projId = this.projId;
       this.formUpdateData();
       //this.navCtrl.pop();
@@ -138,7 +140,7 @@ export class ProtocolFormComponent {
     console.log(this.formModel.value)
     // display coordinates
     this.latitude = this.instance.latitude;
-    this.longitude = this.instance.latitude;
+    this.longitude = this.instance.longitude;
   }
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -218,4 +220,11 @@ export class ProtocolFormComponent {
     });
     toast.present();
   }
+  handleMapSize(size) {
+    this.parent.handleMapSize(size);
+    //console.log('size')
+   // console.log(size)
+    //alert('size')
+  }
+
 }

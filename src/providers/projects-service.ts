@@ -124,15 +124,16 @@ export class ProjectsServiceProvider {
                 console.log('extent');
                 console.log(extent);
                 let bbox = {}
-                bbox['minLng'] = extent[0] - 0.02;
-                bbox['minLat'] = extent[1] -0.02;
-                bbox['maxLng'] = extent[2] + 0.01 ;
-                bbox['maxLat'] = extent[3] + 0.01 ;
+                bbox['minLng'] = extent[0] - 0.005;
+                bbox['minLat'] = extent[1] - 0.005;
+                bbox['maxLng'] = extent[2] + 0.005;
+                bbox['maxLat'] = extent[3] + 0.005;
                 console.log('minLng: ' + extent[0] + ",minLat: " + extent[1] + " ,maxLng : " +  extent[2] + " ,maxLat: " + extent[3])
                 this.toastCreate();
                 this.mapModel.downloadTiles(bbox,10,17).then(val =>{
 
                   this.toastDismisser();
+
                   if(val) {
                     this.toastinstance = this.toastCtrl.create({
                       message: 'Téléchargement réussi.',
@@ -173,7 +174,8 @@ export class ProjectsServiceProvider {
   toastCreate(){
       this.toastinstance = this.toastCtrl.create({
         message: 'Téléchargement des tuiles carto en cours...',
-        position : 'top'
+        position : 'top',
+        duration: 5000
         
       });
       this.toastinstance.present();
