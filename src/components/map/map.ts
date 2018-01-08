@@ -10,7 +10,7 @@ import * as geojsonBounds from 'geojson-bounds'
 import { Storage } from '@ionic/storage'
 //import { NetworkService } from '../../shared/network.service';
 import { Network } from '@ionic-native/network'
-import L from "leaflet"
+import L, { circleMarker } from "leaflet"
 import  Draw  from 'leaflet-draw';
 import _ from 'lodash'
 
@@ -203,6 +203,22 @@ onMapModelReady() {
       remove: false
     },
     draw: false
+    // TODO dessin vectoriel
+    /*{
+      polyline: {
+        shapeOptions: {
+            color: '#f357a1',
+            weight: 10
+        }
+    },
+    polygon: false,
+    circle : false,
+    marker : false,
+    circlemarker : false,
+    rectangle : false
+    }*/
+
+
   });
     
   this._map.addControl(drawControl);
