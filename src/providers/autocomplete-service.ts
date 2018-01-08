@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map'
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import _ from 'lodash'
 
 @Injectable()
 export class CompleteTaxaService {
@@ -22,9 +23,13 @@ export class CompleteTaxaService {
       {title: 'six'}
   ]
   }
+
+
+
   getResults(item:string, protocole) {
     var _that = this;
         let tableName ;
+        let itemNormalise = null;
         switch(protocole) {
           case 'avifaune':
           tableName = 'Bird'
@@ -44,6 +49,11 @@ export class CompleteTaxaService {
                  'avifaune'
       }
 
+      itemNormalise = item.toLowerCase()
+      itemNormalise = _.deburr(itemNormalise);
+
+
+
           return new Promise((resolve , reject) =>{
 
               _that.sqlite.create({
@@ -52,7 +62,7 @@ export class CompleteTaxaService {
               })
                 .then((db: SQLiteObject) => { 
                   console.log('open SQL');
-                  db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_VERN LIKE "%'+item+'%" ORDER BY NOM_VERN ASC', {})
+                  db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_NORMALISE LIKE "%'+itemNormalise+'%" ORDER BY NOM_VERN ASC', {})
                     .then((res) => {
                       db.close();
                       var data = []
