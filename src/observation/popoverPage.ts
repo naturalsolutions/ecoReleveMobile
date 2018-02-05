@@ -9,7 +9,7 @@ import {ObsProvider} from '../providers/obs/obs'
   template: `
     <ion-list class="popover-page">
       <ion-item class="actionItem" (click)="changeProtocol()">
-        <ion-label>Nouvelle observation</ion-label>
+        <ion-label>Changer le protocole</ion-label>
       </ion-item>
       <ion-item class="" (click)="displayObs()">
         <ion-label>Mes observations</ion-label>
@@ -20,7 +20,10 @@ import {ObsProvider} from '../providers/obs/obs'
     <ion-item class=""  (click)="deleteObs()">
     <ion-label>Supprimer cette observation</ion-label>
     </ion-item>
-    <ion-item class="actionItem" (click)="closePopover()">
+    <ion-item class="actionItem" (click)="saveObs()">
+    <ion-label>Enregistrer</ion-label>
+    </ion-item>
+    <ion-item class="" (click)="closePopover()">
     <ion-label>Retour</ion-label>
     </ion-item>
 
@@ -50,7 +53,7 @@ export class PopoverPage {
 
   }
   takePicture(){
-    this.parent.takePicture();
+    this.parent.takePicture(this.projId,this.obsId);
     this.viewCtrl.dismiss();
   }
   changeProtocol(){
@@ -70,6 +73,11 @@ export class PopoverPage {
   deleteObs(){
     this.viewCtrl.dismiss()
     this.deleteConfirm()
+  }
+  saveObs(){
+    this.parent.onSubmit()
+    this.viewCtrl.dismiss()
+
   }
   deleteConfirm() {
     let alert = this.alertCtrl.create({

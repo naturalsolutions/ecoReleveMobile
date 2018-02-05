@@ -2,7 +2,7 @@ import {AvifauneComponent} from './proto-forms/avifaune/avifaune'
 import { BatrachofauneComponent } from './proto-forms/batrachofaune/batrachofaune'
 import {  HerpetofauneComponent } from './proto-forms/herpetofaune/herpetofaune'
 import {  MammofauneComponent } from './proto-forms/mammofaune/mammofaune'
-
+import {  ChiropteresComponent } from './proto-forms/chiropteres/chiropteres'
 
 export class AdFormService {
 
@@ -23,6 +23,10 @@ export class AdFormService {
         case 'Mammo':
             component = MammofauneComponent
             break
+        case 'Chiro' : 
+        component = ChiropteresComponent
+            break
+
     }
     return component
   }

@@ -1,5 +1,6 @@
 import { Component, ElementRef, Output, EventEmitter, Input,Renderer } from '@angular/core'
-import { NavController, NavParams,Platform,ViewController } from 'ionic-angular'
+import { NavController, NavParams,Platform,ViewController,AlertController } from 'ionic-angular'
+import * as L from "leaflet"
 //import { Subscription } from 'rxjs/Subscription'
 import { MapNotificationService } from '../../shared/map.notification.service'
 import {ProjectsServiceProvider} from '../../providers/projects-service'
@@ -10,9 +11,11 @@ import * as geojsonBounds from 'geojson-bounds'
 import { Storage } from '@ionic/storage'
 //import { NetworkService } from '../../shared/network.service';
 import { Network } from '@ionic-native/network'
-import L, { circleMarker } from "leaflet"
+
 import  Draw  from 'leaflet-draw';
+import Polylinedecorator from 'leaflet-polylinedecorator';
 import _ from 'lodash'
+
 
 
 @Component({
@@ -31,9 +34,9 @@ export class MapComponent {
 @Input() longitude:number
 
 @Output() fullsize = new EventEmitter()
-  @Output() latEvent = new EventEmitter()
-  @Output() lonEvent = new EventEmitter()
-
+@Output() latEvent = new EventEmitter()
+@Output() lonEvent = new EventEmitter()
+@Output() jsonEvent = new EventEmitter()
   //private mapModel: MapModel
    private _map: any
    public mapEl
@@ -43,6 +46,7 @@ export class MapComponent {
   markers:any = []
   mapModel :any
   public connectionStatus: String = 'online'
+  private traceLayerId : any
 
 
   constructor(
@@ -56,7 +60,9 @@ export class MapComponent {
     public storage : Storage,
     private network :Network,
     public platform :Platform,
-    private renderer : Renderer
+    private renderer : Renderer,
+    private alertCtrl: AlertController,
+   // private elRef:ElementRef
 
   ) {
 
@@ -90,6 +96,8 @@ export class MapComponent {
       }, error=> {
         console.log(error)
       });
+
+      
 }
 
 ionViewDidEnter(){
@@ -177,6 +185,42 @@ onMapReady() {
         }
       }
   })
+
+  // reload map tiles for current project if not yet loaded
+  let tilesLoaded = this.storage.get('tilesLoadedForProj-'+ this.projId).then(data =>{
+    if( data != true ){
+      this.downloadTilesMsg()
+    }
+  });
+  }
+
+  downloadTilesMsg(){
+    let alert = this.alertCtrl.create({
+      title: 'Tuiles cartographiques',
+      message: 'Voulez-vous relancer le chargement de tuiles cartographiques manquantes pour ce projet?',
+      buttons: [
+        {
+          text: 'Non',
+          role: 'cancel',
+          handler: data => {
+            var key = 'tilesLoadedForProj-'+ this.projId
+            this.storage.set(key, true);
+          }
+        },
+        {
+          text: 'Ok',
+          handler: data => {
+            let bbox = this.storage.get('bboxProj-'+ this.projId).then(data =>{
+              if( data){
+                let dt = this.projectsService.downloadTiles(data,this.projId, this.mapModel.tileLayer)
+              }
+            });
+            
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 onMapModelReady() {
@@ -184,7 +228,7 @@ onMapModelReady() {
     this._map.setView(center, 14)
     var icon = L.icon({
       iconUrl: 'assets/icon/picto.png',
-      iconSize:     [40, 40], // size of the icon
+      iconSize:     [40, 40] // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
       //shadowAnchor: [4, 62],  // the same for the shadow
@@ -192,38 +236,112 @@ onMapModelReady() {
     });
 
     let  drawnItems =  L.featureGroup();
+    let  arrowLayer =  L.featureGroup();
+    var style = {
+      color: '#f44141', 
+      weight: 6,
+      opacity: 1,
+      fillOpacity: 1,
+      fillColor: '#f44141'
+    };
+    arrowLayer.setStyle(style);
     drawnItems['name']= 'markeur';
     this._map.addLayer(drawnItems);
+    this._map.addLayer(arrowLayer);
+
+
+
     
-    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems);
-    console.log(Draw)
-    var drawControl =  new L.Control.Draw({
+    
+    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems as any);
+    let _this = this;
+    let v = Draw
+    var drawControl =  new (L as any).Control.Draw({
       edit: {
       featureGroup: drawnItems,
-      remove: false
+      remove: true
     },
-    draw: false
-    // TODO dessin vectoriel
-    /*{
-      polyline: {
-        shapeOptions: {
-            color: '#f357a1',
-            weight: 10
-        }
-    },
-    polygon: false,
-    circle : false,
-    marker : false,
-    circlemarker : false,
-    rectangle : false
-    }*/
+    //draw: false
+    draw: {
+        polyline: {
+          shapeOptions: {
+              color: '#f357a1',
+              weight: 10
+          }
+      },
+      polygon: false,
+      circle : false,
+      marker : false,
+      circlemarker : false,
+      rectangle : false
+      }
+  });
+
+
+
+
+
+
+
+
+/*var controlDiv = drawControl._toolbars.edit._toolbarContainer;
+var removeControlUI = L.DomUtil.create('a', 'leaflet-draw-edit-remove');
+controlDiv.append(removeControlUI);
+removeControlUI.title = 'Remove All Polygons';
+removeControlUI['href'] = '#';
+L.DomEvent.addListener(removeControlUI, 'click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  //if(!$(removeControlUI).hasClass("leaflet-disabled") && _this.drawnItems.getLayers().length > 0){
+  //  _this.drawnItems.clearLayers();
+  //  _this.map.fire('draw:deleted');
+
+  //}
+});*/
+
+
+
+  /*this._map.on('draw:deletestart', function (e) { 
+   var layers = e.layers;
 
 
   });
-    
+*/
+  /*this._map.on('moveend', function (e) { 
+        var style = {
+      color: '#f44141', 
+      weight: 6,
+      opacity: 1,
+      fillOpacity: 1,
+      fillColor: '#f44141'
+    };
+    arrowLayer.setStyle(style);
+  });
+  this._map.on('zoomend', function (e) { 
+    var style = {
+      color: '#f44141', 
+      weight: 6,
+      opacity: 1,
+      fillOpacity: 1,
+      fillColor: '#f44141'
+    };
+    arrowLayer.setStyle(style);
+  });*/
+
+  
+
+
+
   this._map.addControl(drawControl);
   let that = this;
-  this._map.on('draw:edited', function (e) {
+
+  // disable remove btn
+  let removeCtr = _this.el.nativeElement.querySelector('.leaflet-draw-edit-remove');
+   _this.renderer.setElementAttribute(removeCtr, 'disabled', 'disabled');
+  
+    
+
+  /*this._map.on('draw:edited', function (e) {
     var layers = e.layers;
     layers.eachLayer(function (layer) {
       console.log(layer);
@@ -233,9 +351,137 @@ onMapModelReady() {
         that.latEvent.emit(latitude)
         that.lonEvent.emit(longitude)
       }
-      //do whatever you want, most likely save back to db
     });
+  })*/
+
+  this._map.on((L as any).Draw.Event.CREATED, function (e) {
+    var type = e.layerType,
+    layer = e.layer;
+    layer['name']= 'trace';
+    this.traceLayerId = e.target._leaflet_id
+
+    if (type != 'marker') {
+      console.log('tracé :')
+      // get json
+     // set style
+
+      var json = layer.toGeoJSON();
+
+      console.log(json)
+      console.log('rotatedmarker')
+      console.log(Polylinedecorator)
+
+      _this.jsonEvent.emit(json)
+
+      
+      var arrowHead = (L as any).polylineDecorator(layer, {
+            patterns: [
+                {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+            ]
+      });
+      arrowLayer.addLayer(arrowHead);
+      arrowLayer.setStyle(style);
+
+
+      layer.setStyle(style);
+
+    }
+
+    drawnItems.addLayer(layer);
+    console.log('drawControl'); 
+    drawControl.setDrawingOptions({
+      polyline: false
   });
+    drawControl.draw = false;
+    console.log(drawControl); 
+    console.log(_this.el);
+    // disable draw mode
+    let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
+    _this.renderer.setElementAttribute(drawCtr, 'disabled', 'disabled');
+    // activate remove btn
+    let removeCtr = _this.el.nativeElement.querySelector('.leaflet-draw-edit-remove');
+    _this.renderer.setElementAttribute(removeCtr, 'disabled', null);
+
+
+});
+
+
+  this._map.on('draw:edited', function (e) {
+    console.log('******** edition *********')
+    console.log(e)
+    var layers = e.layers;
+    layers.eachLayer(function (layer) {
+
+      
+      if (layer instanceof ( L as any).Marker){
+        
+      } else {
+        _this.removeRow(arrowLayer);
+        var arrowHead = (L as any).polylineDecorator(layer, {
+          patterns: [
+              {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+          ]
+        });
+        arrowLayer.addLayer(arrowHead);
+        arrowLayer.setStyle(style);
+      }
+
+      if(layer['_latlng']){
+        let latitude = layer['_latlng'].lat
+        let longitude = layer['_latlng'].lng
+        that.latEvent.emit(latitude)
+        that.lonEvent.emit(longitude)
+      }
+      if(layer['name']=='trace') {
+        var json = layer.toGeoJSON();
+        console.log(json)
+        _this.jsonEvent.emit(json)
+      }
+
+
+
+  
+    });
+    // activate remoove btn
+    let removeCtr = _this.el.nativeElement.querySelector('.leaflet-draw-edit-remove');
+    _this.renderer.setElementAttribute(removeCtr, 'disabled', null);
+  
+  });
+  this._map.on('draw:deletestop', function (e) { 
+    console.log(e)
+    var layers = e.target._layers;
+    var elemId = e.target._leaflet_id;
+
+    if(elemId == this.traceLayerId ) {
+
+    } else {
+      alert('markeur !')
+    }
+    
+    
+    /*for (var prop in layers) {
+      let layer =  layers[prop];
+      if(layer._leaflet_id == elemId){
+        alert('markeur !')
+      }
+      if (layer instanceof ( L as any).Marker){
+        console.log('ici')
+      }
+    }*/
+    // activate draw btn
+    let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
+    _this.renderer.setElementAttribute(drawCtr, 'disabled', null);
+    // disable remove btn
+    let removeCtr = _this.el.nativeElement.querySelector('.leaflet-draw-edit-remove');
+    _this.renderer.setElementAttribute(removeCtr, 'disabled', 'disabled');
+    // delete arrow
+    _this.removeRow(arrowLayer);
+ 
+   });
+
+
+
+
 }
 goOnline() {
 
@@ -259,4 +505,14 @@ onConnectionStatusChange() {
     this.goOffline()
   }
 }
+
+removeRow(arrowLayer){
+
+  arrowLayer.eachLayer(function (layer) {
+    arrowLayer.removeLayer(layer)
+
+  });
+}
+
+
 }

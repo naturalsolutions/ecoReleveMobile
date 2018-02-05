@@ -191,10 +191,10 @@ export class ProjectsPage {
       });
 
   }
-    navToProtocols(id){
+    navToProtocols(id,isPushed ){
     // get selected protocol
     //let pro = this.protocols.find(x => x.id === id);
-      this.navCtrl.push(ObservationsPage, {projId : id});
+      this.navCtrl.push(ObservationsPage, {projId : id, isPushed : isPushed});
   }
   onSegmentChanged($event){
     if (($event._value == 'myproj')) {
@@ -238,7 +238,11 @@ export class ProjectsPage {
     if(proj.checked){
       this.disabled = false;
       this.myProjdisabled = false;
+      if(!proj.isPushed) {
       this.syncdisabled = false;
+      } else {
+        this.syncdisabled = "disabled";
+      }
     } else {
       this.disabled = "disabled";
       this.myProjdisabled = "disabled";
@@ -270,7 +274,12 @@ export class ProjectsPage {
     for (let proj of this.projects) {
       if(proj.checked) {
         let id = proj.ID;
-        proj.image = "./assets/icones_projects/pas_synchro.png";
+        if(proj.isPushed) {
+          proj.image = "./assets/icones_projects/synchro.png";
+        } else {
+          proj.image = "./assets/icones_projects/pas_synchro.png";
+        }
+        
         this.projectsService.loadGeometry(id).then(data =>{
           if(data){
             proj.geometry = data;
@@ -474,9 +483,9 @@ export class ProjectsPage {
                   let projName ;
                   for(let j=0; j<this.loadedProjects.length;j++) {
                     if(this.loadedProjects[j]['ID'] == projID){
-                      this.projects[j]['isLoaded'] = true;
+                      this.loadedProjects[j]['isPushed'] = true;
                       projName = this.projects[j]['Name'];
-                      this.projects[j]['image'] = "./assets/icones_projects/synchro.png";
+                      this.loadedProjects[j]['image'] = "./assets/icones_projects/synchro.png";
                     }
                   }
                   // persistance, MAJ
@@ -527,9 +536,16 @@ export class ProjectsPage {
     let folderName = 'tuilesProj-' + projId;
     mapModel.initialize({'folder' : folderName })
       .then(() => {
-        mapModel.tileLayer.emptyCache();
-        let name = 'tilesLoadedForProj-'+ projId;
-        this.storage.remove(name);
+        try {
+          mapModel.tileLayer.emptyCache();
+          let name = 'tilesLoadedForProj-'+ projId;
+          let bbox = 'bboxProj' + projId;
+          this.storage.remove(name);
+          this.storage.remove(bbox);
+        } catch (e) {
+           console.log(e)
+        }
+
     });
   }
   updateStatus(list){

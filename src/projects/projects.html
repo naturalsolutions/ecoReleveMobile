@@ -23,43 +23,50 @@
 
     <div [ngSwitch]="projectsSegment">
         <ion-list *ngSwitchCase="'myproj'">
-            <ion-item *ngFor="let project of loadedProjects" (click)="navToProtocols(project.ID)">
-                <ion-row>
-                    <ion-col width-25>
+            <ion-item *ngFor="let project of loadedProjects" (click)="navToProtocols(project.ID, project.isPushed)">
+                <!--    <ion-thumbnail item-start>
+                    <img src={{project.image}} />
+                </ion-thumbnail>
+                <div item-content>
+                    <h2> {{project.Name}}</h2>
+                    <p>ref : {{project.Project_reference}}</p>
+                </div>
+                
+                <ion-checkbox item-right secondary checked={{project.checked}} [(ngModel)]="project.checked" (click)="checkedDone(project, 'local')"></ion-checkbox>
+
+            -->
+
+                <ion-row class="myprojrow">
+                    <ion-col col-3>
                         <ion-thumbnail item-start>
                             <img src={{project.image}} />
                         </ion-thumbnail>
                     </ion-col>
-                    <ion-col width-50>
+                    <ion-col col-6>
                         <br/>
                         <h2> {{project.Name}}</h2>
                         <p>ref : {{project.Project_reference}}</p>
                     </ion-col>
-                    <ion-col width-25>
-                        <ion-item>
-                            <br/>
+                    <ion-col col-3>
+                        <ion-item class="myprojcheckbox">
                             <ion-checkbox item-right secondary checked={{project.checked}} [(ngModel)]="project.checked" (click)="checkedDone(project, 'local')"></ion-checkbox>
                         </ion-item>
                     </ion-col>
                 </ion-row>
+
+
             </ion-item>
 
 
         </ion-list>
 
         <ion-list *ngSwitchCase=" 'allproj' ">
-            <ion-item *ngFor="let project of projects ">
-                <ion-row>
-                    <ion-col width-75>
-                        <h2> {{project.Name}}</h2>
-                        <p>ref : {{project.Project_reference}}</p>
-                    </ion-col>
-                    <ion-col width-15>
-                        <ion-item *ngIf="!project.isLoaded">
-                            <ion-checkbox item-right secondary checked="false" [(ngModel)]="project.checked" (click)="checkedDone(project, null)"></ion-checkbox>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
+            <ion-item *ngFor="let project of projects " class="allprojitem">
+                <div item-content>
+                    <h2> {{project.Name}}</h2>
+                    <p>ref : {{project.Project_reference}}</p>
+                </div>
+                <ion-checkbox item-right secondary checked="false" [(ngModel)]="project.checked" (click)="checkedDone(project, null)" *ngIf="!project.isLoaded" class="allprojcheckbox"></ion-checkbox>
             </ion-item>
         </ion-list>
 

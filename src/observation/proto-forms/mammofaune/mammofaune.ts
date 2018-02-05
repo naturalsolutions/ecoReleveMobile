@@ -25,10 +25,18 @@ export class MammofauneComponent  extends ProtocolFormComponent{
            model.nom_vernaculaire,
           [Validators.required]
         ],
+        'nom_scientifique': [
+          model.nom_scientifique,
+         []
+       ],
         'effectif' : [
            model.effectif,
           [Validators.required]
         ],
+        'estimated' : [
+          model.estimated,
+         []
+       ],
         'type_milieu' : [
           model.type_milieu
         ],
@@ -49,7 +57,13 @@ export class MammofauneComponent  extends ProtocolFormComponent{
           ],
          'dateObs' : [
            model.dateObs
-          ]
+          ],
+          'remarques' : [
+            model.remarques
+           ],
+           'images' : [
+            model.images
+           ]
       });
   }
 }

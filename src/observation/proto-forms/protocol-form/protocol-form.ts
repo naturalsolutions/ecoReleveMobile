@@ -10,7 +10,7 @@ import { CommonService } from '../../../shared/notification.service';
 import { Subscription } from 'rxjs/Subscription';
 import {GeoService} from '../../../shared/geolocation.notification.service';
 import {PopoverAutocompPage} from'./popoverAutocompPage'
-
+import {config }  from '../../../config';
 
 @Component({
   selector: 'protocol-form',
@@ -37,6 +37,7 @@ export class ProtocolFormComponent {
     private image : any;
     private instance : any;
     public parent;
+    public images = [];
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams ,
@@ -99,7 +100,9 @@ export class ProtocolFormComponent {
         this.formModel = this.getFormModel(model);
       // set date value
       this.dateObs = Date.now();//  Date.now().getTime();
-   
+      if(this.formModel.value.images && (this.formModel.value.images.length >0)) {
+        this.images = this.formModel.value.images;
+      }
       this.formModel.value.dateObs = this.dateObs;
       // detect form changes to activate "save current obs"
       this.formModel.valueChanges.subscribe(data => {
@@ -113,16 +116,40 @@ export class ProtocolFormComponent {
 
      });
   }
-  onSubmit(value,segment) {
+  /*getImages(){
+    //let images = this.formModel.value.images
+    if(!this.images){
+      images= [];
+    }
+    return images ;
+  }*/
+  setImages(tab){
+    this.formModel.value.images = tab;
+    console.log('***images****');
+    console.log(this.formModel.value.images);
+  }
+  onSubmit(segment) {
     // check if model is valid
     if ((!this.formModel.invalid) &&(segment =='facultatif')) {
       this.formModel.value.finished = true;
+      this.formModel.value.images= this.images;
       console.log(this.formModel.value)
       this.formModel.value.projId = this.projId;
       this.formUpdateData();
       //this.navCtrl.pop();
       this.presentToast('Observation enregistrée.', 'top' )
-      this.reinitform();
+      let latitude = this.latitude
+      let longitude = this.longitude
+      let fieldvalue = null
+      let fieldName = null
+      if(config.defautLastObsValue) {
+        fieldName = config.fieldName
+        fieldvalue = this.formModel.value[fieldName]
+      }
+      if(config.defaultLastStation){
+        this.parent.sameStation = true
+      }
+      this.reinitform(latitude,longitude,fieldName, fieldvalue);
 
       //this.navCtrl.push(ObservationsPage, {projId : this.projId})
     } else {
@@ -132,16 +159,45 @@ export class ProtocolFormComponent {
       
     }
   }
-  reinitform(){
-    this.parent.segment = 'localisation';
+  reinitform(latitude,longitude,fieldName,fieldvalue){
+
+    
+    
+    
+    /*this.formModel.valueChanges.subscribe(data => {
+      this.formChanged = true;
+    })*/
+    if(config.defaultLastStation) {
+      // TODO : update val -> obligatoire
+      
+      this.parent.segment = 'obligatoire';
+      this.formModel.value.latitude = latitude;
+      this.formModel.value.longitude = longitude;
+    } else {
+      this.parent.segment = 'localisation';
+      this.parent.getPosition();
+      // display coordinates
+      this.latitude = this.instance.latitude;
+      this.longitude = this.instance.longitude;
+    }
+    if(config.defautLastObsValue) {
+      this.formModel.value[fieldName] = fieldvalue
+      this.instance[fieldName] = fieldvalue
+    }
+    
     this.buildForm(this.instance);
-    this.parent.getPosition();
+    
+    // update date 
+    this.dateObs = Date.now();//  Date.now().getTime();
+    this.formModel.value.dateObs = this.dateObs;
+
     console.log(' initialisation form ')
     console.log(this.formModel.value)
-    // display coordinates
-    this.latitude = this.instance.latitude;
-    this.longitude = this.instance.longitude;
+    
+
   }
+
+
   presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'Champs requis',
@@ -171,6 +227,7 @@ export class ProtocolFormComponent {
     }
     this.data.saveObs(value)
     this.obsSaved = true;
+    this.images = [];
   }
 
   handleLatChange(lat){
@@ -182,6 +239,12 @@ export class ProtocolFormComponent {
     lon = lon.toFixed(5);
     this.formModel.value.longitude = lon;
     this.longitude = lon;
+  }
+  handleTraceChange(json){
+    console.log('*****json******')
+    console.log(json)
+    this.formModel.value.trace = json
+
   }
   ionViewDidLoad() {
 
@@ -195,21 +258,20 @@ export class ProtocolFormComponent {
     this.handleLatChange(lat)
     this.handleLonChange(lon) 
   }
-  presentPopoverAutocomp(ev, protocole) {
-    ev.stopPropagation();
+  presentPopoverAutocomp(protocole) {
+
     this.formModel.controls['nom_vernaculaire'].setValue('');
-    let popover = this.modalCtrl.create(PopoverAutocompPage, { parent : this, protocole : protocole},{cssClass: 'autocomp'});
-        /*popover.onDidDismiss(data => {
-          
-                    if(data && data.action == "removeObs") {
-                      let protoId= data.protoId
-                      this.data.deleteObs(this.obsId)
-                      this.navCtrl.pop()
-                    }
-                  });*/
-        popover.present({
-          ev: ev
-        });
+    let popover = this.modalCtrl.create(PopoverAutocompPage, { protocole : protocole},{cssClass: 'autocomp'});
+    popover.onDidDismiss(data => {
+      console.log(data);
+      this.formModel.patchValue(data);
+       //this.formModel.value.nom_vernaculaire = data.nom_vernaculaire
+     // this.formModel.value.nom_scientifique = data.
+
+  //this.parent.formModel.controls['nom_vernaculaire'].setValue(verna);
+  //this.parent.formModel.controls['nom_scientifique'].setValue(scientifique);
+    })    
+    popover.present();
 
   }
   presentToast(message, position) {
@@ -226,5 +288,34 @@ export class ProtocolFormComponent {
    // console.log(size)
     //alert('size')
   }
+  deleteImage(image){
+    let self = this;
+    let alert = this.alertCtrl.create({
+      title: 'Suppression de photo',
+      message: 'Etes vous sur(e) de supprimer cette photo?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Oui',
+          handler: () => {
+            self.images.forEach( (item, index) => {
+              if(item === image) self.images.splice(index,1);
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+
+
+
 
 }

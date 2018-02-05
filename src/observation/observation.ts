@@ -8,7 +8,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { Storage } from '@ionic/storage';
 
 //import { Validators } from '@angular/common';
-import { IonicPage, NavController, NavParams, PopoverController,Platform,ToastController  } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, PopoverController,Platform,ToastController,LoadingController  } from 'ionic-angular'
 import { Geolocation } from '@ionic-native/geolocation'
 import { CommonService } from '../shared/notification.service'  // notify exit view to childs
 import { Subscription } from 'rxjs/Subscription'
@@ -47,6 +47,9 @@ export class ObservationPage  {
   lastImage: string = null;
   image : any;
   nbRelances= 0
+  loading : any;
+  sameStation : any
+  editIsDisabled :any =  false
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -63,12 +66,16 @@ export class ObservationPage  {
     public data : ObsProvider,
     private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath ,
     public storage : Storage,
-    private renderer : Renderer
-    
-
+    private renderer : Renderer,
+    public loadingCtrl: LoadingController
   ) {
     this.protocol = navParams.data.protoObj;
     this.projId = navParams.get("projId");
+    // check if we can edit obs (not yet pushed)
+    if(!navParams.get("isEditable")) {
+      this.editIsDisabled = 'disabled' ;
+    }
+    
     this.obsId = navParams.data.obsId || 0;
     //console.log('in obs page, onsId =' + this.obsId)
     if(this.protocol){
@@ -80,6 +87,7 @@ export class ObservationPage  {
 
   ionViewDidLoad() {
     console.log('obs load')
+    this.sameStation = false;
   }
    ionViewDidEnter() {
     console.log('obs load')
@@ -92,8 +100,8 @@ export class ObservationPage  {
     //this.geoServ.notifyOther();
   }
 
-  onSubmit(value) {
-    this.myProto.onSubmit(value,this.segment)
+  onSubmit() {
+    this.myProto.onSubmit(this.segment)
     this.switchToNextSegment()
 
   }
@@ -127,22 +135,29 @@ export class ObservationPage  {
   }
   switchToNextSegment(){
     console.log('segment')
+    console.log(this.myProto.images)
     let btn = this.el.nativeElement.querySelector('.btnsubmit')
     if((this.segment == 'localisation')&&( btn.innerText != 'TERMINER')) {
       this.segment = 'obligatoire'
       this.actionsStatus = true
       this.myProto.hideEspBtn = true;
     } 
-    else if(this.segment == 'obligatoire'){
+    else if((this.segment == 'obligatoire') &&(!this.sameStation)){
       this.segment ='facultatif';
       btn.innerText = 'Terminer';
       this.myProto.hideEspBtn = false;
       this.actionsStatus = false;
-    } else {
+    } 
+    else if (this.sameStation) {
+      this.segment ='obligatoire'
+      this.myProto.hideEspBtn = false;
+    }
+    else {
       this.actionsStatus = false;
       this.myProto.hideEspBtn = true;
     }
     this.myProto.segment = this.segment
+    this.sameStation = false
   }
 
   getbtnSubmitWidth(){
@@ -194,13 +209,17 @@ export class ObservationPage  {
   getPosition(){
       this.platform.ready().then(() => {
       // get current position
-      //this.presentToast('get coordinates', 'top')
-      // TODO spinner get coordinates
-      this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 12000, maximumAge: 0}).then(pos => {
+        this.loading = this.loadingCtrl.create({
+          content: 'aquisition des coordonnées...'
+        });
+        this.loading.present();
+      this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 20000, maximumAge: 0}).then(pos => {
         //this.presentToast('lat: '+ pos.coords.latitude + ", lon: " +pos.coords.longitude, 'top' )
         this.myProto.updatePosition(pos.coords.latitude ,pos.coords.longitude);
+        this.loading.dismiss();
 
       }, (err) => {
+        this.loading.dismiss();
         this.nbRelances +=1;
         this.presentToast('erreur gps', 'top' );
         if(this.nbRelances < 4 ) {
@@ -222,7 +241,7 @@ export class ObservationPage  {
     });
     toast.present();
   }
-  takePicture(){
+  takePicture(projId,obsId){
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -241,14 +260,16 @@ export class ObservationPage  {
       correctOrientation: true
   }).then((imageData) => {
     // imageData is a base64 encoded string
-      this.image = "data:image/jpeg;base64," + imageData;
-      console.log(this.image);
-      this.storage.set('image', this.image);
-      this.myProto.image = this.image;
-      //this.fileURL = imageData;
-      //this.images.push(this.base64Image);
-      //this.isPicture = 1;
-      //this.uploadPictures(this.fileURL);
+      let image = "data:image/jpeg;base64," + imageData;
+      //console.log(this.image);
+      //let images =  this.myProto.getImages();
+      let images =  this.myProto.images;
+      //let storageName = 'image' + '-' + Date.now() ;
+      //images.push(storageName);
+      images.push(image);
+      this.myProto.images = images;
+      //this.storage.set('storageName', image);
+
   }, (err) => {
       console.log(err);
   });

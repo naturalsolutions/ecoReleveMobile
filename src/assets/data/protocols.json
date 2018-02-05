@@ -5,6 +5,18 @@
         "id": 1
     },
     {
+        "name": "Batracho",
+        "label": "Batrachofaune",
+        "image": "./assets/icones_protocoles/batracho.png",
+        "id": 4
+    },
+    {
+        "name": "Chiro",
+        "label": "Chiroptères",
+        "image": "./assets/icones_protocoles/chiro.png",
+        "id": 5
+    },
+    {
         "name": "Herpeto",
         "label": "Herpetofaune",
         "image": "./assets/icones_protocoles/herpeto.png",
@@ -15,12 +27,5 @@
         "label": "Mammofaune",
         "image": "./assets/icones_protocoles/mammo.png",
         "id": 3
-    },
-    {
-        "name": "Batracho",
-        "label": "Batrachofaune",
-        "image": "./assets/icones_protocoles/batracho.png",
-        "id": 4
     }
-
 ]

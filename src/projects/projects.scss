@@ -22,4 +22,17 @@ page-projects {
     .tuilesToastError {
         background: rgb(209, 71, 71);
     }
+    .allprojitem {
+        padding-bottom: 8px;
+        padding-top: 8px;
+    }
+    .allprojitem .item-inner {
+        padding-bottom: 10px;
+    }
+    .allprojitem .label-md {
+        flex: 0;
+    }
+    .myprojcheckbox .item-block .item-inner {
+        border-bottom: 0px;
+    }
 }

@@ -49,6 +49,6 @@
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
-        <button ion-button type="submit" block (click)="newObs()">Nouvelle observation</button>
+        <button ion-button type="submit" block (click)="newObs()" [disabled]="newObsDisabled">Nouvelle observation</button>
     </ion-toolbar>
 </ion-footer>

@@ -7,7 +7,7 @@ export class ProtocolsServiceProvider {
   data:any;
 
   constructor(public http: Http) {
-    console.log('Hello ProtocolsServiceProvider Provider');
+
   }
   load(){
     if(this.data){
@@ -18,7 +18,6 @@ export class ProtocolsServiceProvider {
       this.http.get('assets/data/protocols.json')
       .map(res => res.json())
       .subscribe(data => {
-        console.log('projets chargés');
         this.data = data;
         resolve(this.data);
       });

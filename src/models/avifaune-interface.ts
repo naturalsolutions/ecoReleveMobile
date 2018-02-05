@@ -5,6 +5,7 @@ interface AvifauneInterface {
     nom_vernaculaire: string,
    nom_scientifique: string,
     effectif: number,
+    estimated : number,
     type_milieu: string,
     comportement: string,
     sexe: string,
@@ -13,7 +14,9 @@ interface AvifauneInterface {
     latitude:number,
     longitude: number,
     dateObs: number,
-    projId : number
+    projId : number,
+    remarques : string,
+    images : string
 }
 export   class Avifaune implements AvifauneInterface {  
         constructor(
@@ -23,6 +26,7 @@ export   class Avifaune implements AvifauneInterface {
           public nom_vernaculaire ='',
           public nom_scientifique ='',
           public effectif=null,
+          public estimated = 0,
           public type_milieu ='',
           public comportement ='',
           public sexe ='',
@@ -31,7 +35,9 @@ export   class Avifaune implements AvifauneInterface {
           public latitude= 0,
           public longitude=0,
           public dateObs =0,
-          public projId
+          public projId,
+          public remarques ='',
+          public images
         ) {
         } 
 }

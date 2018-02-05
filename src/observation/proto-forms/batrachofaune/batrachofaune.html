@@ -1,9 +1,9 @@
 <form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
-            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude"></map>
+            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude"></map>
             <br/>
-            <p><b>Date</b> : {{dateObs | date :'shortDate'}},<b>heure </b>: {{dateObs | date :'shortTime'}}</p>
+            <p><b>Date</b> : {{dateObs | date: 'dd/MM/yyyy'}} , <b>heure </b>: {{dateObs | date :'HH:mm'}}</p>
             <p><b>Latitude </b>: {{latitude}} , <b>longitude </b>: {{longitude}}</p>
 
 
@@ -24,14 +24,33 @@
                     <ion-option value="Troubleau">Troubleau</ion-option>
                 </ion-select>
             </ion-item>
+
+
+
+
+            <ion-item (click)="presentPopoverAutocomp('batrachofaune')">
+                <ion-label *ngIf="!formModel.value.nom_vernaculaire" class="labelSpecie">Nom vernaculaire</ion-label>
+                <ion-label stacked *ngIf="formModel.value.nom_vernaculaire" class="labelSpecie">Nom vernaculaire</ion-label>
+                <div item-content *ngIf="formModel.value.nom_vernaculaire" class="specieValue">{{formModel.value.nom_vernaculaire}}</div>
+            </ion-item>
+            <ion-item>
+                <ion-input type="hidden" formControlName="nom_vernaculaire"></ion-input>
+            </ion-item>
+            <ion-item [class.hide]="true">
+                <ion-label floating>Nom scientifique</ion-label><br/>
+
+                <ion-input readOnly formControlName="nom_scientifique"></ion-input>
+
+            </ion-item>
+
+
             <ion-item>
                 <ion-label floating>Effectif</ion-label>
                 <ion-input type="number" formControlName="effectif"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Nom vernaculaire</ion-label><br/>
-                <ion-input readOnly formControlName="nom_vernaculaire" (click)="presentPopoverAutocomp($event, 'batrachofaune')"></ion-input>
-
+                <ion-label class="labelSpecie">Valeur estimée</ion-label>
+                <ion-checkbox formControlName="estimated" item-right></ion-checkbox>
             </ion-item>
 
 
@@ -94,12 +113,13 @@
                     <ion-option value="certain">certain</ion-option>
                 </ion-select>
             </ion-item>
+            <ion-item>
+                <ion-label floating>Remarques</ion-label>
+                <ion-textarea formControlName="remarques"></ion-textarea>
+            </ion-item>
 
         </ion-list>
 
     </div>
     <!--<button ion-button type="submit" [disabled]="formModel.invalid" block>Terminer</button>-->
-    <div>
-        <button ion-button class="" [class.hide]="hideEspBtn" (click)="presentPopoverAutocomp($event, 'batrachofaune')" color="light">espece</button>
-    </div>
 </form>

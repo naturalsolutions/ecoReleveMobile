@@ -33,7 +33,9 @@ export class ProjectsServiceProvider {
         this.data = data[1];
         for (let proj in this.data) {
             this.data[proj]['isLoaded'] = false;
+            this.data[proj]['isPushed'] = false;
         }
+        this.data = _.sortBy(this.data, 'Name');
         resolve(this.data);
       },
       err => {
@@ -129,43 +131,8 @@ export class ProjectsServiceProvider {
                 bbox['maxLng'] = extent[2] + 0.005;
                 bbox['maxLat'] = extent[3] + 0.005;
                 console.log('minLng: ' + extent[0] + ",minLat: " + extent[1] + " ,maxLng : " +  extent[2] + " ,maxLat: " + extent[3])
-                this.toastCreate();
-                this.mapModel.downloadTiles(bbox,10,17).then(val =>{
-
-                  this.toastDismisser();
-
-                  if(val) {
-                    this.toastinstance = this.toastCtrl.create({
-                      message: 'Téléchargement réussi.',
-                      duration: 3000,
-                      position : 'top',
-                      cssClass: "tuilesToastOk"
-                    }).present();
-                    this.storage.set('tilesLoadedForProj-'+id, true);
-
-                  } else {
-                    this.toastinstance = this.toastCtrl.create({
-                      message: 'Erreur de téléchargement de tuiles carto.',
-                      duration: 3000,
-                      position : 'top',
-                      cssClass: "tuilesToastError"
-                    }).present();
-
-                    this.storage.set('tilesToLoadForProj-'+id, bbox);
-
-                  }
-                  
-
-                }, error=> {
-                  this.toastDismisser();
-                  this.toastinstance = this.toastCtrl.create({
-                    message: 'Erreur de téléchargement de tuiles carto.',
-                    duration: 3000,
-                    position : 'top',
-                    cssClass: "tuilesToastError"
-                  }).present();
-                  this.storage.set('tilesToLoadForProj-'+id, bbox);
-                });
+                this.storage.set('bboxProj-'+ id, bbox)
+                this.downloadTiles(bbox,id)
               }
           });
         }
@@ -182,6 +149,50 @@ export class ProjectsServiceProvider {
   }
     
   toastDismisser(){
+    if(this.toastinstance) {
       this.toastinstance.dismiss();
+    }
   }
+  downloadTiles(bbox,id, tilelayer=null){
+
+    this.toastCreate();
+    this.mapModel.downloadTiles(bbox,10,17,tilelayer).then(val =>{
+    //this.toastDismisser();
+
+    if(val) {
+      this.toastinstance = this.toastCtrl.create({
+        message: 'Téléchargement réussi.',
+        duration: 3000,
+        position : 'top',
+        cssClass: "tuilesToastOk"
+      }).present();
+      this.storage.set('tilesLoadedForProj-'+id, true);
+
+    } else {
+      this.toastinstance = this.toastCtrl.create({
+        message: 'Erreur de téléchargement de tuiles carto.',
+        duration: 3000,
+        position : 'top',
+        cssClass: "tuilesToastError"
+      }).present();
+
+      this.storage.set('tilesToLoadForProj-'+id, bbox);
+
+    }
+
+    return(val)
+    
+
+  }, error=> {
+    this.toastDismisser();
+    this.toastinstance = this.toastCtrl.create({
+      message: 'Erreur de téléchargement de tuiles carto.',
+      duration: 3000,
+      position : 'top',
+      cssClass: "tuilesToastError"
+    }).present();
+    this.storage.set('tilesToLoadForProj-'+id, bbox);
+    return 0
+  });
+}
 }

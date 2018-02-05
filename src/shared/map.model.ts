@@ -159,9 +159,9 @@ export class MapModel {
     }
   }
 
-  downloadTiles(options=null, minZoom=null,maxZoom=null) {
+  downloadTiles(options=null, minZoom=null,maxZoom=null, tilelayer=null) {
     return new Promise((resolve, reject) => {
-      let cacheBounds,minZoomLoad, maxZoomLoad
+      let cacheBounds,minZoomLoad, maxZoomLoad, tiles
       if(options) {
         cacheBounds = options
       } else {
@@ -178,8 +178,13 @@ export class MapModel {
       }else {
         maxZoomLoad = this.cacheZoom
       }
+      if(!tilelayer){
+        tiles = this.tileLayer
+      } else {
+        tiles = tilelayer
+      }
 
-      let tileList = this.tileLayer.calculateXYZListFromBounds({
+      let tileList = tiles.calculateXYZListFromBounds({
         getNorthWest: function () {
           return {
             lat: cacheBounds.maxLat,
@@ -193,15 +198,18 @@ export class MapModel {
           }
         }
       }, minZoomLoad, maxZoomLoad)
-      this.tileLayer.downloadXYZList(tileList,
+      tiles.downloadXYZList(tileList,
         // Overwrite existing tiles on disk? if no then a tile already on disk will be kept, which can be a big time saver
-        false,
+        true,
         // Progress callback
         (done, total) => {
           var percent = Math.round(100 * done / total);
           //console.log('downloadTiles Progress', done + " / " + total + " = " + percent + "%")
           let message ='Progression ' +  done + " / " + total + " = " + percent + "%";
-          
+          if(percent == 99) {
+            message = 'Téléchargement réussi.'
+            resolve(1)
+          }
 
           this.parent.toastinstance = this.parent.toastCtrl.create({
             message: message ,
@@ -216,12 +224,16 @@ export class MapModel {
         },
         // Complete callback
         () => {
-          this.tileLayer.getDiskUsage((filecount, bytes) => {
+          tiles.getDiskUsage((filecount, bytes) => {
             let kilobytes = Math.round(bytes / 1024);
-            console.log('downloadTiles Done', filecount + " files" + " : " + kilobytes + " kB");
+            if(filecount) {
+              console.log('downloadTiles Done', filecount + " files" + " : " + kilobytes + " kB");
+              console.log('Done')
+
+            }
+            
           });
-          console.log('Done')
-          resolve()
+
         },
         // Error callback
         (error) => {

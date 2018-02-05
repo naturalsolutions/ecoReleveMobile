@@ -2,21 +2,21 @@
 import { Component } from '@angular/core';
 import {ProtocolFormComponent } from '../protocol-form/protocol-form';
 import { Validators } from '@angular/forms';
-import {Avifaune} from '../../../models/avifaune-interface';
+import {Chiropteres} from '../../../models/chiropteres-interface';
 
 @Component({
-  selector: 'avifaune',
-  templateUrl: 'avifaune.html'
+  selector: 'chiropteres',
+  templateUrl: 'chiropteres.html'
 })
-export class AvifauneComponent extends ProtocolFormComponent {
+export class ChiropteresComponent extends ProtocolFormComponent {
 
   ngOnInit() {
-    super.ngOnInit(Avifaune);
+    super.ngOnInit(Chiropteres);
   }
 
   getFormModel(model){
         return this.builder.group({
-        'protocole':'Avifaune',
+        'protocole':'Chiro',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]
@@ -37,6 +37,10 @@ export class AvifauneComponent extends ProtocolFormComponent {
           model.estimated,
          []
        ],
+        'nb_contact': [
+            model.nb_contact,
+         [Validators.required]
+        ],
         'type_milieu' : [
           model.type_milieu
         ],
@@ -46,11 +50,8 @@ export class AvifauneComponent extends ProtocolFormComponent {
         'sexe': [
            model.sexe
         ],
-        'code_atlas' : [
-           model.code_atlas
-        ],
-        'hauteur_vol': [
-           model.hauteur_vol
+        'hauteur_detection': [
+           model.hauteur_detection
         ], 
          'latitude' : [
             model.latitude

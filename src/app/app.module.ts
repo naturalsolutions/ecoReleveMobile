@@ -30,6 +30,7 @@ import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaun
 import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
 import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
 import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
+import { ChiropteresComponent } from '../observation/proto-forms/chiropteres/chiropteres';  
 
 import {PopoverPage} from'../observation/popoverPage';
 import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
@@ -57,6 +58,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     AvifauneComponent,
     MammofauneComponent,
     HerpetofauneComponent,
+    ChiropteresComponent,
     MapComponent,
     PopoverPage,
     PopoverAutocompPage,
@@ -84,6 +86,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     PopoverAutocompPage,
     AvifauneComponent,
     HerpetofauneComponent,
+    ChiropteresComponent,
     MammofauneComponent,
     BatrachofauneComponent
     

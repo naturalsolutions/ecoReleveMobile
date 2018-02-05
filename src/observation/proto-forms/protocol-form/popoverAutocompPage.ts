@@ -1,9 +1,7 @@
-import { Component,ElementRef,Renderer } from '@angular/core';
+import { Component,ElementRef,Renderer,ViewChild  } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavController,NavParams,ViewController } from 'ionic-angular';
+import { NavController,NavParams,ViewController,Searchbar  } from 'ionic-angular';
 import { CompleteTaxaService } from '../../../providers/autocomplete-service';
-/*import { Component, ViewChild, ElementRef } from '@angular/core';
-import { PopoverController, NavController,ViewController, NavParams,AlertController } from 'ionic-angular';*/
 
 
 @Component({
@@ -53,24 +51,22 @@ export class PopoverAutocompPage {
     items: any;
     searching: any = false;
     protocole : any;
+    @ViewChild(Searchbar) searchbar:Searchbar;
     
-  
-    parent : any;
 
   constructor( 
     public navCtrl: NavController,
     public completeTaxaService: CompleteTaxaService,
-    //private el: ElementRef,
+
     public viewCtrl: ViewController,
     public navParams: NavParams,
     private elementRef: ElementRef,
     public renderer: Renderer
-   // public data : ObsProvider,
-   // private alertCtrl: AlertController
+
   
   ) {
     this.searchControl = new FormControl();
-    this.parent  = navParams.data.parent
+
     this.protocole = navParams.data.protocole
     
 
@@ -82,10 +78,10 @@ export class PopoverAutocompPage {
     const searchInput = this.elementRef.nativeElement.querySelector('input');
     setTimeout(() => {
       //delay required or ionic styling gets finicky
-      this.renderer.invokeElementMethod(searchInput, 'focus', []);
-    }, 100);
+     this.renderer.invokeElementMethod(searchInput, 'focus', []);
+    }, 200);
     
-
+    
 
 
 
@@ -99,7 +95,13 @@ export class PopoverAutocompPage {
            });
     
     
-       }
+    }
+
+    ionViewDidEnter() {
+      setTimeout(() => {
+        this.searchbar.setFocus();
+      });
+    }
     setFilteredItems() {
         if(this.searchTerm && (this.searchTerm.length > 2)) {
           this.completeTaxaService.getResults(this.searchTerm, this.protocole).then(data =>{
@@ -110,42 +112,12 @@ export class PopoverAutocompPage {
                
         
     }
- /* deleteConfirm() {
-    let alert = this.alertCtrl.create({
-      title: 'Suppression d\'observation',
-      message: 'Etes vous sur(e) de supprimer cette observation?',
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'OK',
-          handler: () => {
-            let data = {"action" : "removeObs", "protoId" :this.obsId  };
-            this.dismiss(data)
-            this.data.deleteObs(this.obsId)
-            this.parent.navCtrl.pop()
-          }
-        }
-      ]
-    });
-    alert.present();
-  }*/
+
 
 
   onSearchInput(e){
     this.searching = true;
     this.setFilteredItems();
-    /*this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
-      
-                 this.searching = false;
-                 this.setFilteredItems();
-      
-             });*/
 }
 onCancel(e){
    // this.searching = true;
@@ -153,13 +125,10 @@ onCancel(e){
 getSelected(e){
   let verna = e.label
   let scientifique = e.latin
-
-  this.parent.formModel.value.nom_vernaculaire = verna
-  this.parent.formModel.value.nom_scientifique = scientifique
-
-  this.parent.formModel.controls['nom_vernaculaire'].setValue(verna);
-  this.parent.formModel.controls['nom_scientifique'].setValue(scientifique);
-  this.viewCtrl.dismiss();
+  this.viewCtrl.dismiss({
+    nom_vernaculaire : verna,
+    nom_scientifique : scientifique
+  });
 }
 
 }

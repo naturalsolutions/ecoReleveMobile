@@ -1,9 +1,12 @@
 import { Component,ElementRef } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular'
 import {ObsProvider} from '../providers/obs/obs'
 import { ProtocolsPage } from '../protocols/protocols'
 import {ProtocolsServiceProvider} from '../providers/protocols-service'
 import { ObservationPage} from '../observation/observation'
+import { Storage } from '@ionic/storage'
+import { MapModel } from '../shared/map.model'
+import {ProjectsServiceProvider} from '../providers/projects-service';
 //import {MapComponent} from '../components/map/map'
 //import { Subscription } from 'rxjs/Subscription'
 //import { MapNotificationService } from '../shared/map.notification.service'
@@ -14,8 +17,8 @@ import { ObservationPage} from '../observation/observation'
   selector: 'page-observations',
   templateUrl: 'observations.html',
   providers : [
-    ProtocolsServiceProvider//,
-    //MapComponent
+    ProtocolsServiceProvider,
+    ProjectsServiceProvider
   ]
 })
 export class ObservationsPage {
@@ -26,6 +29,7 @@ export class ObservationsPage {
   protocols : any;
   public map : any
   public projId : any
+  newObsDisabled = false
   //private subscription: Subscription;
 
   constructor(
@@ -34,15 +38,20 @@ export class ObservationsPage {
   private data : ObsProvider,
   public protocolsService : ProtocolsServiceProvider,
   private el: ElementRef,
+  public storage : Storage,
+  private alertCtrl: AlertController,
+  public projectsService : ProjectsServiceProvider
   //public map : MapComponent,
   //private NotificationService: MapNotificationService
 
   ) {
     this.projId = navParams.get("projId")
+    this.newObsDisabled = navParams.get("isPushed")
     this.loadProtocols()
   }
 
   ionViewDidLoad() {
+    
     
   }
   ionViewDidEnter(){
@@ -68,21 +77,14 @@ export class ObservationsPage {
       this.obs = data
       this.waypoints = points
      }
-
     );
-    // when map is loaded, add waypoints
-    // subscription to notify loading map
-    /*this.subscription = this.NotificationService.notifyObservable$.subscribe((res) => {
-      let map = res.map
-      this.map.addStations(this.waypoints, map)
-    })*/
-    
   }
+
   navigateToDetail(protocole,id){
     // get selected protocol
     let protocol = this.protocols.find(x => x.name === protocole);
     console.log(protocol, id);
-    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId});
+    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId, 'isEditable' : !this.newObsDisabled});
   }
   newObs(){
     console.log('new obs');
@@ -101,40 +103,39 @@ export class ObservationsPage {
     let src="";
     if(finished){
       switch(protocole) {
-          case "avifaune":
+          case "Avifaune":
               src="avifaune.png";
               break;
-          case "herpetofaune":
+          case "Herpeto":
               src="herpeto.png";   
               break;
-           case "mammofaune":
-             src="mammo.png";  //TODO update picto 
+           case "Mammo":
+             src="mammo.png";   
             break;
-            case "batrachofaune":
-            src="batracho.png";  //TODO update picto 
+            case "Batracho":
+            src="batracho.png";  
             break;
-
-          default:
-              src="avifaune.jpg";  //TODO update picto 
+            case "Chiro":
+            src="chiro.png";  //TODO update picto 
+            break;
       }
 
     } else {
       switch(protocole) {
-          case "avifaune":
-              src="avifaune_progress.png"; //TODO update picto 
+          case "Avifaune":
+              src="avifaune_progress.png";  
+          case "Herpeto":
+              src="herpeto_progress.png";    
               break;
-          case "herpetofaune":
-              src="herpeto_progress.png";   //TODO update picto 
-              break;
-           case "mammofaune":
-             src="mammo_progress.png";  //TODO update picto 
+           case "Mammo":
+             src="mammo_progress.png";   
             break;
-            case "batrachofaune":
-            src="batracho_progress.png";  //TODO update picto 
+            case "Batracho":
+            src="batracho_progress.png";   
             break;
-
-          default:
-              src="avifaune_progress.png";  //TODO update picto 
+            case "Chiro":
+            src="chiro_progress.png";  //TODO update picto 
+            break;
       }
 
     }

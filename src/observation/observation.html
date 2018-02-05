@@ -29,6 +29,6 @@
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
         <button ion-button [class.hide]="actionsStatus" (click)="presentPopoverActions($event)" class="actionsBtn" color="light">Plus d'actions</button>
-        <button ion-button type="submit" class="btnsubmit" (click)="onSubmit($event)" [style.width]="getbtnSubmitWidth()">Suivant</button>
+        <button ion-button type="submit" class="btnsubmit" (click)="onSubmit()" [style.width]="getbtnSubmitWidth()" [disabled]="editIsDisabled">Suivant</button>
     </ion-toolbar>
 </ion-footer>

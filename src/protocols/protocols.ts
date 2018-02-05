@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 import {ProtocolsServiceProvider} from '../providers/protocols-service';
 import { ObservationPage} from '../observation/observation';
+import {Geolocation } from '@ionic-native/geolocation'
 
 
 @IonicPage()
@@ -16,7 +17,11 @@ export class ProtocolsPage {
   projSelect :any = false;
   public projId : any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public protocolsService : ProtocolsServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public protocolsService : ProtocolsServiceProvider,private geolocation: Geolocation,
+    public toastCtrl: ToastController,
+  
+  ) {
     this.projId = navParams.get("projId");
     this.loadProtocols()
   }
@@ -31,7 +36,17 @@ export class ProtocolsPage {
   }
 
   ionViewDidEnter(){
-    console.log(' protocols  page did enter')
+    this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 12000, maximumAge: 0}).then(pos => {
+
+    }, (err) => {
+      let toast = this.toastCtrl.create({
+        message: 'erreur gps',
+        duration: 3000,
+        position : 'top'
+      });
+      toast.present();
+      
+    });
 
   }
 
@@ -46,7 +61,7 @@ export class ProtocolsPage {
     // get selected protocol
     let protocol = this.protocols.find(x => x.id === id);
     console.log(protocol);
-    this.navCtrl.push(ObservationPage, {protoObj:protocol, projId : this.projId});
+    this.navCtrl.push(ObservationPage, {protoObj:protocol, projId : this.projId, 'isEditable' : true});
   }
 
 }
