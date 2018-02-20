@@ -31,26 +31,34 @@ export class CompleteTaxaService {
         let tableName ;
         let itemNormalise = null;
         switch(protocole) {
-          case 'avifaune':
-          tableName = 'Bird'
-              break;
-          case 'batrachofaune':
-          tableName = 'Amphibia'
-              break;
-          case 'herpetofaune':
-          tableName = 'Reptil'
-                  break;
-          case 'mammofaune':
-          tableName = 'Mammal'
+          case 'avifaune': {
+            tableName = 'Bird'
             break;
-          case 'insect' :
-          tableName = 'Insect'
-
-          case 'insect' :
-          tableName = 'Insect'
-
-          default:
-                 'avifaune'
+          }
+          case 'batrachofaune': {
+            tableName = 'Amphibia'
+            break;
+          }
+          case 'herpetofaune': {
+            tableName = 'Reptil'
+            break;
+          }
+          case 'mammofaune': {
+            tableName = 'Mammal'
+            break;
+          }
+          case 'insect' : {
+            tableName = 'Insect'
+            break;
+          }
+          case 'chiro' : {
+            tableName = 'Chiroptera'
+            break;
+          }
+          default: {
+            tableName = 'avifaune'
+            break;
+          }
       }
 
       itemNormalise = item.toLowerCase()
@@ -88,7 +96,7 @@ export class CompleteTaxaService {
                   })
                     .then((db: SQLiteObject) => { 
                       console.log('open SQL');
-                      db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_NORMALISE LIKE "%'+itemNormalise+'%" ORDER BY NOM_VERN ASC', {})
+                      db.executeSql('SELECT CD_NOM AS taxref_id, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_NORMALISE LIKE "%'+itemNormalise+'%" ORDER BY LOWER(NOM_VERN) ASC', {})
                         .then((res) => {
                           db.close();
                           var data = []
