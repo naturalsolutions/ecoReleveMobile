@@ -1,4 +1,7 @@
 export var config = {
-    serverUrl: ...
+    serverUrl: 'http://url.siteweb.com/',
+    defaultLastStation: true,
+    defautLastObsValue : true,
+    fieldName : 'type_inventaire'
 
 }
