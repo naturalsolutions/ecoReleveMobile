@@ -23,7 +23,7 @@ export   class Mammo implements MammoInterface {
         public type_inventaire ='',
         public nom_vernaculaire ='',
         public nom_scientifique ='',
-        public effectif=null,
+        public effectif=1,
         public estimated = 0,
         public type_milieu ='',
         public comportement ='',

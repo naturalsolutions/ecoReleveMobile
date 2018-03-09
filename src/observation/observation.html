@@ -28,7 +28,8 @@
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
-        <button ion-button [class.hide]="actionsStatus" (click)="presentPopoverActions($event)" class="actionsBtn" color="light">Plus d'actions</button>
-        <button ion-button type="submit" class="btnsubmit" (click)="onSubmit()" [style.width]="getbtnSubmitWidth()" [disabled]="editIsDisabled">Suivant</button>
+        <button ion-button (click)="presentPopoverActions($event)" class="actionsBtn" color="light"><img src="./assets/icon/plusdaction.png"></button>
+        <button ion-button (click)="takePicture($event)" class="actionsBtn" color="light"><img src="./assets/icon/camera.png"></button>
+        <button ion-button type="submit" class="btnsubmit" (click)="onSubmit()" [disabled]="editIsDisabled">Suivant</button>
     </ion-toolbar>
 </ion-footer>

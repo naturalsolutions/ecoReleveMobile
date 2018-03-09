@@ -453,12 +453,16 @@ export class ProjectsPage {
                     observation['station']['FK_Project'] = obs[dt]['projId'];
                     observation['type_name'] = obs[dt]['protocole'];
                     let dateObs =  obs[dt]['dateObs'];
-                    var obsdate = moment(dateObs);
-                    var day = obsdate.date();
-                    var month = obsdate.month (); 
-                    var year = obsdate.year();
-                    observation['station']['StationDate'] =  day + "/"+ (month+1) + "/"  + year;
-                    observation['station']['Name'] = 'test';
+                    let obsdate = moment(dateObs);
+                    let day = obsdate.date();
+                    let month = obsdate.month (); 
+                    let year = obsdate.year();
+                    let hours = obsdate.hours();  
+                    let minutes = obsdate.minutes();  
+                    let seconds = obsdate.seconds();  
+
+                    observation['station']['StationDate'] =  day + "/"+ (month+1) + "/"  + year + " " + hours + ":" + minutes + ":" + seconds ;
+                    observation['station']['Name'] = 'mob_' + projID +'_'+ year + (month+1) + day + '_' + observation['station']['LAT'] ;
 
                     let p= new Promise((resolve, reject) => {
                       this.data.pushObs(observation).then(data =>{

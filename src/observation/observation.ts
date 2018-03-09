@@ -241,7 +241,9 @@ export class ObservationPage  {
     });
     toast.present();
   }
-  takePicture(projId,obsId){
+  takePicture(){
+    let projId = this.projId
+    let obsId = this.obsId
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,

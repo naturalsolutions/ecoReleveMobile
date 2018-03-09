@@ -117,6 +117,12 @@
                 <ion-label floating>Remarques</ion-label>
                 <ion-textarea formControlName="remarques"></ion-textarea>
             </ion-item>
+            <div class="imagesContainer">
+                <div *ngFor="let image of images" class="imgContainer">
+                    <img src={{image}}>
+                    <button class="delImg" (click)="deleteImage(image)">supprimer</button>
+                </div>
+            </div>
 
         </ion-list>
 

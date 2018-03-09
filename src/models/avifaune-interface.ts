@@ -3,7 +3,7 @@ interface AvifauneInterface {
     protocole : string,
     type_inventaire: string,
     nom_vernaculaire: string,
-   nom_scientifique: string,
+    taxon: string,
     effectif: number,
     estimated : number,
     type_milieu: string,
@@ -16,7 +16,9 @@ interface AvifauneInterface {
     dateObs: number,
     projId : number,
     remarques : string,
-    images : string
+    images : string,
+    trace : string,
+    taxref_id : number
 }
 export   class Avifaune implements AvifauneInterface {  
         constructor(
@@ -24,8 +26,8 @@ export   class Avifaune implements AvifauneInterface {
           public protocole ='',
           public type_inventaire ='',
           public nom_vernaculaire ='',
-          public nom_scientifique ='',
-          public effectif=null,
+          public taxon ='',
+          public effectif=1,
           public estimated = 0,
           public type_milieu ='',
           public comportement ='',
@@ -37,7 +39,9 @@ export   class Avifaune implements AvifauneInterface {
           public dateObs =0,
           public projId,
           public remarques ='',
-          public images
+          public images,
+          public trace ='',
+          public taxref_id=null
         ) {
         } 
 }

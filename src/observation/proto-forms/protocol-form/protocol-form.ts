@@ -26,6 +26,7 @@ export class ProtocolFormComponent {
     public dateObs : any;
     public latitude: any;
     public longitude: any;
+    public trace : any;
     private subscription: Subscription;
     private geoSub :  Subscription;
     private obsSaved : boolean = false;
@@ -71,6 +72,13 @@ export class ProtocolFormComponent {
             // display coordinates
             this.latitude = parseFloat(this.instance.latitude);
             this.longitude = parseFloat(this.instance.longitude);
+
+            // get json trace if exists
+            if(this.instance.trace) {
+              this.trace = this.instance.trace
+            } else {
+              this.trace = null;
+            }
         });
 
       } else {
@@ -133,6 +141,7 @@ export class ProtocolFormComponent {
     if ((!this.formModel.invalid) &&(segment =='facultatif')) {
       this.formModel.value.finished = true;
       this.formModel.value.images= this.images;
+      this.formModel.value.trace = this.trace
       console.log(this.formModel.value)
       this.formModel.value.projId = this.projId;
       this.formUpdateData();
@@ -243,7 +252,7 @@ export class ProtocolFormComponent {
   handleTraceChange(json){
     console.log('*****json******')
     console.log(json)
-    this.formModel.value.trace = json
+    this.trace = JSON.stringify(json) 
 
   }
   ionViewDidLoad() {

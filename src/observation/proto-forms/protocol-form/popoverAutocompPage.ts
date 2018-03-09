@@ -36,6 +36,7 @@ import { CompleteTaxaService } from '../../../providers/autocomplete-service';
       {{item.vernaculaire}}
       <br>
       <i class="js-nomlatin">{{item.latin}}</i>
+      <i class="js-nomlatin" [class.hide]="true">{{item.taxrefid}}</i>
     </ion-item>
   </ion-list>
  
@@ -104,6 +105,7 @@ export class PopoverAutocompPage {
     }
     setFilteredItems() {
         if(this.searchTerm && (this.searchTerm.length > 2)) {
+          this.searching = true;
           this.completeTaxaService.getResults(this.searchTerm, this.protocole).then(data =>{
             this.items = data;
             this.searching = false;
@@ -116,7 +118,7 @@ export class PopoverAutocompPage {
 
 
   onSearchInput(e){
-    this.searching = true;
+   
     this.setFilteredItems();
 }
 onCancel(e){
@@ -125,9 +127,11 @@ onCancel(e){
 getSelected(e){
   let verna = e.label
   let scientifique = e.latin
+  let id = e.taxref_id
   this.viewCtrl.dismiss({
     nom_vernaculaire : verna,
-    nom_scientifique : scientifique
+    taxon : scientifique,
+    taxref_id : id
   });
 }
 

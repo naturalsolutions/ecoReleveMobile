@@ -118,6 +118,9 @@ export class ObservationsPage {
             case "Chiro":
             src="chiro.png";  //TODO update picto 
             break;
+            case "Flore":
+            src="flore.png";  
+            break;
       }
 
     } else {
@@ -135,6 +138,9 @@ export class ObservationsPage {
             break;
             case "Chiro":
             src="chiro_progress.png";  //TODO update picto 
+            break;
+            case "Flore":
+            src="flore_progress.png";  
             break;
       }
 

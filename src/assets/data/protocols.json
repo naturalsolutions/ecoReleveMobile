@@ -17,6 +17,12 @@
         "id": 5
     },
     {
+        "name": "Flore",
+        "label": "Flore",
+        "image": "./assets/icones_protocoles/flore.png",
+        "id": 6
+    },
+    {
         "name": "Herpeto",
         "label": "Herpetofaune",
         "image": "./assets/icones_protocoles/herpeto.png",

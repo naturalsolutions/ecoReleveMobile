@@ -6,11 +6,15 @@ page-observation {
         padding: 10px;
     }
     .actionsBtn {
-        width: 45%;
+        width: 24%;
     }
-    /*.btnsubmit {
-        width: 45%;
-    }*/
+    .actionsBtn img {
+        max-width: 90%;
+        max-height: 50%;
+    }
+    .btnsubmit {
+        width: 44%;
+    }
 }
 
 .actionItem {
@@ -20,4 +24,8 @@ page-observation {
 .delImg {
     padding: 10px;
     margin-bottom: 20px;
+}
+
+.popover-page .label {
+    padding-left: 15px;
 }

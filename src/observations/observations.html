@@ -1,17 +1,17 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>observations</ion-title>
+        <ion-title>Mes observations</ion-title>
     </ion-navbar>
 
     <!-- segment -->
     <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
         <ion-segment [(ngModel)]="obsSegment" (ionChange)="onSegmentChanged($event)">
             <ion-segment-button value="listes">
-                Listes
+                Liste
             </ion-segment-button>
             <ion-segment-button value="stations">
-                Stations
+                Carte
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>

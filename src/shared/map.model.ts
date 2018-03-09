@@ -24,12 +24,14 @@ export class MapModel {
       size: options.tileSize || 256
     })*/
   }
+  
+  //http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 
   initialize(options?): any {
     options = options || {};
     return new Promise((resolve, reject) => {
       tileLayerCordova(L)
-      this.tileLayer = L['tileLayerCordova'](_.get(options, 'layerUrl', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'), {
+      this.tileLayer = L['tileLayerCordova'](_.get(options, 'layerUrl', 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'), {
         folder: _.get(options, 'folder', 'ecoreleve'),
         name: 'tile',
         autocache : true

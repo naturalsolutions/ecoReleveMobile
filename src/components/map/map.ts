@@ -32,6 +32,7 @@ export class MapComponent {
 @Input() projId : number
 @Input() latitude : number
 @Input() longitude:number
+@Input() trace:string
 
 @Output() fullsize = new EventEmitter()
 @Output() latEvent = new EventEmitter()
@@ -138,7 +139,21 @@ onMapReady() {
       //maxBounds: this._bounds,
     })
 
+    let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+      maxZoom: 20,
+      subdomains:['mt0','mt1','mt2','mt3']
+    });
+    let layerGroup = L.layerGroup([])
+
+    layerGroup.addLayer(googleSat)
+      .addTo(this._map);
+
+    let layerControl = L.control.layers().addTo(this._map);
+
+    layerControl.addOverlay(layerGroup , "Google satellite");
+    //L.control.layers(this.mapModel.tileLayer).addTo(this._map);
     this.mapModel.tileLayer.addTo(this._map);
+
 
     if (this.platform.is('cordova')) {
       this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online'
@@ -227,7 +242,7 @@ onMapModelReady() {
     let center = L.latLng(this.latitude, this.longitude)
     this._map.setView(center, 14)
     var icon = L.icon({
-      iconUrl: 'assets/icon/picto.png',
+      iconUrl: 'assets/icon/picto_red2.png',
       iconSize:     [40, 40] // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
@@ -366,6 +381,15 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
      // set style
 
       var json = layer.toGeoJSON();
+      json.properties = {
+        color: '#f44141', 
+        weight: 6,
+        opacity: 1,
+        fillOpacity: 1,
+        fillColor: '#f44141'
+      };
+
+
 
       console.log(json)
       console.log('rotatedmarker')
@@ -410,6 +434,7 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
     console.log('******** edition *********')
     console.log(e)
     var layers = e.layers;
+    //var layers = e.target._layers;
     layers.eachLayer(function (layer) {
 
       
@@ -453,9 +478,9 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
     var elemId = e.target._leaflet_id;
 
     if(elemId == this.traceLayerId ) {
-
+      this.trace ='';
     } else {
-      alert('markeur !')
+      //alert('Effacement du markeur n\'est pas permis !')
     }
     
     
@@ -478,6 +503,49 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
     _this.removeRow(arrowLayer);
  
    });
+
+   // if trace exists, add it
+   console.log('*** trace ****')
+   if(this.trace){
+
+    let trace = JSON.parse(this.trace)
+
+    let traceLayer = L.geoJSON(trace,{ style: function (f) {
+              return f.properties;
+      }})
+
+    // select the geometry, assuming only 1
+  var newLayer = traceLayer.getLayers()[0];
+  newLayer['name']='trace'
+  newLayer['options']['style'] = {
+    color: '#f44141', 
+    weight: 6,
+    opacity: 1,
+    fillOpacity: 1,
+    fillColor: '#f44141'
+  };
+
+    drawnItems.addLayer(newLayer)
+    this.traceLayerId = newLayer['_leaflet_id']
+
+    drawControl.setDrawingOptions({
+      polyline: false
+    });
+    var arrowHead = (L as any).polylineDecorator(traceLayer, {
+      patterns: [
+          {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+      ]
+    });
+    arrowLayer.addLayer(arrowHead);
+    arrowLayer.setStyle(style);
+
+    // disable  draw btn
+    let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
+    _this.renderer.setElementAttribute(drawCtr, 'disabled', 'disabled');
+    _this.renderer.setElementAttribute(removeCtr, 'disabled', null);
+  
+  }
+
 
 
 

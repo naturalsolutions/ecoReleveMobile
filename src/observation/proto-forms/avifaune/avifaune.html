@@ -1,7 +1,7 @@
 <form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
-            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude"></map>
+            <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude" [trace]="trace"></map>
             <!-- <map (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" [projId]="projId"></map>  -->
             <br/>
             <p><b>Date</b> : {{dateObs | date: 'dd/MM/yyyy'}} , <b>heure </b>: {{dateObs | date :'HH:mm'}}</p>
@@ -37,7 +37,13 @@
             <ion-item [class.hide]="true">
                 <ion-label floating>Nom scientifique</ion-label><br/>
 
-                <ion-input readOnly formControlName="nom_scientifique"></ion-input>
+                <ion-input readOnly formControlName="taxon"></ion-input>
+
+            </ion-item>
+            <ion-item [class.hide]="true">
+                <ion-label floating>taxref_id</ion-label><br/>
+
+                <ion-input readOnly formControlName="taxref_id"></ion-input>
 
             </ion-item>
 
@@ -107,6 +113,7 @@
                     <ion-option value="mâle">mâle</ion-option>
                     <ion-option value="femelle">femelle</ion-option>
                     <ion-option value="juv/imm">juv/imm</ion-option>
+                    <ion-option value="couple">couple</ion-option>
                     <ion-option value="?">?</ion-option>
                 </ion-select>
             </ion-item>

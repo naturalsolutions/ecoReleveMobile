@@ -2,21 +2,21 @@
 import { Component } from '@angular/core';
 import {ProtocolFormComponent } from '../protocol-form/protocol-form';
 import { Validators } from '@angular/forms';
-import {Avifaune} from '../../../models/avifaune-interface';
+import {Flore} from '../../../models/flore-interface';
 
 @Component({
-  selector: 'avifaune',
-  templateUrl: 'avifaune.html'
+  selector: 'flore',
+  templateUrl: 'flore.html'
 })
-export class AvifauneComponent extends ProtocolFormComponent {
+export class FloreComponent extends ProtocolFormComponent {
 
   ngOnInit() {
-    super.ngOnInit(Avifaune);
+    super.ngOnInit(Flore);
   }
 
   getFormModel(model){
         return this.builder.group({
-        'protocole':'Avifaune',
+        'protocole':'Flore',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]
@@ -25,33 +25,26 @@ export class AvifauneComponent extends ProtocolFormComponent {
            model.nom_vernaculaire,
           [Validators.required]
         ],
-        'taxon': [
-          model.taxon,
-         []
-       ],
-        'effectif' : [
-           model.effectif,
-          [Validators.required]
-        ],
-        'estimated' : [
-          model.estimated,
+        'nom_scientifique': [
+          model.nom_scientifique,
          []
        ],
         'type_milieu' : [
           model.type_milieu
         ],
-        'comportement'  : [
-           model.comportement
+        'coef_abondance'  : [
+           model.coef_abondance
         ],
-        'sexe': [
-           model.sexe
+        'strate': [
+           model.strate
         ],
-        'code_atlas' : [
-           model.code_atlas
+        'surface' : [
+           model.surface
         ],
-        'hauteur_vol': [
-           model.hauteur_vol
-        ], 
+        'effectif' : [
+          model.effectif,
+         []
+       ],
          'latitude' : [
             model.latitude
           ],
@@ -66,12 +59,6 @@ export class AvifauneComponent extends ProtocolFormComponent {
            ],
            'images' : [
             model.images
-           ],
-           'trace' : [
-            model.trace
-           ],
-           'taxref_id' : [
-            model.taxref_id
            ]
       });
   }

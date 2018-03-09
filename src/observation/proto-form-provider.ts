@@ -3,6 +3,7 @@ import { BatrachofauneComponent } from './proto-forms/batrachofaune/batrachofaun
 import {  HerpetofauneComponent } from './proto-forms/herpetofaune/herpetofaune'
 import {  MammofauneComponent } from './proto-forms/mammofaune/mammofaune'
 import {  ChiropteresComponent } from './proto-forms/chiropteres/chiropteres'
+import {  FloreComponent } from './proto-forms/flore/flore'
 
 export class AdFormService {
 
@@ -26,6 +27,9 @@ export class AdFormService {
         case 'Chiro' : 
         component = ChiropteresComponent
             break
+        case 'Flore' : 
+        component = FloreComponent
+                break
 
     }
     return component

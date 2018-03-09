@@ -15,20 +15,20 @@ page-map {
 .fullmap {
     position: absolute!important;
     z-index: 100000!important;
-    right: 20px!important;
+    right: 25px!important;
     width: 50px!important;
     height: 50px!important;
-    top: 20px;
+    top: 90px;
     background: url('../assets/icon/fullMap1.jpg') no-repeat right bottom!important;
 }
 
 .smallmap {
     height: 50px!important;
     width: 50px!important;
-    right: 20px!important;
+    right: 25px!important;
     z-index: 100000!important;
     position: absolute!important;
-    top: 20px;
+    top: 90px;
     background: url('../assets/icon/smallMap1.jpg') no-repeat right bottom!important;
     display: none;
 }

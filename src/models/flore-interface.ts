@@ -1,39 +1,43 @@
-interface BatrachofauneInterface {
+interface FloreInterface {
     id : number,
     protocole : string,
     type_inventaire: string,
     nom_vernaculaire: string,
-    nom_scientifique: string,
-    effectif: number,
-    estimated : number,
+   nom_scientifique: string,
+
     type_milieu: string,
-    comportement: string,
-    sexe: string,
-    reproduction : string,
+    coef_abondance : string,
+    strate : string,
+    surface : string,
+    effectif: number,
     latitude:number,
     longitude: number,
     dateObs: number,
+    projId : number,
     remarques : string,
     images : string
+
 }
-export   class Batrachofaune implements BatrachofauneInterface {  
+export   class Flore implements FloreInterface {  
         constructor(
           public id: number, 
           public protocole ='',
           public type_inventaire ='',
           public nom_vernaculaire ='',
           public nom_scientifique ='',
-          public effectif=1,
-          public estimated = 0,
+          
           public type_milieu ='',
-          public comportement ='',
-          public sexe ='',
-          public reproduction ='',
+          public coef_abondance ='',
+          public strate ='',
+          public surface='',
+          public effectif=null,
           public latitude= 0,
           public longitude=0,
           public dateObs =0,
+          public projId,
           public remarques ='',
-          public images
+          public images,
+
         ) {
         } 
 }

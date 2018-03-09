@@ -11,18 +11,16 @@ import {ObsProvider} from '../providers/obs/obs'
       <ion-item class="actionItem" (click)="changeProtocol()">
         <ion-label>Changer le protocole</ion-label>
       </ion-item>
-      <ion-item class="" (click)="displayObs()">
+      <ion-item class=""  (click)="deleteObs()">
+      <ion-label>Supprimer cette observation</ion-label>
+      </ion-item>
+      <ion-item class="actionItem" (click)="displayObs()">
         <ion-label>Mes observations</ion-label>
       </ion-item>
-      <ion-item class="actionItem"   (click)="takePicture()">
-      <ion-label>Prendre une photo</ion-label>
-    </ion-item>
-    <ion-item class=""  (click)="deleteObs()">
-    <ion-label>Supprimer cette observation</ion-label>
-    </ion-item>
-    <ion-item class="actionItem" (click)="saveObs()">
+
+    <!--<ion-item class="" (click)="saveObs()">
     <ion-label>Enregistrer</ion-label>
-    </ion-item>
+    </ion-item> -->
     <ion-item class="" (click)="closePopover()">
     <ion-label>Retour</ion-label>
     </ion-item>
