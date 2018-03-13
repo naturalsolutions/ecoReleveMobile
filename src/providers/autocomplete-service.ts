@@ -55,6 +55,10 @@ export class CompleteTaxaService {
             tableName = 'Chiroptera'
             break;
           }
+          case 'flore' : {
+            tableName = 'Flore'
+            break;
+          }
           default: {
             tableName = 'avifaune'
             break;
