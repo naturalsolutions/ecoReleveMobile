@@ -1,9 +1,5 @@
-[{
-        "name": "Avifaune",
-        "label": "Oiseaux",
-        "image": "./assets/icones_protocoles/avifaune.png",
-        "id": 1
-    },
+[
+
     {
         "name": "Chiro",
         "label": "Chauves-souris",
@@ -11,16 +7,10 @@
         "id": 5
     },
     {
-        "name": "Flore",
-        "label": "Plantes",
+        "name": "Insectes",
+        "label": "Insectes",
         "image": "./assets/icones_protocoles/flore.png",
-        "id": 6
-    },
-    {
-        "name": "Herpeto",
-        "label": "Reptiles & amphibiens",
-        "image": "./assets/icones_protocoles/herpeto.png",
-        "id": 2
+        "id": 7
     },
     {
         "name": "Mammo",
@@ -28,11 +18,25 @@
         "image": "./assets/icones_protocoles/mammo.png",
         "id": 3
     },
+
     {
-        "name": "Insectes",
-        "label": "Insectes",
+        "name": "Flore",
+        "label": "Plantes",
         "image": "./assets/icones_protocoles/flore.png",
-        "id": 7
+        "id": 6
+    },
+    {
+        "name": "Avifaune",
+        "label": "Oiseaux",
+        "image": "./assets/icones_protocoles/avifaune.png",
+        "id": 1
+    },
+    {
+        "name": "Herpeto",
+        "label": "Reptiles & amphibiens",
+        "image": "./assets/icones_protocoles/herpeto.png",
+        "id": 2
     }
+
 
 ]

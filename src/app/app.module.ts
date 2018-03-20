@@ -26,7 +26,6 @@ import { CommonService } from '../shared/notification.service';
 import {GeoService} from '../shared/geolocation.notification.service';
 import { MapNotificationService } from '../shared/map.notification.service'; 
 import { ProtocolFormComponent } from '../components/protocol-form/protocol-form';
-import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaune/batrachofaune';
 import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
 import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
 import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
@@ -56,7 +55,6 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     //LoginPage,
     LoginPage2,
     ProtocolFormComponent,
-    BatrachofauneComponent,
     AvifauneComponent,
     MammofauneComponent,
     HerpetofauneComponent,
@@ -92,7 +90,6 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     HerpetofauneComponent,
     ChiropteresComponent,
     MammofauneComponent,
-    BatrachofauneComponent,
     FloreComponent,
     InsectesComponent
     
