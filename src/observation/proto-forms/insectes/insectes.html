@@ -16,16 +16,19 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
-                    <ion-option value="Echantillonnage aléatoire">Echantillonnage aléatoire</ion-option>
-                    <ion-option value="Relevé fortuit">Relevé fortuit</ion-option>
-                    <ion-option value="Relevé phytosociologique">Relevé phytosociologique</ion-option>
-                    <ion-option value="Relevé qualitatif">Relevé qualitatif</ion-option>
+                    <ion-option value="A vue">A vue</ion-option>
+                    <ion-option value="ADNe">ADNe</ion-option>
+                    <ion-option value="Biocénomètre">Biocénomètre</ion-option>
+                    <ion-option value="Filet/parapluie japonais">Filet/parapluie japonais</ion-option>
+                    <ion-option value="Nasse/piège aquatique">Nasse/piège aquatique</ion-option>
+                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="Troubleau">Troubleau</ion-option>
                 </ion-select>
 
             </ion-item>
 
 
-            <ion-item (click)="presentPopoverAutocomp('flore')">
+            <ion-item (click)="presentPopoverAutocomp('insectes')">
                 <ion-label *ngIf="!formModel.value.nom_vernaculaire" class="labelSpecie">Nom vernaculaire</ion-label>
                 <ion-label stacked *ngIf="formModel.value.nom_vernaculaire" class="labelSpecie">Nom vernaculaire</ion-label>
                 <div item-content *ngIf="formModel.value.nom_vernaculaire" class="specieValue">{{formModel.value.nom_vernaculaire}}</div>
@@ -36,9 +39,27 @@
             <ion-item [class.hide]="true">
                 <ion-label floating>Nom scientifique</ion-label><br/>
 
-                <ion-input readOnly formControlName="nom_scientifique"></ion-input>
+                <ion-input readOnly formControlName="taxon"></ion-input>
 
             </ion-item>
+            <ion-item [class.hide]="true">
+                <ion-label floating>taxref_id</ion-label><br/>
+
+                <ion-input readOnly formControlName="taxref_id"></ion-input>
+
+            </ion-item>
+
+
+            <ion-item>
+                <ion-label floating>Effectif</ion-label>
+                <ion-input type="number" formControlName="effectif"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label class="labelSpecie">Valeur estimée</ion-label>
+                <ion-checkbox formControlName="estimated" item-right></ion-checkbox>
+            </ion-item>
+
+
 
 
         </ion-list>
@@ -75,73 +96,62 @@
                     <ion-option value="Roselière/Mégaphorbiaie">Roselière/Mégaphorbiaie</ion-option>
                     <ion-option value="Tourbière">Tourbière</ion-option>
                     <ion-option value="Verger/Vignoble">Verger/Vignoble</ion-option>
+
                 </ion-select>
             </ion-item>
 
             <ion-item>
-                <ion-label floating>Coef. abondance/dominance</ion-label>
-                <ion-select formControlName="coef_abondance" interface="popover">
-                    <ion-option value="i">i</ion-option>
-                    <ion-option value="r">r</ion-option>
-                    <ion-option value="+">+</ion-option>
-                    <ion-option value="1">1</ion-option>
-                    <ion-option value="2">2</ion-option>
-                    <ion-option value="3">3</ion-option>
-                    <ion-option value="4">4</ion-option>
-                    <ion-option value="5">5</ion-option>
+                <ion-label floating>Comportement</ion-label>
+                <ion-select formControlName="comportement" interface="popover">
+                    <ion-option value="Accouplement">Accouplement</ion-option>
+                    <ion-option value="Alimentation">Alimentation</ion-option>
+                    <ion-option value="Autre">Autre</ion-option>
+                    <ion-option value="Chant">Chant</ion-option>
+                    <ion-option value="Exuvie/chrysalide">Exuvie/chrysalide</ion-option>
+                    <ion-option value="Mort">Mort</ion-option>
+                    <ion-option value="Posé/repos">Posé/repos</ion-option>
+                    <ion-option value="Vol de chasse">Vol de chasse</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label floating>Strate</ion-label>
-                <ion-select formControlName="strate" interface="popover">
-                    <ion-option value="arborée">arborée</ion-option>
-                    <ion-option value="arbustive">arbustive</ion-option>
-                    <ion-option value="herbacée">herbacée</ion-option>
-                    <ion-option value="muscinale">muscinale</ion-option>
-                </ion-select>
-            </ion-item>
-
-            <ion-item>
-                <ion-label floating>Stade végétatif</ion-label>
-                <ion-select formControlName="stade_vegetatif" interface="popover">
-                    <ion-option value="végétatif">végétatif</ion-option>
-                    <ion-option value="en fleur">en fleur</ion-option>
-                    <ion-option value="en fruits">en fruits</ion-option>
-                    <ion-option value="fané">fané</ion-option>
-                    <ion-option value="mort sur pied">mort sur pied</ion-option>
+                <ion-label floating>Sexe</ion-label>
+                <ion-select formControlName="sexe" interface="popover">
+                    <ion-option value="mâle">mâle</ion-option>
+                    <ion-option value="femelle">femelle</ion-option>
+                    <ion-option value="larves">larves</ion-option>
+                    <ion-option value="oeufs">oeufs</ion-option>
                 </ion-select>
             </ion-item>
 
             <ion-item>
-                <ion-label floating>Surface (m²)</ion-label>
-                <ion-select formControlName="surface" interface="popover">
-                    <ion-option value="0 à 25">0 à 25</ion-option>
-                    <ion-option value="25 à 50">25 à 50</ion-option>
-                    <ion-option value="50 à 100">50 à 100</ion-option>
-                    <ion-option value="plus de 100">plus de 100</ion-option>
+                <ion-label floating>Reproduction</ion-label>
+                <ion-select formControlName="reproduction" interface="popover">
+                    <ion-option value="non">non</ion-option>
+                    <ion-option value="possible">possible</ion-option>
+                    <ion-option value="probable">probable</ion-option>
+                    <ion-option value="certain">certain</ion-option>
                 </ion-select>
             </ion-item>
 
             <ion-item>
-                <ion-label floating>Effectif</ion-label>
-                <ion-input type="number" formControlName="effectif"></ion-input>
+                <ion-label floating>Plante hôte</ion-label>
+                <ion-textarea formControlName="plante_hote"></ion-textarea>
             </ion-item>
 
             <ion-item>
                 <ion-label floating>Remarques</ion-label>
                 <ion-textarea formControlName="remarques"></ion-textarea>
             </ion-item>
+
             <div class="imagesContainer">
                 <div *ngFor="let image of images" class="imgContainer">
                     <img src={{image}}>
                     <button class="delImg" (click)="deleteImage(image)">supprimer</button>
                 </div>
             </div>
-
         </ion-list>
 
     </div>
-
     <div>
 
     </div>

@@ -32,6 +32,7 @@ import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mamm
 import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
 import { ChiropteresComponent } from '../observation/proto-forms/chiropteres/chiropteres';  
 import { FloreComponent } from '../observation/proto-forms/flore/flore';  
+import { InsectesComponent } from '../observation/proto-forms/insectes/insectes';  
 
 import {PopoverPage} from'../observation/popoverPage';
 import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
@@ -61,6 +62,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     HerpetofauneComponent,
     ChiropteresComponent,
     FloreComponent,
+    InsectesComponent,
     MapComponent,
     PopoverPage,
     PopoverAutocompPage,
@@ -71,7 +73,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule .forRoot()
+    IonicStorageModule .forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -91,7 +93,8 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ChiropteresComponent,
     MammofauneComponent,
     BatrachofauneComponent,
-    FloreComponent
+    FloreComponent,
+    InsectesComponent
     
 
   ],
