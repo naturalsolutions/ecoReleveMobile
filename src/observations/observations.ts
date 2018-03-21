@@ -121,6 +121,9 @@ export class ObservationsPage {
             case "Flore":
             src="flore.png";  
             break;
+            case "Insectes":
+            src="insect.png";  
+            break;
       }
 
     } else {
@@ -141,6 +144,9 @@ export class ObservationsPage {
             break;
             case "Flore":
             src="flore_progress.png";  
+            break;
+            case "Insectes":
+            src="insect_progress.png";  
             break;
       }
 
