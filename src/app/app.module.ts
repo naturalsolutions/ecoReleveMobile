@@ -11,8 +11,6 @@ import { ProtocolsPage } from '../protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
 import { ObservationPage} from '../observation/observation';
 import { ObservationsPage } from '../observations/observations';
-//import { LoginPage} from '../login/login';
-//import { LoginPage2} from '../login2/login2';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -39,7 +37,7 @@ import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popov
 import {  MapComponent} from '../components/map/map'; 
 import { AdDirective }    from '../shared/ad.directive';
 import { AdFormService} from '../observation/proto-form-provider'
-import { LoginPage2 } from '../login2/login2';
+import { LoginPage } from '../login/login';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 
@@ -52,8 +50,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ProjectsPage,
     ObservationPage,
     ObservationsPage,
-    //LoginPage,
-    LoginPage2,
+    LoginPage,
     ProtocolFormComponent,
     AvifauneComponent,
     MammofauneComponent,
@@ -81,8 +78,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ProjectsPage,
     ObservationPage,
     ObservationsPage,
-    //LoginPage,
-    LoginPage2,
+    LoginPage,
     MapComponent,
     PopoverPage,
     PopoverAutocompPage,

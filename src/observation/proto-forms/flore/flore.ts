@@ -35,6 +35,9 @@ export class FloreComponent extends ProtocolFormComponent {
         'coef_abondance'  : [
            model.coef_abondance
         ],
+        'stade_vegetatif' : [
+          model.stade_vegetatif
+       ],
         'strate': [
            model.strate
         ],
