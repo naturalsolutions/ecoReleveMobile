@@ -23,7 +23,7 @@ export class AdFormService {
         case 'Mammo':
             component = MammofauneComponent
             break
-        case 'Chiro' : 
+        case 'Chiropteres' : 
         component = ChiropteresComponent
             break
         case 'Flore' : 

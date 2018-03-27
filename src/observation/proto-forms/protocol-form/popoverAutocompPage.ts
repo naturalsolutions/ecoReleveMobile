@@ -127,7 +127,7 @@ onCancel(e){
 getSelected(e){
   let verna = e.label
   let scientifique = e.latin
-  let id = e.taxref_id
+  let id = e.taxrefid
   this.viewCtrl.dismiss({
     nom_vernaculaire : verna,
     taxon : scientifique,

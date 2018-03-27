@@ -15,7 +15,7 @@ interface AvifauneInterface {
     longitude: number,
     dateObs: number,
     projId : number,
-    remarques : string,
+    Comments : string,
     images : string,
     trace : string,
     taxref_id : number
@@ -38,7 +38,7 @@ export   class Avifaune implements AvifauneInterface {
           public longitude=0,
           public dateObs =0,
           public projId,
-          public remarques ='',
+          public Comments ='',
           public images,
           public trace ='',
           public taxref_id=null

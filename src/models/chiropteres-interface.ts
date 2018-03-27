@@ -15,8 +15,10 @@ interface ChiropteresInterface {
     longitude: number,
     dateObs: number,
     projId : number,
-    remarques : string,
-    images : string
+    Comments : string,
+    images : string,
+    taxref_id : number
+    
 }
 export   class Chiropteres implements ChiropteresInterface {  
         constructor(
@@ -37,8 +39,9 @@ export   class Chiropteres implements ChiropteresInterface {
           public longitude=0,
           public dateObs =0,
           public projId,
-          public remarques ='',
-          public images
+          public Comments ='',
+          public images,
+          public taxref_id=null
         ) {
         } 
 }

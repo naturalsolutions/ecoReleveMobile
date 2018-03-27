@@ -6,17 +6,18 @@ interface FloreInterface {
    nom_scientifique: string,
 
     type_milieu: string,
-    coef_abondance : string,
+    abondance_dominance : string,
     strate : string,
-    stade_vegetatif : string,
+    stade : string,
     surface : string,
     effectif: number,
     latitude:number,
     longitude: number,
     dateObs: number,
     projId : number,
-    remarques : string,
-    images : string
+    Comments : string,
+    images : string,
+    taxref_id : number
 
 }
 export   class Flore implements FloreInterface {  
@@ -28,17 +29,18 @@ export   class Flore implements FloreInterface {
           public nom_scientifique ='',
           
           public type_milieu ='',
-          public coef_abondance ='',
+          public abondance_dominance ='',
           public strate ='',
-          public stade_vegetatif ='',
+          public stade ='',
           public surface='',
           public effectif=null,
           public latitude= 0,
           public longitude=0,
           public dateObs =0,
           public projId,
-          public remarques ='',
+          public Comments ='',
           public images,
+          public taxref_id=null
 
         ) {
         } 

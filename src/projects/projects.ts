@@ -488,7 +488,7 @@ export class ProjectsPage {
                   for(let j=0; j<this.loadedProjects.length;j++) {
                     if(this.loadedProjects[j]['ID'] == projID){
                       this.loadedProjects[j]['isPushed'] = true;
-                      projName = this.projects[j]['Name'];
+                      projName = this.loadedProjects[j]['Name'];
                       this.loadedProjects[j]['image'] = "./assets/icones_projects/synchro.png";
                     }
                   }

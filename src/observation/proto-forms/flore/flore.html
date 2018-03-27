@@ -80,7 +80,7 @@
 
             <ion-item>
                 <ion-label floating>Coef. abondance/dominance</ion-label>
-                <ion-select formControlName="coef_abondance" interface="popover">
+                <ion-select formControlName="abondance_dominance" interface="popover">
                     <ion-option value="i">i</ion-option>
                     <ion-option value="r">r</ion-option>
                     <ion-option value="+">+</ion-option>
@@ -103,7 +103,7 @@
 
             <ion-item>
                 <ion-label floating>Stade végétatif</ion-label>
-                <ion-select formControlName="stade_vegetatif" interface="popover">
+                <ion-select formControlName="stade" interface="popover">
                     <ion-option value="végétatif">végétatif</ion-option>
                     <ion-option value="en fleur">en fleur</ion-option>
                     <ion-option value="en fruits">en fruits</ion-option>
@@ -129,7 +129,7 @@
 
             <ion-item>
                 <ion-label floating>Remarques</ion-label>
-                <ion-textarea formControlName="remarques"></ion-textarea>
+                <ion-textarea formControlName="Comments"></ion-textarea>
             </ion-item>
             <div class="imagesContainer">
                 <div *ngFor="let image of images" class="imgContainer">

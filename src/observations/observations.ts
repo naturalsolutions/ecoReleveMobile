@@ -61,7 +61,10 @@ export class ObservationsPage {
       // set label to display for each obs
       let points= [];
       for (let dt in data) {
-        let label = data[dt]['protocole'] + ': ' +  data[dt]['type_inventaire'] 
+        let label, protocolName;
+        protocolName = data[dt]['protocole'];
+        label = this.getLabel(protocolName);
+        label = label + ': ' +  data[dt]['type_inventaire'] 
         if(label.length>32) {
           label = label.substring(0,28) + '...';
         }
@@ -99,6 +102,35 @@ export class ObservationsPage {
       console.log('Exception ' + exception);
     });
   }
+
+  getLabel(protocolName){
+    let label
+    switch(protocolName) {
+
+      case "Avifaune":
+          label="Oiseaux";
+          break;
+      case "Herpeto":
+          label="Reptiles";   
+          break;
+       case "Mammo":
+         label="Mammifères";   
+        break;
+        case "Batracho":
+        label="Reptiles";  
+        break;
+        case "Chiropteres":
+        label="chauves-souris";  
+        break;
+        case "Flore":
+        label="Plantes";  
+        break;
+        case "Insectes":
+        label="Insectes";  
+        break;
+    }
+    return label
+  }
   getImage(protocole,finished){
     let src="";
     if(finished){
@@ -115,7 +147,7 @@ export class ObservationsPage {
             case "Batracho":
             src="batracho.png";  
             break;
-            case "Chiro":
+            case "Chiropteres":
             src="chiro.png";  //TODO update picto 
             break;
             case "Flore":
@@ -139,7 +171,7 @@ export class ObservationsPage {
             case "Batracho":
             src="batracho_progress.png";   
             break;
-            case "Chiro":
+            case "Chiropteres":
             src="chiro_progress.png";  //TODO update picto 
             break;
             case "Flore":

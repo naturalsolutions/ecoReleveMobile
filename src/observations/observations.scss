@@ -24,3 +24,9 @@ page-observations {
 .item-md p {
     margin: 5px 0 2px;
 }
+
+.obsValue {
+    max-width: 75%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -29,6 +29,11 @@ export class MammofauneComponent  extends ProtocolFormComponent{
           model.nom_scientifique,
          []
        ],
+       'taxref_id' :    
+        [
+          model.taxref_id,
+        []
+      ],
         'effectif' : [
            model.effectif,
           [Validators.required]
@@ -58,8 +63,8 @@ export class MammofauneComponent  extends ProtocolFormComponent{
          'dateObs' : [
            model.dateObs
           ],
-          'remarques' : [
-            model.remarques
+          'Comments' : [
+            model.Comments
            ],
            'images' : [
             model.images
