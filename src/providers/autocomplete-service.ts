@@ -36,7 +36,7 @@ export class CompleteTaxaService {
             break;
           }
           case 'batrachofaune': {
-            tableName = 'Amphibia'
+            tableName = 'Reptil'
             break;
           }
           case 'herpetofaune': {
