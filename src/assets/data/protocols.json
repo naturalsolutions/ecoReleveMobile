@@ -1,37 +1,42 @@
-[{
-        "name": "Avifaune",
-        "label": "Avifaune",
-        "image": "./assets/icones_protocoles/avifaune.png",
-        "id": 1
-    },
+[
+
     {
-        "name": "Batracho",
-        "label": "Batrachofaune",
-        "image": "./assets/icones_protocoles/batracho.png",
-        "id": 4
-    },
-    {
-        "name": "Chiro",
-        "label": "Chiroptères",
+        "name": "Chiropteres",
+        "label": "Chauves-souris",
         "image": "./assets/icones_protocoles/chiro.png",
         "id": 5
     },
     {
+        "name": "Insectes",
+        "label": "Insectes",
+        "image": "./assets/icones_protocoles/insect.png",
+        "id": 7
+    },
+    {
+        "name": "Mammo",
+        "label": "Mammifères terrestres",
+        "image": "./assets/icones_protocoles/mammo.png",
+        "id": 3
+    },
+
+    {
         "name": "Flore",
-        "label": "Flore",
+        "label": "Plantes",
         "image": "./assets/icones_protocoles/flore.png",
         "id": 6
     },
     {
-        "name": "Herpeto",
-        "label": "Herpetofaune",
-        "image": "./assets/icones_protocoles/herpeto.png",
-        "id": 2
+        "name": "Avifaune",
+        "label": "Oiseaux",
+        "image": "./assets/icones_protocoles/avifaune.png",
+        "id": 1
     },
     {
-        "name": "Mammo",
-        "label": "Mammofaune",
-        "image": "./assets/icones_protocoles/mammo.png",
-        "id": 3
+        "name": "Herpeto",
+        "label": "Reptiles & amphibiens",
+        "image": "./assets/icones_protocoles/herpeto.png",
+        "id": 2
     }
+
+
 ]

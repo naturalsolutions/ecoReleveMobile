@@ -11,8 +11,6 @@ import { ProtocolsPage } from '../protocols/protocols';
 import { ProjectsPage } from '../projects/projects';
 import { ObservationPage} from '../observation/observation';
 import { ObservationsPage } from '../observations/observations';
-//import { LoginPage} from '../login/login';
-//import { LoginPage2} from '../login2/login2';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,12 +24,12 @@ import { CommonService } from '../shared/notification.service';
 import {GeoService} from '../shared/geolocation.notification.service';
 import { MapNotificationService } from '../shared/map.notification.service'; 
 import { ProtocolFormComponent } from '../components/protocol-form/protocol-form';
-import { BatrachofauneComponent } from '../observation/proto-forms//batrachofaune/batrachofaune';
 import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
 import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
 import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
 import { ChiropteresComponent } from '../observation/proto-forms/chiropteres/chiropteres';  
 import { FloreComponent } from '../observation/proto-forms/flore/flore';  
+import { InsectesComponent } from '../observation/proto-forms/insectes/insectes';  
 
 import {PopoverPage} from'../observation/popoverPage';
 import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
@@ -39,7 +37,7 @@ import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popov
 import {  MapComponent} from '../components/map/map'; 
 import { AdDirective }    from '../shared/ad.directive';
 import { AdFormService} from '../observation/proto-form-provider'
-import { LoginPage2 } from '../login2/login2';
+import { LoginPage } from '../login/login';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 
@@ -52,15 +50,14 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ProjectsPage,
     ObservationPage,
     ObservationsPage,
-    //LoginPage,
-    LoginPage2,
+    LoginPage,
     ProtocolFormComponent,
-    BatrachofauneComponent,
     AvifauneComponent,
     MammofauneComponent,
     HerpetofauneComponent,
     ChiropteresComponent,
     FloreComponent,
+    InsectesComponent,
     MapComponent,
     PopoverPage,
     PopoverAutocompPage,
@@ -71,7 +68,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule .forRoot()
+    IonicStorageModule .forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,8 +78,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ProjectsPage,
     ObservationPage,
     ObservationsPage,
-    //LoginPage,
-    LoginPage2,
+    LoginPage,
     MapComponent,
     PopoverPage,
     PopoverAutocompPage,
@@ -90,8 +86,8 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     HerpetofauneComponent,
     ChiropteresComponent,
     MammofauneComponent,
-    BatrachofauneComponent,
-    FloreComponent
+    FloreComponent,
+    InsectesComponent
     
 
   ],

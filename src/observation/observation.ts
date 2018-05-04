@@ -91,7 +91,7 @@ export class ObservationPage  {
   }
    ionViewDidEnter() {
     console.log('obs load')
-    this.title = this.protocolName;
+    this.title = this.protocol.label;
     // get coordinates for new obs
     if(this.obsId == 0){
       this.getPosition();

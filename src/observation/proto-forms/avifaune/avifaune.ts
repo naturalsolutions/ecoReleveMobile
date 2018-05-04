@@ -61,8 +61,8 @@ export class AvifauneComponent extends ProtocolFormComponent {
          'dateObs' : [
            model.dateObs
           ],
-          'remarques' : [
-            model.remarques
+          'Comments' : [
+            model.Comments
            ],
            'images' : [
             model.images

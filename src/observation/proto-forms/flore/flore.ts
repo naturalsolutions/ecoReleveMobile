@@ -32,9 +32,12 @@ export class FloreComponent extends ProtocolFormComponent {
         'type_milieu' : [
           model.type_milieu
         ],
-        'coef_abondance'  : [
-           model.coef_abondance
+        'abondance_dominance'  : [
+           model.abondance_dominance
         ],
+        'stade' : [
+          model.stade
+       ],
         'strate': [
            model.strate
         ],
@@ -54,11 +57,14 @@ export class FloreComponent extends ProtocolFormComponent {
          'dateObs' : [
            model.dateObs
           ],
-          'remarques' : [
-            model.remarques
+          'Comments' : [
+            model.Comments
            ],
            'images' : [
             model.images
+           ],
+           'taxref_id' : [
+            model.taxref_id
            ]
       });
   }

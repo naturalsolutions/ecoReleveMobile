@@ -57,11 +57,14 @@ export class HerpetofauneComponent extends ProtocolFormComponent {
          'dateObs' : [
            model.dateObs
           ],
-          'remarques' : [
-            model.remarques
+          'Comments' : [
+            model.Comments
            ],
            'images' : [
             model.images
+           ],
+           'taxref_id' : [
+            model.taxref_id
            ]
       });
   }

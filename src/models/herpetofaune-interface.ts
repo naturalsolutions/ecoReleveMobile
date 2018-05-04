@@ -13,8 +13,9 @@ interface HerpetoInterface {
     latitude:number,
     longitude: number,
     dateObs: number,
-    remarques : string,
-    images : string
+    Comments : string,
+    images : string,
+    taxref_id : number
 }
 export   class Herpeto implements HerpetoInterface {  
     constructor(
@@ -32,8 +33,9 @@ export   class Herpeto implements HerpetoInterface {
         public latitude= 0,
         public longitude=0,
         public dateObs =0,
-        public remarques ='',
-        public images
+        public Comments ='',
+        public images,
+        public taxref_id=null
     ) {
     } 
 }

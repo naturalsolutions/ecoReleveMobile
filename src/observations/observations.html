@@ -29,7 +29,7 @@
                             <img src={{getImage(ob.protocole,ob.finished)}} />
                         </ion-thumbnail>
                     </ion-col>
-                    <ion-col width-75>
+                    <ion-col width-75 class="obsValue">
                         <p class="protoName"> {{ob.label}}</p>
                         <h2> {{ob.nom_vernaculaire}}</h2>
                         <p>{{ob.dateObs | date :'dd-MM-yyyy'}}-{{ob.dateObs | date :'shortTime'}}</p>
@@ -40,11 +40,13 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'stations'">
-            <!--<map (load)="addStations(waypoints)"></map>-->
+
             <div id="map" style="width: 100%; height: 300px"></div>
         </ion-list>
 
     </div>
+
+
 
 </ion-content>
 <ion-footer no-shadow>

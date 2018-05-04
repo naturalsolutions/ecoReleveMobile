@@ -26,6 +26,7 @@
                     <ion-option value="Enregistrement manuel au sol">Enregistrement manuel au sol</ion-option>
                     <ion-option value="Observation à vue">Observation à vue</ion-option>
                     <ion-option value="Observation en sortie de gîte">Observation en sortie de gîte</ion-option>
+                    <ion-option value="Recherche de cadavres">Recherche de cadavres</ion-option>
                     <ion-option value="Recherche de gîte de parturition">Recherche de gîte de parturition</ion-option>
                     <ion-option value="Recherche de gîte d'hibernation">Recherche de gîte d'hibernation</ion-option>
                     <ion-option value="Recherche de gîte estival/reproduction">Recherche de gîte estival/reproduction</ion-option>
@@ -79,19 +80,31 @@
                 <ion-select formControlName="type_milieu" interface="popover">
                     <ion-option value="Autre">Autre</ion-option>
                     <ion-option value="Cavité/Grotte">Cavité/Grotte</ion-option>
+                    <ion-option value="Cours d’eau permanent">Cours d’eau permanent</ion-option>
+                    <ion-option value="Cours d'eau temporaire">Cours d'eau temporaire</ion-option>
+                    <ion-option value="Culture extensive">Culture extensive</ion-option>
+                    <ion-option value="Culture intensive">Culture intensive</ion-option>
                     <ion-option value="Etang/Mare/Marais">Etang/Mare/Marais</ion-option>
                     <ion-option value="Forêt de conifères">Forêt de conifères</ion-option>
                     <ion-option value="Forêt de feuillus">Forêt de feuillus</ion-option>
                     <ion-option value="Forêt mixte">Forêt mixte</ion-option>
-                    <ion-option value="Haie/Friche/Lande">Haie/Friche/Lande</ion-option>
+                    <ion-option value="Friche/Lande">Friche/Lande</ion-option>
+                    <ion-option value="Haie">Haie</ion-option>
+                    <ion-option value="Maquis/Garrigue">Maquis/Garrigue</ion-option>
                     <ion-option value="Mer/Océan">Mer/Océan</ion-option>
                     <ion-option value="Milieu bocager">Milieu bocager</ion-option>
                     <ion-option value="Milieu rupestre">Milieu rupestre</ion-option>
                     <ion-option value="Milieu urbain/Bâtis">Milieu urbain/Bâtis</ion-option>
-                    <ion-option value="Plage/Vasière">Plage/Vasière</ion-option>
+                    <ion-option value="Pelouse naturelle">Pelouse naturelle</ion-option>
+                    <ion-option value="Plage/Vasière/Lagune">Plage/Vasière/Lagune</ion-option>
+                    <ion-option value="Plantation d'arbres">Plantation d'arbres</ion-option>
                     <ion-option value="Plaine céréalière">Plaine céréalière</ion-option>
                     <ion-option value="Prairie/Pâture">Prairie/Pâture</ion-option>
+                    <ion-option value="Ripisylve">Ripisylve</ion-option>
                     <ion-option value="Rivière/Canal">Rivière/Canal</ion-option>
+                    <ion-option value="Roselière/Mégaphorbiaie">Roselière/Mégaphorbiaie</ion-option>
+                    <ion-option value="Tourbière">Tourbière</ion-option>
+                    <ion-option value="Verger/Vignoble">Verger/Vignoble</ion-option>
                 </ion-select>
             </ion-item>
 
@@ -121,12 +134,12 @@
 
 
             <ion-item>
-                <ion-label floating>Hauteur de détection</ion-label>
-                <ion-textarea formControlName="hauteur_detection"></ion-textarea>
+                <ion-label floating>Hauteur de détection (m)</ion-label>
+                <ion-input type="number" formControlName="hauteur_detection"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label floating>Remarques</ion-label>
-                <ion-textarea formControlName="remarques"></ion-textarea>
+                <ion-textarea formControlName="Comments"></ion-textarea>
             </ion-item>
 
             <div class="imagesContainer">
