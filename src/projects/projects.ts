@@ -444,7 +444,7 @@ export class ProjectsPage {
                 let promises = [];
 
                 for (let dt in obs) {
-                      if(! obs[dt]['serverId']){
+                      if((! obs[dt]['serverId']) && ( obs[dt]['finished'])){
                       let observation = obs[dt];
                       observation['station'] = {}
 
