@@ -10,13 +10,15 @@ interface ChiropteresInterface {
     type_milieu: string,
     comportement: string,
     sexe: string,
-    hauteur_detection: string,
+    hauteur_detection: number,
     latitude:number,
     longitude: number,
     dateObs: number,
     projId : number,
-    remarques : string,
-    images : string
+    Comments : string,
+    images : string,
+    taxref_id : number
+    
 }
 export   class Chiropteres implements ChiropteresInterface {  
         constructor(
@@ -32,13 +34,14 @@ export   class Chiropteres implements ChiropteresInterface {
           public comportement ='',
           public sexe ='',
           
-          public hauteur_detection ='',
+          public hauteur_detection =null,
           public latitude= 0,
           public longitude=0,
           public dateObs =0,
           public projId,
-          public remarques ='',
-          public images
+          public Comments ='',
+          public images,
+          public taxref_id=null
         ) {
         } 
 }

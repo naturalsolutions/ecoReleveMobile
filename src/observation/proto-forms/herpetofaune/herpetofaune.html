@@ -14,9 +14,14 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
+                    <ion-option value="ADNe">ADNe</ion-option>
+                    <ion-option value="Crapaudrome/crapauduc">Crapaudrome/crapauduc</ion-option>
+                    <ion-option value="Nasse/piège aquatique">Nasse/piège aquatique</ion-option>
                     <ion-option value="Observation fortuite">Observation fortuite</ion-option>
                     <ion-option value="Plaque à reptiles">Plaque à reptiles</ion-option>
+                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
                     <ion-option value="Recherche à vue">Recherche à vue</ion-option>
+                    <ion-option value="Troubleau">Troubleau</ion-option>
                 </ion-select>
 
             </ion-item>
@@ -60,19 +65,31 @@
                 <ion-select formControlName="type_milieu" interface="popover">
                     <ion-option value="Autre">Autre</ion-option>
                     <ion-option value="Cavité/Grotte">Cavité/Grotte</ion-option>
+                    <ion-option value="Cours d’eau permanent">Cours d’eau permanent</ion-option>
+                    <ion-option value="Cours d'eau temporaire">Cours d'eau temporaire</ion-option>
+                    <ion-option value="Culture extensive">Culture extensive</ion-option>
+                    <ion-option value="Culture intensive">Culture intensive</ion-option>
                     <ion-option value="Etang/Mare/Marais">Etang/Mare/Marais</ion-option>
                     <ion-option value="Forêt de conifères">Forêt de conifères</ion-option>
                     <ion-option value="Forêt de feuillus">Forêt de feuillus</ion-option>
                     <ion-option value="Forêt mixte">Forêt mixte</ion-option>
-                    <ion-option value="Haie/Friche/Lande">Haie/Friche/Lande</ion-option>
+                    <ion-option value="Friche/Lande">Friche/Lande</ion-option>
+                    <ion-option value="Haie">Haie</ion-option>
+                    <ion-option value="Maquis/Garrigue">Maquis/Garrigue</ion-option>
                     <ion-option value="Mer/Océan">Mer/Océan</ion-option>
                     <ion-option value="Milieu bocager">Milieu bocager</ion-option>
                     <ion-option value="Milieu rupestre">Milieu rupestre</ion-option>
                     <ion-option value="Milieu urbain/Bâtis">Milieu urbain/Bâtis</ion-option>
-                    <ion-option value="Plage/Vasière">Plage/Vasière</ion-option>
+                    <ion-option value="Pelouse naturelle">Pelouse naturelle</ion-option>
+                    <ion-option value="Plage/Vasière/Lagune">Plage/Vasière/Lagune</ion-option>
+                    <ion-option value="Plantation d'arbres">Plantation d'arbres</ion-option>
                     <ion-option value="Plaine céréalière">Plaine céréalière</ion-option>
                     <ion-option value="Prairie/Pâture">Prairie/Pâture</ion-option>
+                    <ion-option value="Ripisylve">Ripisylve</ion-option>
                     <ion-option value="Rivière/Canal">Rivière/Canal</ion-option>
+                    <ion-option value="Roselière/Mégaphorbiaie">Roselière/Mégaphorbiaie</ion-option>
+                    <ion-option value="Tourbière">Tourbière</ion-option>
+                    <ion-option value="Verger/Vignoble">Verger/Vignoble</ion-option>
                 </ion-select>
             </ion-item>
 
@@ -81,7 +98,7 @@
             <ion-item>
                 <ion-label floating>Comportement/indice</ion-label>
                 <ion-select formControlName="comportement" interface="popover">
-                    <ion-option value="Accouplement">Accouplement</ion-option>
+                    <ion-option value="Accouplement/amplexus">Accouplement/amplexus</ion-option>
                     <ion-option value="Autre">Autre</ion-option>
                     <ion-option value="Déplacement">Déplacement</ion-option>
                     <ion-option value="Hivernage">Hivernage</ion-option>
@@ -89,6 +106,7 @@
                     <ion-option value="Mue">Mue</ion-option>
                     <ion-option value="Ponte">Ponte</ion-option>
                     <ion-option value="Repos/basking">Repos/basking</ion-option>
+                    <ion-option value="Têtard/larve">Têtard/larve</ion-option>
                 </ion-select>
             </ion-item>
 
@@ -114,7 +132,7 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>Remarques</ion-label>
-                <ion-textarea formControlName="remarques"></ion-textarea>
+                <ion-textarea formControlName="Comments"></ion-textarea>
             </ion-item>
             <div class="imagesContainer">
                 <div *ngFor="let image of images" class="imgContainer">

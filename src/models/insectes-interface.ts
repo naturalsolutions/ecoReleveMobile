@@ -1,4 +1,4 @@
-interface AvifauneInterface {
+interface InsectesInterface {
     id : number,
     protocole : string,
     type_inventaire: string,
@@ -9,18 +9,17 @@ interface AvifauneInterface {
     type_milieu: string,
     comportement: string,
     sexe: string,
-    code_atlas: string,
-    hauteur_vol: string,
+    reproduction: string,
+    plante_hote: string,
     latitude:number,
     longitude: number,
     dateObs: number,
     projId : number,
     Comments : string,
     images : string,
-    trace : string,
     taxref_id : number
 }
-export   class Avifaune implements AvifauneInterface {  
+export   class Insectes implements InsectesInterface {  
         constructor(
           public id: number, 
           public protocole ='',
@@ -32,15 +31,14 @@ export   class Avifaune implements AvifauneInterface {
           public type_milieu ='',
           public comportement ='',
           public sexe ='',
-          public code_atlas ='',
-          public hauteur_vol ='',
+          public reproduction ='',
+          public plante_hote ='',
           public latitude= 0,
           public longitude=0,
           public dateObs =0,
           public projId,
           public Comments ='',
           public images,
-          public trace ='',
           public taxref_id=null
         ) {
         } 

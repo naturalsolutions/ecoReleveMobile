@@ -243,7 +243,7 @@ onMapModelReady() {
     this._map.setView(center, 14)
     var icon = L.icon({
       iconUrl: 'assets/icon/picto_red2.png',
-      iconSize:     [40, 40] // size of the icon
+      iconSize:     [60, 60] // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
       //shadowAnchor: [4, 62],  // the same for the shadow
@@ -265,10 +265,21 @@ onMapModelReady() {
     this._map.addLayer(arrowLayer);
 
 
+    let self = this;
+    
+    
+    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems as any).on('click', onClick);
+    function onClick(e) {
+     // alert(e.latlng);
+     //drawnItems['editable'].enable()
+     self.el.nativeElement.querySelector('.leaflet-draw-edit-edit').click()
+    }
 
-    
-    
-    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems as any);
+    marker.on('dragend', function(e) {
+      console.log('marker dragend event');
+    });
+
+
     let _this = this;
     let v = Draw
     var drawControl =  new (L as any).Control.Draw({
@@ -348,6 +359,7 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
 
 
   this._map.addControl(drawControl);
+  //drawnItems['editable'].enable()
   let that = this;
 
   // disable remove btn

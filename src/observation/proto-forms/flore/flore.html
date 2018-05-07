@@ -50,25 +50,37 @@
                 <ion-select formControlName="type_milieu" interface="popover">
                     <ion-option value="Autre">Autre</ion-option>
                     <ion-option value="Cavité/Grotte">Cavité/Grotte</ion-option>
+                    <ion-option value="Cours d’eau permanent">Cours d’eau permanent</ion-option>
+                    <ion-option value="Cours d'eau temporaire">Cours d'eau temporaire</ion-option>
+                    <ion-option value="Culture extensive">Culture extensive</ion-option>
+                    <ion-option value="Culture intensive">Culture intensive</ion-option>
                     <ion-option value="Etang/Mare/Marais">Etang/Mare/Marais</ion-option>
                     <ion-option value="Forêt de conifères">Forêt de conifères</ion-option>
                     <ion-option value="Forêt de feuillus">Forêt de feuillus</ion-option>
                     <ion-option value="Forêt mixte">Forêt mixte</ion-option>
-                    <ion-option value="Haie/Friche/Lande">Haie/Friche/Lande</ion-option>
+                    <ion-option value="Friche/Lande">Friche/Lande</ion-option>
+                    <ion-option value="Haie">Haie</ion-option>
+                    <ion-option value="Maquis/Garrigue">Maquis/Garrigue</ion-option>
                     <ion-option value="Mer/Océan">Mer/Océan</ion-option>
                     <ion-option value="Milieu bocager">Milieu bocager</ion-option>
                     <ion-option value="Milieu rupestre">Milieu rupestre</ion-option>
                     <ion-option value="Milieu urbain/Bâtis">Milieu urbain/Bâtis</ion-option>
-                    <ion-option value="Plage/Vasière">Plage/Vasière</ion-option>
+                    <ion-option value="Pelouse naturelle">Pelouse naturelle</ion-option>
+                    <ion-option value="Plage/Vasière/Lagune">Plage/Vasière/Lagune</ion-option>
+                    <ion-option value="Plantation d'arbres">Plantation d'arbres</ion-option>
                     <ion-option value="Plaine céréalière">Plaine céréalière</ion-option>
                     <ion-option value="Prairie/Pâture">Prairie/Pâture</ion-option>
+                    <ion-option value="Ripisylve">Ripisylve</ion-option>
                     <ion-option value="Rivière/Canal">Rivière/Canal</ion-option>
+                    <ion-option value="Roselière/Mégaphorbiaie">Roselière/Mégaphorbiaie</ion-option>
+                    <ion-option value="Tourbière">Tourbière</ion-option>
+                    <ion-option value="Verger/Vignoble">Verger/Vignoble</ion-option>
                 </ion-select>
             </ion-item>
 
             <ion-item>
                 <ion-label floating>Coef. abondance/dominance</ion-label>
-                <ion-select formControlName="coef_abondance" interface="popover">
+                <ion-select formControlName="abondance_dominance" interface="popover">
                     <ion-option value="i">i</ion-option>
                     <ion-option value="r">r</ion-option>
                     <ion-option value="+">+</ion-option>
@@ -90,6 +102,17 @@
             </ion-item>
 
             <ion-item>
+                <ion-label floating>Stade végétatif</ion-label>
+                <ion-select formControlName="stade" interface="popover">
+                    <ion-option value="végétatif">végétatif</ion-option>
+                    <ion-option value="en fleur">en fleur</ion-option>
+                    <ion-option value="en fruits">en fruits</ion-option>
+                    <ion-option value="fané">fané</ion-option>
+                    <ion-option value="mort sur pied">mort sur pied</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
                 <ion-label floating>Surface (m²)</ion-label>
                 <ion-select formControlName="surface" interface="popover">
                     <ion-option value="0 à 25">0 à 25</ion-option>
@@ -106,7 +129,7 @@
 
             <ion-item>
                 <ion-label floating>Remarques</ion-label>
-                <ion-textarea formControlName="remarques"></ion-textarea>
+                <ion-textarea formControlName="Comments"></ion-textarea>
             </ion-item>
             <div class="imagesContainer">
                 <div *ngFor="let image of images" class="imgContainer">

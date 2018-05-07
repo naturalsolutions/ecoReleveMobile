@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,Platform ,LoadingController} from 'ionic-angular';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { Network } from '@ionic-native/network'
 import { ProjectsPage } from '../projects/projects';
-import {Headers, Http} from "@angular/http";
-import {JwtHelper} from "angular2-jwt";
-import {Storage} from "@ionic/storage";
 import {AuthService} from "../providers/auth";
 import 'rxjs/add/operator/map';
+import { errorHandler } from '@angular/platform-browser/src/browser';
+import {Storage} from "@ionic/storage";
 
 
 
@@ -16,88 +16,83 @@ import 'rxjs/add/operator/map';
 })
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
 
   public formModel: FormGroup;
-  private LOGIN_URL = "http://localhost:3001/sessions/create";
-  private SIGNUP_URL = "http://localhost:3001/users";
-
-  auth: AuthService;
-  // When the page loads, we want the Login segment to be selected
-  authType: string = "login";
-  // We need to set the content type for the server
-  contentHeader = new Headers({"Content-Type": "application/json"});
-  error: string;
-  jwtHelper = new JwtHelper();
-  user: string;
+  connectionStatus : any
+  loading : any
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private  builder: FormBuilder,
     // added to auth
-    private http: Http, private storage: Storage
+    private storage: Storage,
+    private alertCtrl: AlertController,
+    private auth: AuthService,
+    public platform :Platform,
+    private network :Network,
+    public loadingCtrl: LoadingController
   ) {
-    /*this.auth = AuthService;
+
     
-        storage.ready().then(() => {
-          storage.get('profile').then(profile => {
-            this.user = JSON.parse(profile);
-          }).catch(console.log);
-        });*/
   }
 
-  ionViewDidLoad() {
-    this.formModel = this.builder.group({
-        'login': [
-          //'', // default value
-          //[Validators.required]
-        ],
-        'password': [
-          // '',
-          //[Validators.required]
-        ]
-    });
-  }
-
-  onSubmit(value) {
-    this.navCtrl.push(ProjectsPage)
-  }
-  // added to implement login
   authenticate(credentials) {
-    this.authType == 'login' ? this.login(credentials) : this.signup(credentials);
-  }
+    
+    if (this.platform.is('cordova')) {
+      this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online';
+      if(this.connectionStatus == 'offline') {
+        this.alertError();
+        return;
+      }
+    }
+    this.loading = this.loadingCtrl.create({
+      content: 'Authentification en cours...',
+      spinner: 'bubbles'
+    });
 
-  login(credentials) {
-    this.http.post(this.LOGIN_URL, JSON.stringify(credentials), { headers: this.contentHeader })
-      .map(res => res.json())
-      .subscribe(
-        data => this.authSuccess(data.id_token),
-        err => this.error = err
-      );
-  }
+    this.auth.checkuser(credentials).then(data =>{
+      this.auth.login(data).then(data=>{
+        this.loading.dismiss();
+        this.navCtrl.setRoot(ProjectsPage);
+      }), error=> {
+        if(error.status == 401){
+            alert('401');
+        }
+        this.alertError();
 
-  signup(credentials) {
-    this.http.post(this.SIGNUP_URL, JSON.stringify(credentials), { headers: this.contentHeader })
-      .map(res => res.json())
-      .subscribe(
-        data => this.authSuccess(data.id_token),
-        err => this.error = err
-      );
-  }
+      }
+    }, error=> {
+      if(error.status == 401){
+        alert('401');
+      }
+      this.alertError();
 
+    }
+  );
+
+  }
+  alertError(){
+    let alert = this.alertCtrl.create({
+      title: "Erreur d'authentification",
+      message: "L'authentification' a échoué. Merci de vérifier votre connexion internet ou de contacter l'administrateur.",
+      buttons: [
+        {
+          text: 'OK'
+        }
+      ]
+    });
+    alert.present();
+    this.loading.dismiss();
+  }
   logout() {
     this.storage.remove('token');
-    this.user = null;
+    this.auth.isLoggedin = false;
   }
-
-  authSuccess(token) {
-    this.error = null;
-    this.storage.set('token', token);
-    this.user = this.jwtHelper.decodeToken(token).username;
-    this.storage.set('profile', this.user);
+  resetLogout(){
+    this.navCtrl.setRoot(ProjectsPage);
   }
-
 }

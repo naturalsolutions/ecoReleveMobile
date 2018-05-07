@@ -444,7 +444,7 @@ export class ProjectsPage {
                 let promises = [];
 
                 for (let dt in obs) {
-                      if(! obs[dt]['serverId']){
+                      if((! obs[dt]['serverId']) && ( obs[dt]['finished'])){
                       let observation = obs[dt];
                       observation['station'] = {}
 
@@ -488,7 +488,7 @@ export class ProjectsPage {
                   for(let j=0; j<this.loadedProjects.length;j++) {
                     if(this.loadedProjects[j]['ID'] == projID){
                       this.loadedProjects[j]['isPushed'] = true;
-                      projName = this.projects[j]['Name'];
+                      projName = this.loadedProjects[j]['Name'];
                       this.loadedProjects[j]['image'] = "./assets/icones_projects/synchro.png";
                     }
                   }

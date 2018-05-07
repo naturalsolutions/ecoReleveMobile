@@ -13,7 +13,7 @@ interface BatrachofauneInterface {
     latitude:number,
     longitude: number,
     dateObs: number,
-    remarques : string,
+    Comments : string,
     images : string
 }
 export   class Batrachofaune implements BatrachofauneInterface {  
@@ -32,7 +32,7 @@ export   class Batrachofaune implements BatrachofauneInterface {
           public latitude= 0,
           public longitude=0,
           public dateObs =0,
-          public remarques ='',
+          public Comments ='',
           public images
         ) {
         } 

@@ -1,21 +1,22 @@
+
 import { Component } from '@angular/core';
 import {ProtocolFormComponent } from '../protocol-form/protocol-form';
 import { Validators } from '@angular/forms';
-import {Batrachofaune} from '../../../models/batrachofaune-interface';
+import {Insectes} from '../../../models/insectes-interface';
 
 @Component({
-  selector: 'batrachofaune',
-  templateUrl: 'batrachofaune.html'
+  selector: 'insectes',
+  templateUrl: 'insectes.html'
 })
-export class BatrachofauneComponent extends ProtocolFormComponent {
+export class  InsectesComponent extends ProtocolFormComponent {
 
-   ngOnInit() {
-      super.ngOnInit(Batrachofaune);
+  ngOnInit() {
+    super.ngOnInit(Insectes);
+  }
 
-   }
   getFormModel(model){
-         return  this.builder.group({
-        'protocole':'Batracho',
+        return this.builder.group({
+        'protocole':'Insectes',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]
@@ -24,8 +25,8 @@ export class BatrachofauneComponent extends ProtocolFormComponent {
            model.nom_vernaculaire,
           [Validators.required]
         ],
-        'nom_scientifique': [
-          model.nom_scientifique,
+        'taxon': [
+          model.taxon,
          []
        ],
         'effectif' : [
@@ -48,6 +49,9 @@ export class BatrachofauneComponent extends ProtocolFormComponent {
         'reproduction' : [
            model.reproduction
         ],
+        'plante_hote': [
+           model.plante_hote
+        ], 
          'latitude' : [
             model.latitude
           ],
@@ -57,14 +61,18 @@ export class BatrachofauneComponent extends ProtocolFormComponent {
          'dateObs' : [
            model.dateObs
           ],
-          'remarques' : [
-            model.remarques
+          'Comments' : [
+            model.Comments
            ],
            'images' : [
             model.images
+           ],
+           'trace' : [
+            model.trace
+           ],
+           'taxref_id' : [
+            model.taxref_id
            ]
       });
   }
-
-
 }

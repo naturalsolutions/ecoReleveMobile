@@ -12,10 +12,11 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
-                    <ion-option value="IKA">IKA</ion-option>
+                    <ion-option value="ADNe">ADNe</ion-option>
                     <ion-option value="Affût">Affût</ion-option>
                     <ion-option value="Analyse de pelotes de réjection">Analyse de pelotes de réjection</ion-option>
                     <ion-option value="Comptage au phare">Comptage au phare</ion-option>
+                    <ion-option value="IKA">IKA</ion-option>
                     <ion-option value="Observation fortuite">Observation fortuite</ion-option>
                     <ion-option value="Piège non vulnérant">Piège non vulnérant</ion-option>
                     <ion-option value="Piège photographique">Piège photographique</ion-option>
@@ -101,6 +102,7 @@
                 <ion-select formControlName="sexe" interface="popover">
                     <ion-option value="mâle">mâle</ion-option>
                     <ion-option value="femelle">femelle</ion-option>
+                    <ion-option value="couple">couple</ion-option>
                     <ion-option value="juv/imm">juv/imm</ion-option>
                     <ion-option value="?">?</ion-option>
                 </ion-select>
@@ -117,7 +119,7 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>Remarques</ion-label>
-                <ion-textarea formControlName="remarques"></ion-textarea>
+                <ion-textarea formControlName="Comments"></ion-textarea>
             </ion-item>
             <div class="imagesContainer">
                 <div *ngFor="let image of images" class="imgContainer">

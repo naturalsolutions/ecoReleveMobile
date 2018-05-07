@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 
 
 import { ProjectsPage } from '../projects/projects';
-import { LoginPage2} from '../login2/login2';
+import { LoginPage} from '../login/login';
 import {AuthService} from "../providers/auth";
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 @Component({
@@ -43,7 +43,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Projets', component: ProjectsPage},
-      { title: 'Déconnexion', component: LoginPage2},
+      { title: 'Déconnexion', component: LoginPage},
     ];
 
   }
@@ -184,7 +184,7 @@ export class MyApp {
       if(data){
       this.rootPage = ProjectsPage;
     } else {
-      this.rootPage = LoginPage2;
+      this.rootPage = LoginPage;
     }
     this.loading.dismiss();
   });

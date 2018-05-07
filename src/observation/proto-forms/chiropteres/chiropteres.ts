@@ -16,7 +16,7 @@ export class ChiropteresComponent extends ProtocolFormComponent {
 
   getFormModel(model){
         return this.builder.group({
-        'protocole':'Chiro',
+        'protocole':'Chiropteres',
         'type_inventaire': [
           model.type_inventaire, // default value
           [Validators.required]
@@ -62,11 +62,14 @@ export class ChiropteresComponent extends ProtocolFormComponent {
          'dateObs' : [
            model.dateObs
           ],
-          'remarques' : [
-            model.remarques
+          'Comments' : [
+            model.Comments
            ],
            'images' : [
             model.images
+           ],
+           'taxref_id' : [
+            model.taxref_id
            ]
       });
   }
