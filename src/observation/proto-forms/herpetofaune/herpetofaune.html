@@ -136,7 +136,7 @@
             </ion-item>
             <div class="imagesContainer">
                 <div *ngFor="let image of images" class="imgContainer">
-                    <img src={{image}}>
+                    <img src={{image.path}}>
                     <button class="delImg" (click)="deleteImage(image)">supprimer</button>
                 </div>
             </div>
