@@ -253,28 +253,70 @@ export class ObservationPage  {
     
      // Get the data of an image
      this.platform.ready().then(() => {
-       
-     this.camera.getPicture({
-      destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      mediaType: this.camera.MediaType.PICTURE,
-      encodingType: this.camera.EncodingType.JPEG,
-      correctOrientation: true
-  }).then((imageData) => {
-    // imageData is a base64 encoded string
-      let image = "data:image/jpeg;base64," + imageData;
-      //console.log(this.image);
-      //let images =  this.myProto.getImages();
-      let images =  this.myProto.images;
-      //let storageName = 'image' + '-' + Date.now() ;
-      //images.push(storageName);
-      images.push(image);
-      this.myProto.images = images;
-      //this.storage.set('storageName', image);
+  
+      let theKey
+      let theValue
+      let refProto = this.myProto;
+      this.camera.getPicture({
+        destinationType: this.camera.DestinationType.NATIVE_URI,
+        sourceType: this.camera.PictureSourceType.CAMERA,
+        mediaType: this.camera.MediaType.PICTURE,
+        encodingType: this.camera.EncodingType.JPEG,
+        correctOrientation: true
+    }).then((imageUrl) => {
+  
+        this.file.resolveLocalFilesystemUrl(imageUrl)
+        .then((entry : any) => {
+          entry.file(function (file) {
+            let reader = new FileReader();
+            
+            reader.onloadend = function (encodedFile: any) {
+              let src = encodedFile.target.result;
+              src = src.split("base64,");
+              theValue = "data:image/jpeg;base64," +src[1];
+              theKey = imageUrl;
+              let images =  refProto.images;
+              images.push({ 
+                          path:theKey,
+                          name : file.name,
+                          base64Data : theValue
+                 });
+              refProto.images = images;
+            };
+            reader.readAsDataURL(file);
+          })
+         
+        })
+        .catch((error) =>{
+          console.log(error)
+        });
+              
 
-  }, (err) => {
-      console.log(err);
-  });
+    }, (err) => {
+        console.log(err);
+    });
+       
+  //    this.camera.getPicture({
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     sourceType: this.camera.PictureSourceType.CAMERA,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     correctOrientation: true
+  // }).then((imageData) => {
+  //   // imageData is a base64 encoded string
+  //     let image = "data:image/jpeg;base64," + imageData;
+  //     //console.log(this.image);
+  //     //let images =  this.myProto.getImages();
+  //     let images =  this.myProto.images;
+  //     //let storageName = 'image' + '-' + Date.now() ;
+  //     //images.push(storageName);
+  //     images.push(image);
+  //     this.myProto.images = images;
+  //     //this.storage.set('storageName', image);
+
+  // }, (err) => {
+  //     console.log(err);
+  // });
 
 })
 
