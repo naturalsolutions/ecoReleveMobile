@@ -287,6 +287,7 @@ export class ProjectsPage {
             proj.geometry = null;
           }
           proj['isLoaded'] = true;
+          proj['isPushed'] = false;
           //proj.checked = false;
           list.push(proj);
           loaded+=1;
