@@ -1,4 +1,4 @@
-import { Component, Output,ElementRef, ViewChild,ComponentFactoryResolver,AfterViewInit,Renderer } from '@angular/core'
+import { Component, ElementRef, ViewChild,ComponentFactoryResolver,Renderer, OnInit, AfterViewInit } from '@angular/core'
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -11,7 +11,7 @@ import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, PopoverController,Platform,ToastController,LoadingController  } from 'ionic-angular'
 import { Geolocation } from '@ionic-native/geolocation'
 import { CommonService } from '../shared/notification.service'  // notify exit view to childs
-import { Subscription } from 'rxjs/Subscription'
+//import { Subscription } from 'rxjs/Subscription'
 import {GeoService} from '../shared/geolocation.notification.service'
 import {PopoverPage} from'./popoverPage'
 import { AdDirective } from '../shared/ad.directive'
@@ -27,11 +27,11 @@ declare var cordova: any;
   providers : [File,
     Transfer,
     Camera,
-    FilePath,  ]
+    FilePath,  ],
 })
 
 
-export class ObservationPage  {
+export class ObservationPage implements OnInit, AfterViewInit  {
 
   @ViewChild(AdDirective) adForm: AdDirective;
 
@@ -85,6 +85,11 @@ export class ObservationPage  {
 
   }
 
+  ngAfterViewInit() {
+
+    this.loadComponent();
+  }
+
   ionViewDidLoad() {
     console.log('obs load')
     this.sameStation = false;
@@ -95,15 +100,15 @@ export class ObservationPage  {
     // get coordinates for new obs
     if(this.obsId == 0){
       this.getPosition();
-    }
-
+    } 
     //this.geoServ.notifyOther();
+    
   }
-
+  
   onSubmit() {
     this.myProto.onSubmit(this.segment)
     this.switchToNextSegment()
-
+    
   }
   ngOnInit() {
 
@@ -183,10 +188,12 @@ export class ObservationPage  {
         });
 
   }
-  ngAfterViewInit() {
+  //ngOnInit() {
+    //setTimeout(()=> this.loadComponent(), 3000)
+    /* ngAfterViewInit() {  
     this.loadComponent();
 
-  }
+  } */
   loadComponent() {
 
     let component = this.adFormService.getComponent(this.protocolName)
@@ -213,10 +220,13 @@ export class ObservationPage  {
           content: 'aquisition des coordonnées...'
         });
         this.loading.present();
+        setTimeout(() => {
+          this.loading.dismiss();
+        }, 2000);
       this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 20000, maximumAge: 0}).then(pos => {
         //this.presentToast('lat: '+ pos.coords.latitude + ", lon: " +pos.coords.longitude, 'top' )
         this.myProto.updatePosition(pos.coords.latitude ,pos.coords.longitude);
-        this.loading.dismiss();
+        //this.loading.dismiss();
 
       }, (err) => {
         this.loading.dismiss();
@@ -237,7 +247,8 @@ export class ObservationPage  {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position : position
+      position : position,
+      cssClass: "toast-error"
     });
     toast.present();
   }
@@ -295,29 +306,6 @@ export class ObservationPage  {
     }, (err) => {
         console.log(err);
     });
-       
-  //    this.camera.getPicture({
-  //     destinationType: this.camera.DestinationType.DATA_URL,
-  //     sourceType: this.camera.PictureSourceType.CAMERA,
-  //     mediaType: this.camera.MediaType.PICTURE,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     correctOrientation: true
-  // }).then((imageData) => {
-  //   // imageData is a base64 encoded string
-  //     let image = "data:image/jpeg;base64," + imageData;
-  //     //console.log(this.image);
-  //     //let images =  this.myProto.getImages();
-  //     let images =  this.myProto.images;
-  //     //let storageName = 'image' + '-' + Date.now() ;
-  //     //images.push(storageName);
-  //     images.push(image);
-  //     this.myProto.images = images;
-  //     //this.storage.set('storageName', image);
-
-  // }, (err) => {
-  //     console.log(err);
-  // });
-
 })
 
 }
@@ -334,22 +322,4 @@ handleMapSize(size) {
     this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'padding', '16px' );
   }
 }
-
-/*private copyFileToLocalDir(namePath, currentName, newFileName) {
-  this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
-    this.lastImage = newFileName;
-    console.log('fichier image');
-    alert(namePath);
-    console.log(newFileName);
-  }, error => {
-   // this.presentToast('Error while storing file.');
-  });
-}
-// Create a new name for the image
-private createFileName() {
-  var d = new Date(),
-  n = d.getTime(),
-  newFileName =  n + ".jpg";
-  return newFileName;
-}*/
 }

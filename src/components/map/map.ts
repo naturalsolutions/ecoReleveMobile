@@ -7,14 +7,14 @@ import {ProjectsServiceProvider} from '../../providers/projects-service'
 import { MapModel } from '../../shared/map.model'
 //import { MapModel } from '../../shared/map.model'
 import {Geolocation } from '@ionic-native/geolocation'
-import * as geojsonBounds from 'geojson-bounds'
+//import * as geojsonBounds from 'geojson-bounds'
 import { Storage } from '@ionic/storage'
 //import { NetworkService } from '../../shared/network.service';
 import { Network } from '@ionic-native/network'
 
 import  Draw  from 'leaflet-draw';
 import Polylinedecorator from 'leaflet-polylinedecorator';
-import _ from 'lodash'
+//import _ from 'lodash'
 
 
 
@@ -52,11 +52,11 @@ export class MapComponent {
 
   constructor(
     public navCtrl: NavController, 
-    private viewCtrl: ViewController,
+    //private viewCtrl: ViewController,
     public navParams: NavParams,
     private el: ElementRef,
     private geolocation: Geolocation,
-    private NotificationService: MapNotificationService,
+    //private NotificationService: MapNotificationService,
     public projectsService : ProjectsServiceProvider,
     public storage : Storage,
     private network :Network,
@@ -259,7 +259,7 @@ onMapModelReady() {
       fillOpacity: 1,
       fillColor: '#f44141'
     };
-    arrowLayer.setStyle(style);
+    //arrowLayer.setStyle(style);
     drawnItems['name']= 'markeur';
     this._map.addLayer(drawnItems);
     this._map.addLayer(arrowLayer);
@@ -405,7 +405,7 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
 
       console.log(json)
       console.log('rotatedmarker')
-      console.log(Polylinedecorator)
+      //console.log(Polylinedecorator)
 
       _this.jsonEvent.emit(json)
 
@@ -416,14 +416,14 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
             ]
       });
       arrowLayer.addLayer(arrowHead);
-      arrowLayer.setStyle(style);
+      //arrowLayer.setStyle(style);
 
 
-      layer.setStyle(style);
+      //layer.setStyle(function(feature) { return style; });
 
     }
 
-    drawnItems.addLayer(layer);
+    //drawnItems.addLayer(layer);
     console.log('drawControl'); 
     drawControl.setDrawingOptions({
       polyline: false
@@ -443,8 +443,7 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
 
 
   this._map.on('draw:edited', function (e) {
-    console.log('******** edition *********')
-    console.log(e)
+
     var layers = e.layers;
     //var layers = e.target._layers;
     layers.eachLayer(function (layer) {
@@ -471,7 +470,6 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
       }
       if(layer['name']=='trace') {
         var json = layer.toGeoJSON();
-        console.log(json)
         _this.jsonEvent.emit(json)
       }
 
@@ -485,7 +483,6 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
   
   });
   this._map.on('draw:deletestop', function (e) { 
-    console.log(e)
     var layers = e.target._layers;
     var elemId = e.target._leaflet_id;
 
@@ -517,25 +514,29 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
    });
 
    // if trace exists, add it
-   console.log('*** trace ****')
    if(this.trace){
 
     let trace = JSON.parse(this.trace)
 
-    let traceLayer = L.geoJSON(trace,{ style: function (f) {
+    let traceLayer = L.geoJSON(trace,
+      /*{ style: function (f) {
               return f.properties;
-      }})
+      }}*/
+  )
+  //traceLayer.setStyle(function(feature) { return style; });
 
     // select the geometry, assuming only 1
   var newLayer = traceLayer.getLayers()[0];
   newLayer['name']='trace'
-  newLayer['options']['style'] = {
+  /*newLayer['options']['style'] = {
     color: '#f44141', 
     weight: 6,
     opacity: 1,
     fillOpacity: 1,
     fillColor: '#f44141'
-  };
+  };*/
+  var layerStyle = { fillColor: '#f44141', color: '#f44141', weight: 6,  opacity: 1,  fillOpacity: 1 };
+  //newLayer.setStyle(function(feature) { return layerStyle; });
 
     drawnItems.addLayer(newLayer)
     this.traceLayerId = newLayer['_leaflet_id']
@@ -549,7 +550,7 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
       ]
     });
     arrowLayer.addLayer(arrowHead);
-    arrowLayer.setStyle(style);
+   arrowLayer.setStyle(style);
 
     // disable  draw btn
     let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');

@@ -47,3 +47,9 @@ i.js-nomlatin {
     padding-top: 5px!important;
     padding-bottom: 5px!important;
 }
+
+.toast-success {
+    >div {
+        background-color: #32db64!important;
+    }
+}

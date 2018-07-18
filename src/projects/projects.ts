@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Renderer } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import {ProjectsServiceProvider} from '../providers/projects-service';
 import {ObsProvider} from '../providers/obs/obs'
@@ -27,12 +27,14 @@ export class ProjectsPage {
   myProjdisabled:any = 'disabled';
   syncdisabled:any = 'disabled';
   displayMyProjs : boolean = false;
+  networkStatus : any;
   
   mapModel :any
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public projectsService : ProjectsServiceProvider, private alertCtrl: AlertController,
     public data : ObsProvider,
-    public storage : Storage
+    public storage : Storage,
+    private renderer: Renderer,
 
   ) {
 
@@ -42,6 +44,15 @@ export class ProjectsPage {
     console.log('ionViewDidLoad ProjectsPage');
     this.loadProjects();
     console.log(this.navCtrl)
+    //Network Listerner
+      this.renderer.listenGlobal('window', 'online', (evt) => {
+        console.log('online');
+        this.networkStatus = 'hasNetwork';
+      });
+      this.renderer.listenGlobal('window', 'offline', (evt) => {
+        console.log('offline');
+        this.networkStatus = 'hasErrorNetwork';
+      })
   }
 
   loadProjects (){
@@ -148,7 +159,10 @@ export class ProjectsPage {
       });
 
     */
-
+   if (this.networkStatus == 'hasErrorNetwork') {
+    this.informAlert('Problème de connexion', 'Merci de vérifier votre connexion Internet.')
+    return
+  }
         let p1= new Promise((resolve, reject) => {
           this.projectsService.getProj().then(data =>{
             
@@ -260,6 +274,10 @@ export class ProjectsPage {
   }
 
   ImportProjects(){
+    if (this.networkStatus == 'hasErrorNetwork') {
+      this.informAlert('Problème de connexion', 'Merci de vérifier votre connexion Internet.')
+      return
+    }
     // load checked projects
     // 1- for each checked project load geometry
     let nbToload = 0;
@@ -424,7 +442,12 @@ export class ProjectsPage {
           text: 'Oui',
           handler: () => {
              //supprimer proj en local, mettre à jour liste et update local storage
-            let list = [];
+            if (this.networkStatus == 'hasErrorNetwork') {
+              this.informAlert('Problème de connexion', 'Merci de vérifier votre connexion Internet.')
+              return
+            }
+            
+             let list = [];
             for (let proj of this.loadedProjects) {
               if(proj.checked) {
                list.push(proj.ID)  
@@ -520,6 +543,7 @@ export class ProjectsPage {
     alert.present();
     
   }
+
   informAlert(tite, data){
     let alert = this.alertCtrl.create({
       title: tite,

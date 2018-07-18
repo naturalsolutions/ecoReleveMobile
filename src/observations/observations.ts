@@ -7,6 +7,8 @@ import { ObservationPage} from '../observation/observation'
 import { Storage } from '@ionic/storage'
 import { MapModel } from '../shared/map.model'
 import {ProjectsServiceProvider} from '../providers/projects-service';
+import {config }  from '../config';
+import * as L from 'leaflet';
 //import {MapComponent} from '../components/map/map'
 //import { Subscription } from 'rxjs/Subscription'
 //import { MapNotificationService } from '../shared/map.notification.service'
@@ -46,7 +48,9 @@ export class ObservationsPage {
 
   ) {
     this.projId = navParams.get("projId")
-    this.newObsDisabled = navParams.get("isPushed")
+    if(config.disableAfterSync) {
+      this.newObsDisabled = navParams.get("isPushed")
+    }
     this.loadProtocols()
   }
 
@@ -87,7 +91,7 @@ export class ObservationsPage {
     // get selected protocol
     let protocol = this.protocols.find(x => x.name === protocole);
     console.log(protocol, id);
-    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId, 'isEditable' : !this.newObsDisabled});
+    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId, 'isEditable' : !this.obs.pushed});
   }
   newObs(){
     console.log('new obs');
@@ -131,9 +135,40 @@ export class ObservationsPage {
     }
     return label
   }
-  getImage(protocole,finished){
+  getImage(ob){
+    let protocole = ob.protocole;
+    let finished = ob.finished;
+    let pushed = ob.pushed;
     let src="";
-    if(finished){
+    
+    if(pushed){
+      switch(protocole) {
+          case "Avifaune":
+              src="avifaune_sync.png";
+              break;
+          case "Herpeto":
+              src="herpeto_sync.png";   
+              break;
+           case "Mammo":
+             src="mammo_sync.png";   
+            break;
+            case "Batracho":
+            src="batracho_sync.png";  
+            break;
+            case "Chiropteres":
+            src="chiro_sync.png";  //TODO update picto 
+            break;
+            case "Flore":
+            src="flore_sync.png";  
+            break;
+            case "Insectes":
+            src="insect_sync.png";  
+            break;
+      }
+
+    } 
+    
+    else if(finished){
       switch(protocole) {
           case "Avifaune":
               src="avifaune.png";

@@ -4,6 +4,7 @@ import { PopoverController, NavController,ViewController, NavParams,AlertControl
 import { ProtocolsPage } from '../protocols/protocols'
 import { ObservationsPage } from '../observations/observations'
 import {ObsProvider} from '../providers/obs/obs'
+import {ProjectsPage} from '../projects/projects'
 
 @Component({
   template: `
@@ -18,10 +19,10 @@ import {ObsProvider} from '../providers/obs/obs'
         <ion-label>Mes observations</ion-label>
       </ion-item>
 
-    <!--<ion-item class="" (click)="saveObs()">
-    <ion-label>Enregistrer</ion-label>
-    </ion-item> -->
-    <ion-item class="" (click)="closePopover()">
+    <ion-item class="" (click)="displayProj()">
+    <ion-label>Mes projets</ion-label>
+    </ion-item> 
+    <ion-item class="actionItem" (click)="closePopover()">
     <ion-label>Retour</ion-label>
     </ion-item>
 
@@ -67,6 +68,11 @@ export class PopoverPage {
     //this.navCtrl.push(ObservationsPage)
     this.parent.navCtrl.pop()
     this.parent.navCtrl.pop()
+  }
+  displayProj(){
+    this.viewCtrl.dismiss();
+    this.navCtrl.push(ProjectsPage)
+
   }
   deleteObs(){
     this.viewCtrl.dismiss()

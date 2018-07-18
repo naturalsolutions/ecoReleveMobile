@@ -236,6 +236,9 @@ export class ProtocolFormComponent {
     }
     this.data.saveObs(value)
     this.obsSaved = true;
+    if( !value.pushed){
+      value.pushed = false;
+    }
     this.images = [];
   }
 
@@ -287,7 +290,8 @@ export class ProtocolFormComponent {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 2000,
-      position : position
+      position : position,
+      cssClass: "toast-success"
     });
     toast.present();
   }

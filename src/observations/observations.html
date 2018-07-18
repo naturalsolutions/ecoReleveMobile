@@ -26,7 +26,7 @@
                 <ion-row>
                     <ion-col width-25 class="iconObs">
                         <ion-thumbnail item-start>
-                            <img src={{getImage(ob.protocole,ob.finished)}} />
+                            <img src={{getImage(ob)}} />
                         </ion-thumbnail>
                     </ion-col>
                     <ion-col width-75 class="obsValue">
@@ -51,6 +51,7 @@
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
-        <button ion-button type="submit" block (click)="newObs()" [disabled]="newObsDisabled">Nouvelle observation</button>
+        <button ion-button type="submit" block (click)="newObs()">Nouvelle observation</button>
+        <!--<button ion-button type="submit" block (click)="newObs()" [disabled]="newObsDisabled">Nouvelle observation</button>-->
     </ion-toolbar>
 </ion-footer>

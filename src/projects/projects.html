@@ -71,12 +71,13 @@
         </ion-list>
 
     </div>
+    <!--<div><button ion-button (click)="navToProtocols(1,false)" color="danger">next</button></div>-->
 
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
         <button ion-button [class.hide]="!displayMyProjs" (click)="deleteSelected($event)" type="submit" [disabled]="myProjdisabled" color="danger">Supprimer</button>
-        <button ion-button [class.hide]="!displayMyProjs" (click)="pushData($event)" type="submit" [disabled]="syncdisabled" style="float: right;" class="syncBtn">Synchroniser</button>
+        <button ion-button [class.hide]="!displayMyProjs" (click)="pushData($event)" type="submit" style="float: right;" class="syncBtn">Synchroniser</button>
         <button ion-button [class.hide]="displayMyProjs" type="submit" block (click)="ImportProjects()" [disabled]="disabled">Importer</button>
     </ion-toolbar>
 </ion-footer>

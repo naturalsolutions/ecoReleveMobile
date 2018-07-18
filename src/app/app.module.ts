@@ -7,10 +7,10 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../home/home';
-import { ProtocolsPage } from '../protocols/protocols';
-import { ProjectsPage } from '../projects/projects';
-import { ObservationPage} from '../observation/observation';
-import { ObservationsPage } from '../observations/observations';
+//import { ProtocolsPage } from '../protocols/protocols';
+//import { ProjectsPage } from '../projects/projects';
+//import { ObservationPage} from '../observation/observation';
+//import { ObservationsPage } from '../observations/observations';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,11 +34,16 @@ import { InsectesComponent } from '../observation/proto-forms/insectes/insectes'
 import {PopoverPage} from'../observation/popoverPage';
 import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
 
-import {  MapComponent} from '../components/map/map'; 
-import { AdDirective }    from '../shared/ad.directive';
+//import {  MapComponent} from '../components/map/map'; 
 import { AdFormService} from '../observation/proto-form-provider'
-import { LoginPage } from '../login/login';
+//import { LoginPage } from '../login/login';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { MapComponentModule } from '../components/map/map.module';
+import { LoginPageModule } from '../login/login.module';
+import { ObservationPageModule } from '../observation/observation.module';
+import { ObservationsPageModule } from '../observations/observations.module';
+import { ProjectsPageModule } from '../projects/projects.module';
+import { ProtocolsPageModule } from '../protocols/protocols.module';
 
 
 
@@ -46,11 +51,11 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
   declarations: [
     MyApp,
     HomePage,
-    ProtocolsPage,
-    ProjectsPage,
-    ObservationPage,
-    ObservationsPage,
-    LoginPage,
+    //ProtocolsPage,
+   // ProjectsPage,
+    //ObservationPage,
+    //ObservationsPage,
+    //LoginPage,
     ProtocolFormComponent,
     AvifauneComponent,
     MammofauneComponent,
@@ -58,15 +63,19 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ChiropteresComponent,
     FloreComponent,
     InsectesComponent,
-    MapComponent,
+    //MapComponent,
     PopoverPage,
-    PopoverAutocompPage,
-    AdDirective
+    PopoverAutocompPage
   ],
   imports: [
     HttpModule,
-
+    MapComponentModule,
     BrowserModule,
+    LoginPageModule,
+    ObservationPageModule,
+    ObservationsPageModule,
+    ProjectsPageModule,
+    ProtocolsPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule .forRoot(),
   ],
@@ -74,12 +83,12 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
   entryComponents: [
     MyApp,
     HomePage,
-    ProtocolsPage,
-    ProjectsPage,
-    ObservationPage,
-    ObservationsPage,
-    LoginPage,
-    MapComponent,
+    //ProtocolsPage,
+    //ProjectsPage,
+    //ObservationPage,
+    //ObservationsPage,
+    //LoginPage,
+    //MapComponent,
     PopoverPage,
     PopoverAutocompPage,
     AvifauneComponent,
@@ -104,7 +113,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     CommonService,
     MapNotificationService,
     GeoService,
-    AdDirective,
+    //AdDirective,
     AdFormService,
     AuthService,
     SQLite

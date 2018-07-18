@@ -34,3 +34,9 @@ page-observation {
     width: 320px!important;
     left: 5px!important;
 }
+
+.toast-error {
+    >div {
+        background-color: red!important;
+    }
+}
