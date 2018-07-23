@@ -76,7 +76,9 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     ObservationsPageModule,
     ProjectsPageModule,
     ProtocolsPageModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'md',
+    }),
     IonicStorageModule .forRoot(),
   ],
   bootstrap: [IonicApp],

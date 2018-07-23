@@ -1,6 +1,7 @@
 import { Component, ElementRef, Output, EventEmitter, Input,Renderer } from '@angular/core'
 import { NavController, NavParams,Platform,ViewController,AlertController } from 'ionic-angular'
 import * as L from "leaflet"
+import { Draw } from "leaflet-draw"
 //import { Subscription } from 'rxjs/Subscription'
 import { MapNotificationService } from '../../shared/map.notification.service'
 import {ProjectsServiceProvider} from '../../providers/projects-service'
@@ -12,7 +13,6 @@ import { Storage } from '@ionic/storage'
 //import { NetworkService } from '../../shared/network.service';
 import { Network } from '@ionic-native/network'
 
-import  Draw  from 'leaflet-draw';
 import Polylinedecorator from 'leaflet-polylinedecorator';
 //import _ from 'lodash'
 
@@ -281,7 +281,6 @@ onMapModelReady() {
 
 
     let _this = this;
-    let v = Draw
     var drawControl =  new (L as any).Control.Draw({
       edit: {
       featureGroup: drawnItems,
