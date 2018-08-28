@@ -30,18 +30,18 @@ Le principe consiste à créer un projet sur le serveur et le charger sur le mob
 
 * Sélectionner le projet en cours pour démarrer une saisie
 <br/>
-
+![](https://raw.githubusercontent.com/NaturalSolutions/ecoReleveMobile/master/src/assets/printscreens/2-my%20proj.jpg)
 
 * Consultation / nouvelle observation
 <br/>
-
+![](https://raw.githubusercontent.com/NaturalSolutions/ecoReleveMobile/master/src/assets/printscreens/3-mes_obs.jpg)
 
 * Choix d'un protocole de saisie
 <br/>
-
+![](https://raw.githubusercontent.com/NaturalSolutions/ecoReleveMobile/master/src/assets/printscreens/4-proto.jpg)
 
 * Nouvelle saisie
 <br/>
-
+![](https://raw.githubusercontent.com/NaturalSolutions/ecoReleveMobile/master/src/assets/printscreens/5-new-obs-loc.jpg)
 <br/>
-
+![](https://raw.githubusercontent.com/NaturalSolutions/ecoReleveMobile/master/src/assets/printscreens/6-new-obs-obligatoire.jpg)
