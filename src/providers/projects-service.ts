@@ -91,6 +91,19 @@ export class ProjectsServiceProvider {
       });
     });
   }
+
+  getProjById(id){
+    return new Promise(resolve =>{
+      this.storage.get('projects').then((data)=>{
+        for (let proj in data) {
+          if(data[proj]['ID']==id) {
+            resolve(data[proj])
+          }
+        }
+      });
+    });
+
+  }
   
   saveProject(proj){
 

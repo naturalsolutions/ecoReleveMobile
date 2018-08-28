@@ -1,4 +1,4 @@
-<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
+<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)" (swipe)="swipe($event)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
             <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude" [trace]="trace"></map>
@@ -16,27 +16,32 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
-                    <ion-option value="Echantillonnage aléatoire">Echantillonnage aléatoire</ion-option>
-                    <ion-option value="Relevé fortuit">Relevé fortuit</ion-option>
-                    <ion-option value="Relevé phytosociologique">Relevé phytosociologique</ion-option>
                     <ion-option value="Relevé qualitatif">Relevé qualitatif</ion-option>
+                    <ion-option value="Relevé phytosociologique">Relevé phytosociologique</ion-option>
+                    <ion-option value="Relevé fortuit">Relevé fortuit</ion-option>
                 </ion-select>
 
             </ion-item>
 
 
             <ion-item (click)="presentPopoverAutocomp('flore')">
-                <ion-label *ngIf="!formModel.value.nom_vernaculaire" class="labelSpecie">Nom vernaculaire</ion-label>
-                <ion-label stacked *ngIf="formModel.value.nom_vernaculaire" class="labelSpecie">Nom vernaculaire</ion-label>
-                <div item-content *ngIf="formModel.value.nom_vernaculaire" class="specieValue">{{formModel.value.nom_vernaculaire}}</div>
+                <ion-label *ngIf="!formModel.value.taxon" class="labelSpecie">Nom scientifique</ion-label>
+                <ion-label stacked *ngIf="formModel.value.taxon" class="labelSpecie">Nom scientifique</ion-label>
+                <div item-content *ngIf="formModel.value.taxon" class="specieValue">{{formModel.value.taxon}}</div>
             </ion-item>
             <ion-item>
-                <ion-input type="hidden" formControlName="nom_vernaculaire"></ion-input>
+                <ion-input type="hidden" formControlName="taxon" class="hiddenItem"></ion-input>
             </ion-item>
             <ion-item [class.hide]="true">
                 <ion-label floating>Nom scientifique</ion-label><br/>
 
-                <ion-input readOnly formControlName="nom_scientifique"></ion-input>
+                <ion-input readOnly formControlName="nom_vernaculaire"></ion-input>
+
+            </ion-item>
+            <ion-item [class.hide]="true">
+                <ion-label floating>taxref_id</ion-label><br/>
+
+                <ion-input readOnly formControlName="taxref_id"></ion-input>
 
             </ion-item>
 

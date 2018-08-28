@@ -15,7 +15,8 @@ interface HerpetoInterface {
     dateObs: number,
     Comments : string,
     images : string,
-    taxref_id : number
+    taxref_id : number,
+    minimum : number
 }
 export   class Herpeto implements HerpetoInterface {  
     constructor(
@@ -35,7 +36,8 @@ export   class Herpeto implements HerpetoInterface {
         public dateObs =0,
         public Comments ='',
         public images,
-        public taxref_id=null
+        public taxref_id=null,
+        public minimum 
     ) {
     } 
 }

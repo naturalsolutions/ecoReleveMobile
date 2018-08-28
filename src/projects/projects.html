@@ -1,7 +1,9 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Projets</ion-title>
+        <ion-title>Projets
+            <ion-icon name="help" class="help" (click)="onHelpClicked()"></ion-icon>
+        </ion-title>
     </ion-navbar>
 
     <!-- segment -->
@@ -57,6 +59,10 @@
 
             </ion-item>
 
+            <div *ngIf="loadedProjects == null">
+                <button ion-button (click)="navToProtocols(1,false)" color="danger">Projet test</button>
+            </div>
+
 
         </ion-list>
 
@@ -71,13 +77,13 @@
         </ion-list>
 
     </div>
-    <!--<div><button ion-button (click)="navToProtocols(1,false)" color="danger">next</button></div>-->
+
 
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">
         <button ion-button [class.hide]="!displayMyProjs" (click)="deleteSelected($event)" type="submit" [disabled]="myProjdisabled" color="danger">Supprimer</button>
-        <button ion-button [class.hide]="!displayMyProjs" (click)="pushData($event)" type="submit" style="float: right;" class="syncBtn">Synchroniser</button>
+        <button ion-button [class.hide]="!displayMyProjs" (click)="pushData($event)" type="submit" style="float: right;" class="syncBtn" [disabled]="myProjdisabled">Synchroniser</button>
         <button ion-button [class.hide]="displayMyProjs" type="submit" block (click)="ImportProjects()" [disabled]="disabled">Importer</button>
     </ion-toolbar>
 </ion-footer>

@@ -25,8 +25,8 @@ export class MammofauneComponent  extends ProtocolFormComponent{
            model.nom_vernaculaire,
           [Validators.required]
         ],
-        'nom_scientifique': [
-          model.nom_scientifique,
+        'taxon': [
+          model.taxon,
          []
        ],
        'taxref_id' :    
@@ -68,6 +68,9 @@ export class MammofauneComponent  extends ProtocolFormComponent{
            ],
            'images' : [
             model.images
+           ],
+           'minimum' : [
+             model.minimum
            ]
       });
   }

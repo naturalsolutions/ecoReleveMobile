@@ -1,4 +1,4 @@
-<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
+<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)" (swipe)="swipe($event)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'">
 
@@ -14,14 +14,15 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
-                    <ion-option value="ADNe">ADNe</ion-option>
+                    <ion-option value="Recherche à vue">Recherche à vue</ion-option>
+                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="Troubleau">Troubleau</ion-option>
+                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
                     <ion-option value="Crapaudrome/crapauduc">Crapaudrome/crapauduc</ion-option>
                     <ion-option value="Nasse/piège aquatique">Nasse/piège aquatique</ion-option>
-                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="ADNe">ADNe</ion-option>
                     <ion-option value="Plaque à reptiles">Plaque à reptiles</ion-option>
-                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
-                    <ion-option value="Recherche à vue">Recherche à vue</ion-option>
-                    <ion-option value="Troubleau">Troubleau</ion-option>
+
                 </ion-select>
 
             </ion-item>
@@ -35,14 +36,6 @@
             <ion-item>
                 <ion-input type="hidden" formControlName="nom_vernaculaire"></ion-input>
             </ion-item>
-            <ion-item [class.hide]="true">
-                <ion-label floating>Nom scientifique</ion-label><br/>
-
-                <ion-input readOnly formControlName="nom_scientifique"></ion-input>
-
-            </ion-item>
-
-
 
             <ion-item>
                 <ion-label floating>Effectif</ion-label>
@@ -51,6 +44,10 @@
             <ion-item>
                 <ion-label class="labelSpecie">Valeur estimée</ion-label>
                 <ion-checkbox formControlName="estimated" item-right></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label class="labelSpecie">Minimum</ion-label>
+                <ion-checkbox formControlName="minimum" item-right></ion-checkbox>
             </ion-item>
 
 

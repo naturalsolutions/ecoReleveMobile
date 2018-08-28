@@ -5,14 +5,14 @@
     </ion-navbar>
 
     <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
-        <ion-segment [(ngModel)]="segment" (ionChange)="onSegmentChanged($event)">
-            <ion-segment-button value="localisation">
+        <ion-segment [(ngModel)]="segment" (ionChange)="onSegmentChanged($event)" (swipe)="swipe($event)">
+            <ion-segment-button value="localisation" (swipe)="swipe($event)">
                 Localisation
             </ion-segment-button>
-            <ion-segment-button value="obligatoire">
+            <ion-segment-button value="obligatoire" (swipe)="swipe($event)">
                 Obligatoire
             </ion-segment-button>
-            <ion-segment-button value="facultatif">
+            <ion-segment-button value="facultatif" (swipe)="swipe($event)">
                 Facultatif
             </ion-segment-button>
         </ion-segment>

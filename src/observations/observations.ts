@@ -1,11 +1,11 @@
 import { Component,ElementRef } from '@angular/core'
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams,PopoverController } from 'ionic-angular'
 import {ObsProvider} from '../providers/obs/obs'
 import { ProtocolsPage } from '../protocols/protocols'
 import {ProtocolsServiceProvider} from '../providers/protocols-service'
 import { ObservationPage} from '../observation/observation'
 import { Storage } from '@ionic/storage'
-import { MapModel } from '../shared/map.model'
+import {PopoverHelpPage} from'./popoverHelpPage'
 import {ProjectsServiceProvider} from '../providers/projects-service';
 import {config }  from '../config';
 import * as L from 'leaflet';
@@ -41,8 +41,8 @@ export class ObservationsPage {
   public protocolsService : ProtocolsServiceProvider,
   private el: ElementRef,
   public storage : Storage,
-  private alertCtrl: AlertController,
-  public projectsService : ProjectsServiceProvider
+  public projectsService : ProjectsServiceProvider,
+  private popoverCtrl: PopoverController,
   //public map : MapComponent,
   //private NotificationService: MapNotificationService
 
@@ -87,11 +87,11 @@ export class ObservationsPage {
     );
   }
 
-  navigateToDetail(protocole,id){
+  navigateToDetail(protocole,id,pushed){
     // get selected protocol
     let protocol = this.protocols.find(x => x.name === protocole);
     console.log(protocol, id);
-    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId, 'isEditable' : !this.obs.pushed});
+    this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId, 'isEditable' : !(pushed)});
   }
   newObs(){
     console.log('new obs');
@@ -241,6 +241,7 @@ export class ObservationsPage {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           }).addTo(self.map);
           self.addStations()
+          self.addProjectBounds()
         }
     }, 200);
 
@@ -282,6 +283,39 @@ export class ObservationsPage {
       } else {
         center = L.latLng(43.2915582, 5.372177)
         this.map.setView(center, 8)
+      }
+    }
+    addProjectBounds(){
+      let projId = this.projId
+      this.projectsService.getProjById(projId).then(data =>{ 
+          if (data) {
+            let geometry = data['geometry'];
+            if(geometry) {
+              var myLayer = L.geoJSON().addTo(this.map);
+              myLayer.addData(geometry);
+            }
+          }
+      })
+    }
+    onHelpClicked(){
+
+      let popover = this.popoverCtrl.create(PopoverHelpPage, {parent : this},{cssClass: 'help-pop'});
+      popover.present({
+      });
+  
+    }
+
+    swipe($event) {
+      
+      if($event.direction === 2 ) {
+        if(this.obsSegment =='listes') {
+          this.obsSegment = 'stations';
+        }
+      }
+      if($event.direction === 4 ) {
+        if(this.obsSegment =='stations') {
+          this.obsSegment = 'listes';
+        }
       }
     }
 

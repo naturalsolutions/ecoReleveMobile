@@ -18,7 +18,8 @@ interface AvifauneInterface {
     Comments : string,
     images : string,
     trace : string,
-    taxref_id : number
+    taxref_id : number,
+    minimum : number
 }
 export   class Avifaune implements AvifauneInterface {  
         constructor(
@@ -41,7 +42,8 @@ export   class Avifaune implements AvifauneInterface {
           public Comments ='',
           public images,
           public trace ='',
-          public taxref_id=null
+          public taxref_id=null,
+          public minimum 
         ) {
         } 
 }

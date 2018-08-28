@@ -17,7 +17,8 @@ interface InsectesInterface {
     projId : number,
     Comments : string,
     images : string,
-    taxref_id : number
+    taxref_id : number,
+    minimum : number
 }
 export   class Insectes implements InsectesInterface {  
         constructor(
@@ -39,7 +40,8 @@ export   class Insectes implements InsectesInterface {
           public projId,
           public Comments ='',
           public images,
-          public taxref_id=null
+          public taxref_id=null,
+          public minimum 
         ) {
         } 
 }

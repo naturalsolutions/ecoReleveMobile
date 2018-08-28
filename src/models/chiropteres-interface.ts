@@ -17,7 +17,8 @@ interface ChiropteresInterface {
     projId : number,
     Comments : string,
     images : string,
-    taxref_id : number
+    taxref_id : number,
+    minimum : number
     
 }
 export   class Chiropteres implements ChiropteresInterface {  
@@ -41,7 +42,8 @@ export   class Chiropteres implements ChiropteresInterface {
           public projId,
           public Comments ='',
           public images,
-          public taxref_id=null
+          public taxref_id=null,
+          public minimum 
         ) {
         } 
 }

@@ -70,7 +70,10 @@ export class ChiropteresComponent extends ProtocolFormComponent {
            ],
            'taxref_id' : [
             model.taxref_id
-           ]
+           ],
+           'minimum' : [
+            model.minimum
+          ]
       });
   }
 }

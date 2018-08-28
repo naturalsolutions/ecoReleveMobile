@@ -36,7 +36,7 @@ export class ProtocolsPage {
   }
 
   ionViewDidEnter(){
-    this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 12000, maximumAge: 0}).then(pos => {
+    /*this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 12000, maximumAge: 0}).then(pos => {
 
     }, (err) => {
       let toast = this.toastCtrl.create({
@@ -46,7 +46,7 @@ export class ProtocolsPage {
       });
       toast.present();
       
-    });
+    });*/
 
   }
 

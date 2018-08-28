@@ -15,7 +15,8 @@ interface MammoInterface {
     dateObs: number,
     Comments : string,
     images : string,
-    taxref_id : number
+    taxref_id : number,
+    minimum : number
 }
 export   class Mammo implements MammoInterface {  
     constructor(
@@ -35,7 +36,8 @@ export   class Mammo implements MammoInterface {
         public dateObs =0,
         public Comments ='',
         public images,
-        public taxref_id=null
+        public taxref_id=null,
+        public minimum 
     ) {
     } 
 }

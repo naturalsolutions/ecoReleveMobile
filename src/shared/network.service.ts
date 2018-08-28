@@ -1,7 +1,4 @@
 import { Injectable,HostBinding } from '@angular/core';
-
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
 import { AlertController, Platform } from 'ionic-angular'
 import { Network } from '@ionic-native/network';
 import { Response } from '@angular/http'

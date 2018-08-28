@@ -7,10 +7,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../home/home';
-//import { ProtocolsPage } from '../protocols/protocols';
-//import { ProjectsPage } from '../projects/projects';
-//import { ObservationPage} from '../observation/observation';
-//import { ObservationsPage } from '../observations/observations';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,12 +28,12 @@ import { FloreComponent } from '../observation/proto-forms/flore/flore';
 import { InsectesComponent } from '../observation/proto-forms/insectes/insectes';  
 
 import {PopoverPage} from'../observation/popoverPage';
+import {PopoverHelpPage} from'../observations/popoverHelpPage';
 import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
+import {PopoverHelpProj} from'../projects/popoverHelpProj'
 
-//import {  MapComponent} from '../components/map/map'; 
 import { AdFormService} from '../observation/proto-form-provider'
-//import { LoginPage } from '../login/login';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { SQLite } from '@ionic-native/sqlite';
 import { MapComponentModule } from '../components/map/map.module';
 import { LoginPageModule } from '../login/login.module';
 import { ObservationPageModule } from '../observation/observation.module';
@@ -51,11 +47,6 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
   declarations: [
     MyApp,
     HomePage,
-    //ProtocolsPage,
-   // ProjectsPage,
-    //ObservationPage,
-    //ObservationsPage,
-    //LoginPage,
     ProtocolFormComponent,
     AvifauneComponent,
     MammofauneComponent,
@@ -63,9 +54,11 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     ChiropteresComponent,
     FloreComponent,
     InsectesComponent,
-    //MapComponent,
     PopoverPage,
-    PopoverAutocompPage
+    PopoverAutocompPage,
+    PopoverHelpPage,
+    PopoverHelpProj
+    
   ],
   imports: [
     HttpModule,
@@ -76,20 +69,18 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     ObservationsPageModule,
     ProjectsPageModule,
     ProtocolsPageModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'md',
+    }),
     IonicStorageModule .forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    //ProtocolsPage,
-    //ProjectsPage,
-    //ObservationPage,
-    //ObservationsPage,
-    //LoginPage,
-    //MapComponent,
     PopoverPage,
+    PopoverHelpPage,
+    PopoverHelpProj,
     PopoverAutocompPage,
     AvifauneComponent,
     HerpetofauneComponent,
@@ -113,7 +104,6 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     CommonService,
     MapNotificationService,
     GeoService,
-    //AdDirective,
     AdFormService,
     AuthService,
     SQLite

@@ -7,24 +7,14 @@ import _ from 'lodash'
 
 @Injectable()
 export class CompleteTaxaService {
-  items: any;
   protocole : any;
+  dbFieldName :any =  'NOM_NORMALISE';
   constructor(
     private http:Http,
     private sqlite : SQLite,
     public platform: Platform
   ) {
-    this.items = [
-      {title: 'one'},
-      {title: 'two'},
-      {title: 'three'},
-      {title: 'four'},
-      {title: 'five'},
-      {title: 'six'}
-  ]
   }
-
-
 
   getResults(item:string, protocole) {
     var _that = this;
@@ -35,10 +25,6 @@ export class CompleteTaxaService {
             tableName = 'Bird'
             break;
           }
-          case 'batrachofaune': {
-            tableName = 'Reptil'
-            break;
-          }
           case 'herpetofaune': {
             tableName = 'Reptil'
             break;
@@ -47,20 +33,18 @@ export class CompleteTaxaService {
             tableName = 'Mammal'
             break;
           }
-          case 'insect' : {
-            tableName = 'Insect'
-            break;
-          }
           case 'chiro' : {
             tableName = 'Chiroptera'
             break;
           }
           case 'flore' : {
-            tableName = 'Flore'
+            tableName = 'Flore';
+            this.dbFieldName = 'LB_NOM';
             break;
           }
           case 'insectes' : {
-            tableName = 'Insect'
+            tableName = 'Insect',
+            this.dbFieldName = 'LB_NOM';
             break;
           }
           default: {
@@ -104,7 +88,7 @@ export class CompleteTaxaService {
                   })
                     .then((db: SQLiteObject) => { 
                       console.log('open SQL');
-                      db.executeSql('SELECT CD_NOM AS taxrefid, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE NOM_NORMALISE LIKE "%'+itemNormalise+'%" ORDER BY LOWER(NOM_VERN) ASC', {})
+                      db.executeSql('SELECT CD_NOM AS taxrefid, NOM_VERN AS label, NOM_VERN AS vernaculaire, LB_NOM AS latin, RANG AS Rang FROM '+tableName+' WHERE '+ this.dbFieldName +' LIKE "%'+itemNormalise+'%" ORDER BY LOWER(NOM_VERN) ASC', {})
                         .then((res) => {
                           db.close();
                           var data = []

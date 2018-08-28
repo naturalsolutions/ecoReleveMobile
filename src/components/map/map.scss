@@ -32,3 +32,36 @@ page-map {
     background: url('../assets/icon/smallMap1.jpg') no-repeat right bottom!important;
     display: none;
 }
+
+.leaflet-draw-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.leaflet-draw-actions a {
+    background-color: #0e0e00;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.leaflet-touch .leaflet-draw-actions a {
+    font-size: 17px;
+    line-height: 35px;
+    height: 40px;
+}
+
+.leaflet-draw-actions li {
+    display: block;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-top: 15px;
+}
+
+.leaflet-touch .leaflet-draw-actions {
+    left: 0px!important;
+}
+
+.leaflet-draw-tooltip {
+    display: none!important;
+}

@@ -24,8 +24,8 @@ export class HerpetofauneComponent extends ProtocolFormComponent {
            model.nom_vernaculaire,
           [Validators.required]
         ],
-        'nom_scientifique': [
-          model.nom_scientifique,
+        'taxon': [
+          model.taxon,
          []
        ],
         'effectif' : [
@@ -65,7 +65,10 @@ export class HerpetofauneComponent extends ProtocolFormComponent {
            ],
            'taxref_id' : [
             model.taxref_id
-           ]
+           ],
+           'minimum' : [
+            model.minimum
+          ]
       });
   }
 }

@@ -1,20 +1,18 @@
+
+declare const L: any;
+
 import { Component, ElementRef, Output, EventEmitter, Input,Renderer } from '@angular/core'
 import { NavController, NavParams,Platform,ViewController,AlertController } from 'ionic-angular'
-import * as L from "leaflet"
-//import { Subscription } from 'rxjs/Subscription'
-import { MapNotificationService } from '../../shared/map.notification.service'
+import  "leaflet"
 import {ProjectsServiceProvider} from '../../providers/projects-service'
 import { MapModel } from '../../shared/map.model'
-//import { MapModel } from '../../shared/map.model'
 import {Geolocation } from '@ionic-native/geolocation'
-//import * as geojsonBounds from 'geojson-bounds'
 import { Storage } from '@ionic/storage'
-//import { NetworkService } from '../../shared/network.service';
 import { Network } from '@ionic-native/network'
-
 import  Draw  from 'leaflet-draw';
-import Polylinedecorator from 'leaflet-polylinedecorator';
-//import _ from 'lodash'
+
+import 'leaflet-draw';
+
 
 
 
@@ -47,7 +45,7 @@ export class MapComponent {
   markers:any = []
   mapModel :any
   public connectionStatus: String = 'online'
-  private traceLayerId : any
+  traceLayerId : any
 
 
   constructor(
@@ -113,6 +111,7 @@ displayfull(){
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'position', 'fixed');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.fullmap'), 'display', 'none');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.smallmap'), 'display', 'block');
+  this.renderer.setElementAttribute(this.el.nativeElement.querySelector('.smallmap'), 'isFull', 'true');
 
   this._map._onResize();
 }
@@ -124,6 +123,7 @@ displaysmall(){
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'position', 'relative');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.fullmap'), 'display', 'block');
   this.renderer.setElementStyle(this.el.nativeElement.querySelector('.smallmap'), 'display', 'none');
+  this.renderer.setElementAttribute(this.el.nativeElement.querySelector('.smallmap'), 'isFull', 'false');
   this._map._onResize();
 }
 onMapReady() {
@@ -133,25 +133,24 @@ onMapReady() {
     this._map = L
     .map(this.mapEl, {
       minZoom: 2,
-      maxZoom: 18,
+      maxZoom: 25,
 
 
       //maxBounds: this._bounds,
     })
 
+    // disable zoom on double click
+    this._map.doubleClickZoom.disable(); 
+
     let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
+      maxZoom: 25,
       subdomains:['mt0','mt1','mt2','mt3']
     });
     let layerGroup = L.layerGroup([])
 
-    layerGroup.addLayer(googleSat)
-      .addTo(this._map);
-
+    layerGroup.addLayer(googleSat);
     let layerControl = L.control.layers().addTo(this._map);
-
     layerControl.addOverlay(layerGroup , "Google satellite");
-    //L.control.layers(this.mapModel.tileLayer).addTo(this._map);
     this.mapModel.tileLayer.addTo(this._map);
 
 
@@ -159,13 +158,6 @@ onMapReady() {
       this.connectionStatus = this.network.type == 'none' ? 'offline' : 'online'
       this.onConnectionStatusChange()
 }
-   /* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //bounds: this._bounds,
-    minZoom: 2,
-    maxZoom: 18,
-   // attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(this._map);*/
-      // get location
       
       if(!this.latitude && (!this.longitude)) {
         this.geolocation.getCurrentPosition().then((position)=> {
@@ -177,8 +169,6 @@ onMapReady() {
       } else {
         this.onMapModelReady()
       }
-
-
 
   // add edit control
   
@@ -269,15 +259,7 @@ onMapModelReady() {
     
     
     let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems as any).on('click', onClick);
-    function onClick(e) {
-     // alert(e.latlng);
-     //drawnItems['editable'].enable()
-     self.el.nativeElement.querySelector('.leaflet-draw-edit-edit').click()
-    }
 
-    marker.on('dragend', function(e) {
-      console.log('marker dragend event');
-    });
 
 
     let _this = this;
@@ -303,59 +285,32 @@ onMapModelReady() {
       }
   });
 
+  function onClick(e) {
+    // alert(e.latlng);
+    //drawnItems['editable'].enable()
+    self.el.nativeElement.querySelector('.leaflet-draw-edit-edit').click()
+     let isedited = e.target.edited;
+     if(isedited) {
+      //e.target.editing.enable();
+      //e.target.editing.save();
+      var toolbar;
+      for (var toolbarId in drawControl._toolbars) {
+          toolbar = drawControl._toolbars[toolbarId];
+          if (toolbar instanceof (L as any).EditToolbar) {
+              toolbar._modes.edit.handler.enable();
+              toolbar._modes.edit.handler.save();
+              toolbar._modes.edit.handler.disable();
+              break;
+          }
+      }
 
 
+     }
+   }
 
-
-
-
-
-/*var controlDiv = drawControl._toolbars.edit._toolbarContainer;
-var removeControlUI = L.DomUtil.create('a', 'leaflet-draw-edit-remove');
-controlDiv.append(removeControlUI);
-removeControlUI.title = 'Remove All Polygons';
-removeControlUI['href'] = '#';
-L.DomEvent.addListener(removeControlUI, 'click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  //if(!$(removeControlUI).hasClass("leaflet-disabled") && _this.drawnItems.getLayers().length > 0){
-  //  _this.drawnItems.clearLayers();
-  //  _this.map.fire('draw:deleted');
-
-  //}
-});*/
-
-
-
-  /*this._map.on('draw:deletestart', function (e) { 
-   var layers = e.layers;
-
-
-  });
-*/
-  /*this._map.on('moveend', function (e) { 
-        var style = {
-      color: '#f44141', 
-      weight: 6,
-      opacity: 1,
-      fillOpacity: 1,
-      fillColor: '#f44141'
-    };
-    arrowLayer.setStyle(style);
-  });
-  this._map.on('zoomend', function (e) { 
-    var style = {
-      color: '#f44141', 
-      weight: 6,
-      opacity: 1,
-      fillOpacity: 1,
-      fillColor: '#f44141'
-    };
-    arrowLayer.setStyle(style);
-  });*/
-
-  
-
+   marker.on('dragend', function(e) {
+     console.log('marker dragend event');
+   });
 
 
   this._map.addControl(drawControl);
@@ -367,20 +322,6 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
    _this.renderer.setElementAttribute(removeCtr, 'disabled', 'disabled');
   
     
-
-  /*this._map.on('draw:edited', function (e) {
-    var layers = e.layers;
-    layers.eachLayer(function (layer) {
-      console.log(layer);
-      if(layer['_latlng']){
-        let latitude = layer['_latlng'].lat
-        let longitude = layer['_latlng'].lng
-        that.latEvent.emit(latitude)
-        that.lonEvent.emit(longitude)
-      }
-    });
-  })*/
-
   this._map.on((L as any).Draw.Event.CREATED, function (e) {
     var type = e.layerType,
     layer = e.layer;
@@ -401,21 +342,32 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
         fillColor: '#f44141'
       };
 
+      layer.setStyle(style);
 
-
-      console.log(json)
-      console.log('rotatedmarker')
-      //console.log(Polylinedecorator)
 
       _this.jsonEvent.emit(json)
 
+      if(L.polylineDecorator ) {
+        var arrowHead = L.polylineDecorator(layer, {
+          patterns: [
+              {offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+          ]
+        });
+      }
       
-      var arrowHead = (L as any).polylineDecorator(layer, {
+      
+
+  
+     /* var arrowHead = (L as any).polylineDecorator(layer, {
             patterns: [
                 {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
             ]
-      });
-      arrowLayer.addLayer(arrowHead);
+      });*/
+
+      if (arrowHead) {
+        arrowLayer.addLayer(arrowHead);
+      }
+      
       //arrowLayer.setStyle(style);
 
 
@@ -423,7 +375,7 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
 
     }
 
-    //drawnItems.addLayer(layer);
+    drawnItems.addLayer(layer);
     console.log('drawControl'); 
     drawControl.setDrawingOptions({
       polyline: false
@@ -453,13 +405,22 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
         
       } else {
         _this.removeRow(arrowLayer);
-        var arrowHead = (L as any).polylineDecorator(layer, {
-          patterns: [
-              {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
-          ]
-        });
-        arrowLayer.addLayer(arrowHead);
-        arrowLayer.setStyle(style);
+        
+        if(L.polylineDecorator ) {
+          
+          var arrowHead = (L as any).polylineDecorator(layer, {
+            patterns: [
+                {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+            ]
+          });
+          arrowLayer.addLayer(arrowHead);
+          arrowLayer.setStyle(style);
+
+
+        }
+        
+
+
       }
 
       if(layer['_latlng']){
@@ -489,19 +450,9 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
     if(elemId == this.traceLayerId ) {
       this.trace ='';
     } else {
-      //alert('Effacement du markeur n\'est pas permis !')
+
     }
     
-    
-    /*for (var prop in layers) {
-      let layer =  layers[prop];
-      if(layer._leaflet_id == elemId){
-        alert('markeur !')
-      }
-      if (layer instanceof ( L as any).Marker){
-        console.log('ici')
-      }
-    }*/
     // activate draw btn
     let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
     _this.renderer.setElementAttribute(drawCtr, 'disabled', null);
@@ -535,22 +486,28 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
     fillOpacity: 1,
     fillColor: '#f44141'
   };*/
-  var layerStyle = { fillColor: '#f44141', color: '#f44141', weight: 6,  opacity: 1,  fillOpacity: 1 };
+  //var layerStyle = { fillColor: '#f44141', color: '#f44141', weight: 6,  opacity: 1,  fillOpacity: 1 };
   //newLayer.setStyle(function(feature) { return layerStyle; });
 
-    drawnItems.addLayer(newLayer)
+    
+  newLayer.setStyle(style);
+  drawnItems.addLayer(newLayer)
     this.traceLayerId = newLayer['_leaflet_id']
 
     drawControl.setDrawingOptions({
       polyline: false
     });
-    var arrowHead = (L as any).polylineDecorator(traceLayer, {
-      patterns: [
-          {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
-      ]
-    });
-    arrowLayer.addLayer(arrowHead);
-   arrowLayer.setStyle(style);
+    
+    if(L.polylineDecorator) {
+      var arrowHead = L.polylineDecorator(traceLayer, {
+        patterns: [
+            {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+        ]
+      });
+      arrowLayer.addLayer(arrowHead);
+     arrowLayer.setStyle(style);
+
+    }
 
     // disable  draw btn
     let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
@@ -558,10 +515,6 @@ L.DomEvent.addListener(removeControlUI, 'click', function (e) {
     _this.renderer.setElementAttribute(removeCtr, 'disabled', null);
   
   }
-
-
-
-
 
 }
 goOnline() {

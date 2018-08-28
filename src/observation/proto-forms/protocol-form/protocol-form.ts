@@ -1,10 +1,6 @@
-import { Component, Input,ElementRef,EventEmitter,Output } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController, ModalController,ToastController } from 'ionic-angular';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
-//import {Geolocation } from '@ionic-native/geolocation';
-import {MapComponent} from '../../../components/map/map'
-import { ObservationsPage } from '../../../observations/observations';
-//import { Storage } from '@ionic/storage';
+import { Component, EventEmitter,Output,ElementRef,Renderer } from '@angular/core';
+import { NavController, NavParams,AlertController, ModalController,ToastController } from 'ionic-angular';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import {ObsProvider} from '../../../providers/obs/obs'
 import { CommonService } from '../../../shared/notification.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -28,14 +24,11 @@ export class ProtocolFormComponent {
     public longitude: any;
     public trace : any;
     private subscription: Subscription;
-    private geoSub :  Subscription;
     private obsSaved : boolean = false;
     private formChanged  : boolean = false;
     private segment: string;
     private obsId: number;
     private projId : number;
-    private hideEspBtn : boolean = true;
-    private image : any;
     private instance : any;
     public parent;
     public images = [];
@@ -43,16 +36,14 @@ export class ProtocolFormComponent {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams ,
     public  builder: FormBuilder, 
-    //public storage : Storage,
     public data : ObsProvider,
     public commonService: CommonService,
     public geoServ : GeoService,
-    private el: ElementRef,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     public toastCtrl: ToastController,
-    //public completeTaxaService: CompleteTaxaService
-   // , private geolocation: Geolocation
+    private el : ElementRef,
+    private renderer : Renderer
   ) {
     /*events.subscribe('formSubmit', (event, segment) => {
       this.onSubmit(event, segment)
@@ -325,6 +316,43 @@ export class ProtocolFormComponent {
       ]
     });
     alert.present();
+  }
+  swipe($event) {
+    let mapIsNotFull = true;
+    //alert($event.direction);
+    let currentSegment = this.parent.segment;
+    // check if map is not in full display mode
+    let fullmap = this.el.nativeElement.querySelector('.smallmap');
+    if (fullmap) {
+      let isDisplayed = fullmap.getAttribute('isFull');
+      if(isDisplayed=="true") {
+        mapIsNotFull = false;
+      }
+    }
+    
+    
+
+
+    if($event.direction === 2 && mapIsNotFull) {
+      if(currentSegment =='localisation') {
+        this.parent.segment = 'obligatoire';
+
+      }
+      if(currentSegment =='obligatoire') {
+        this.parent.segment = 'facultatif';
+
+      }
+    }
+    if($event.direction === 4 && mapIsNotFull) {
+      if(currentSegment =='facultatif') {
+        this.parent.segment = 'obligatoire';
+
+      }
+      if(currentSegment =='obligatoire') {
+        this.parent.segment = 'localisation';
+
+      }
+    }
   }
 
 

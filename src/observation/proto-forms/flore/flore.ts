@@ -22,12 +22,13 @@ export class FloreComponent extends ProtocolFormComponent {
           [Validators.required]
         ],
         'nom_vernaculaire': [
-           model.nom_vernaculaire,
-          [Validators.required]
+           model.nom_vernaculaire
+         
         ],
-        'nom_scientifique': [
-          model.nom_scientifique,
-         []
+        'taxon': [
+          model.taxon,
+          [Validators.required]
+
        ],
         'type_milieu' : [
           model.type_milieu

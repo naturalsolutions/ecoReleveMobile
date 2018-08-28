@@ -1,8 +1,6 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 
-import { PopoverController, NavController,ViewController, NavParams,AlertController } from 'ionic-angular';
-import { ProtocolsPage } from '../protocols/protocols'
-import { ObservationsPage } from '../observations/observations'
+import {  NavController,ViewController, NavParams,AlertController } from 'ionic-angular';
 import {ObsProvider} from '../providers/obs/obs'
 import {ProjectsPage} from '../projects/projects'
 

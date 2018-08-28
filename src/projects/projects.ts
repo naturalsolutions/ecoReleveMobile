@@ -1,8 +1,9 @@
 import { Component,Renderer } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,PopoverController } from 'ionic-angular';
 import {ProjectsServiceProvider} from '../providers/projects-service';
 import {ObsProvider} from '../providers/obs/obs'
 import { ObservationsPage } from '../observations/observations';
+import {PopoverHelpProj} from'./popoverHelpProj'
 import { MapModel } from '../shared/map.model';
 import { Storage } from '@ionic/storage';
 import _ from 'lodash';
@@ -35,6 +36,7 @@ export class ProjectsPage {
     public data : ObsProvider,
     public storage : Storage,
     private renderer: Renderer,
+    private popoverCtrl: PopoverController,
 
   ) {
 
@@ -57,113 +59,11 @@ export class ProjectsPage {
 
   loadProjects (){
 
-    /*
-    // projects from server
-    var p1 = new Promise((resolve, reject) => {
-      this.projectsService.load()
-      .then(data =>{
-        this.projects = data;
-        return Promise.resolve(1);
-  
-      })
-    });
-    // local projects
-    var p2 = new Promise((resolve, reject) => {
-      this.projectsService.getProj().then(data =>{
-        
-              this.loadedProjects = data;
-              if(!this.loadedProjects) {
-                this.projectsSegment = 'allproj';
-                this.displayMyProjs = false;
-                this.myProjdisabled = false;
-              } else {
-                this.displayMyProjs = true;
-              }
-              return Promise.resolve(1);
-      })
-    });
-
-    var source = Rx.Observable.forkJoin(
-      p1,
-      p2
-    );
-    
-    var subscription = source.subscribe(
-      function (x) {
-          for (let serverProj in this.projects) {
-            for (let localProj in this.projects) {
-              if(serverProj['ID'] == localProj['ID']){
-                serverProj['isLoaded'] = true;
-              }
-            }
-        }
-        console.log('loaded from server :');
-        console.log(this.projects);
-      },
-      function (err) {
-        console.log('Error: %s', err);
-      },
-      function () {
-        console.log('Completed');
-      });
-    
-    */
-    /*
-      this.projectsService.getProj().then(data =>{
-        
-              this.loadedProjects = data;
-              if(!this.loadedProjects) {
-                this.projectsSegment = 'allproj';
-                this.displayMyProjs = false;
-                this.myProjdisabled = false;
-              } else {
-                this.displayMyProjs = true;
-              }
-              return Promise.resolve(this.loadedProjects);
-      })
-      .then( res => {
-        this.projectsService.load()
-        .then(data =>{
-          this.projects = data;
-          return Promise.resolve(this.projects);
-    
-        })
-
-      })
-      .then(res => {
-        console.log('je suis à la fin');
-        for(let i=0; i<this.projects.length;i++) {
-
-            for(let j=0; j<this.loadedProjects.length;j++) {
-              if(this.loadedProjects[j]['ID'] == this.projects[i]['ID']){
-                this.projects[i]['isLoaded'] = true;
-              }
-            }
-
-
-        }
-        
-        
-       /* for (let serverProj in this.projects) {
-          for (let localProj in this.projects) {
-            if(serverProj['ID'] == localProj['ID']){
-              serverProj['isLoaded'] = true;
-            }
-          }
-        }
-      console.log('loaded from server :');
-      console.log(this.projects);
-
-
-
-      });
-
-    */
    if (this.networkStatus == 'hasErrorNetwork') {
     this.informAlert('Problème de connexion', 'Merci de vérifier votre connexion Internet.')
     return
   }
-        let p1= new Promise((resolve, reject) => {
+        let p1= new Promise((resolve) => {
           this.projectsService.getProj().then(data =>{
             
                   this.loadedProjects = data;
@@ -179,7 +79,7 @@ export class ProjectsPage {
           })
         })
           
-      let p2= new Promise((resolve, reject) => {
+      let p2= new Promise((resolve) => {
             this.projectsService.load()
             .then(data =>{
               this.projects = data;
@@ -346,14 +246,6 @@ export class ProjectsPage {
       proj.checked = false;
     }
   }
- /* refreshTabs(data) {
-        // local projects
-        this.projectsService.getProj().then(data =>{
-          this.loadedProjects = data;
-          console.log('*** loaded ****')
-          console.log(this.loadedProjects)
-        })
-  }*/
   displayAlert(loaded){
     let alert = this.alertCtrl.create({
       title: 'Téléchargement de projet(s)',
@@ -466,6 +358,7 @@ export class ProjectsPage {
                 // set label to display for each obs
                 
                 let promises = [];
+                let obsListToUpdate = [];
 
                 for (let dt in obs) {
                       if((! obs[dt]['serverId']) && ( obs[dt]['finished'])){
@@ -495,7 +388,8 @@ export class ProjectsPage {
                           obs[dt]['serverId']= data['id']; 
                           obs[dt]['pushed']= true; 
                           console.log(obs);
-                          this.data.saveObsById(obs[dt]['id'],obs[dt]);
+                          //this.data.saveObsById(obs[dt]['id'],obs[dt]);
+                          obsListToUpdate.push({id:obs[dt]['id'], value : obs[dt]});
                             resolve(data['id']);
                         })
                       })
@@ -506,6 +400,8 @@ export class ProjectsPage {
                 }
 
                 Promise.all(promises).then(value => {
+                  // update obs in storage
+                  this.data.saveObsList(obsListToUpdate);
                   console.log('promises');
                   console.log(value);
                   let projName ;
@@ -586,6 +482,13 @@ export class ProjectsPage {
         }
       }
   }
+
+  }
+  onHelpClicked(){
+
+    let popover = this.popoverCtrl.create(PopoverHelpProj, {parent : this},{cssClass: 'help-pop'});
+    popover.present({
+    });
 
   }
 }

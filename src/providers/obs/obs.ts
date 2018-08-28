@@ -3,7 +3,6 @@ import { Http,RequestOptions,Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
-import {AuthService} from "../../providers/auth";
 import _ from 'lodash';
 import {config }  from '../../config';
 
@@ -12,7 +11,7 @@ import {config }  from '../../config';
 export class ObsProvider {
     data:any;
 
-  constructor(public http: Http, public storage : Storage,private alertCtrl: AlertController,private auth: AuthService) {
+  constructor(public http: Http, public storage : Storage,private alertCtrl: AlertController) {
 
   }
 
@@ -78,6 +77,33 @@ export class ObsProvider {
               
             }
             list.push(obs);
+        }
+        this.storage.set('observations', list);
+        resolve(1);  
+
+      });
+    });
+
+  }
+  saveObsList(listToUpate){
+    let obs = null;
+    return new Promise(resolve =>{
+      this.storage.get('observations').then((data)=>{
+        //console.log('-data from storage')
+        //console.log(data)
+        let list = [];
+        for (obs of data) {
+          for (var k=0;k<listToUpate.length;k++){
+              var idObs = listToUpate[k].id;
+              var value = listToUpate[k].value;
+              if(obs.id==idObs) {
+                obs.pushed = true;
+                obs.serverId = value.serverId;
+                list.push(obs);
+                break;
+              }
+              
+          }
         }
         this.storage.set('observations', list);
         resolve(1);  

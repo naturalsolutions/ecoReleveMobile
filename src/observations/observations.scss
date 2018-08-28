@@ -30,3 +30,50 @@ page-observations {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.help {
+    float: right;
+    margin-right: 10px;
+    background-color: #d8dede;
+    width: 30px;
+    /* height: 20px; */
+    text-align: center;
+    padding: 5px;
+}
+
+.popover-help-page .iconHelp {
+    width: 50px!important;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.helpBtn {
+    float: right;
+    margin: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.popover-help-page {
+    padding: 5px;
+}
+
+.helpTitle {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: 20px;
+}
+
+.obsList .item-md {
+    height: 85px!important;
+    padding-top: 10px;
+}
+
+.obsIsEmpty {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}

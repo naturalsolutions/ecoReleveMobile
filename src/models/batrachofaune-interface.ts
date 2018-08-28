@@ -14,7 +14,8 @@ interface BatrachofauneInterface {
     longitude: number,
     dateObs: number,
     Comments : string,
-    images : string
+    images : string,
+    minimum : number
 }
 export   class Batrachofaune implements BatrachofauneInterface {  
         constructor(
@@ -33,7 +34,8 @@ export   class Batrachofaune implements BatrachofauneInterface {
           public longitude=0,
           public dateObs =0,
           public Comments ='',
-          public images
+          public images,
+          public minimum 
         ) {
         } 
 }

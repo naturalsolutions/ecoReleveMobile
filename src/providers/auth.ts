@@ -1,4 +1,4 @@
-import {Injectable, Inject} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers,RequestOptions} from '@angular/http';
 import { AlertController } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
@@ -161,7 +161,7 @@ export class AuthService {
       }
   
   alertError(title, message){
-    let alert = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: title,
       message: message,
       buttons: [

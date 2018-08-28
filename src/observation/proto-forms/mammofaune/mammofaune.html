@@ -1,4 +1,4 @@
-<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
+<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)" (swipe)="swipe($event)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'">
             <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude"></map>
@@ -12,15 +12,15 @@
             <ion-item>
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
-                    <ion-option value="ADNe">ADNe</ion-option>
-                    <ion-option value="Affût">Affût</ion-option>
-                    <ion-option value="Analyse de pelotes de réjection">Analyse de pelotes de réjection</ion-option>
-                    <ion-option value="Comptage au phare">Comptage au phare</ion-option>
-                    <ion-option value="IKA">IKA</ion-option>
-                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
-                    <ion-option value="Piège non vulnérant">Piège non vulnérant</ion-option>
-                    <ion-option value="Piège photographique">Piège photographique</ion-option>
                     <ion-option value="Recherche à vue ou écoute">Recherche à vue ou écoute</ion-option>
+                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="Piège photographique">Piège photographique</ion-option>
+                    <ion-option value="IKA">IKA</ion-option>
+                    <ion-option value="Piège non vulnérant">Piège non vulnérant</ion-option>
+                    <ion-option value="Affût">Affût</ion-option>
+                    <ion-option value="Comptage au phare">Comptage au phare</ion-option>
+                    <ion-option value="Analyse de pelotes de réjection">Analyse de pelotes de réjection</ion-option>
+                    <ion-option value="ADNe">ADNe</ion-option>
                 </ion-select>
             </ion-item>
 
@@ -33,12 +33,6 @@
             <ion-item>
                 <ion-input type="hidden" formControlName="nom_vernaculaire"></ion-input>
             </ion-item>
-            <ion-item [class.hide]="true">
-                <ion-label floating>Nom scientifique</ion-label><br/>
-
-                <ion-input readOnly formControlName="nom_scientifique"></ion-input>
-
-            </ion-item>
 
 
             <ion-item>
@@ -49,6 +43,10 @@
             <ion-item>
                 <ion-label class="labelSpecie">Valeur estimée</ion-label>
                 <ion-checkbox formControlName="estimated" item-right></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label class="labelSpecie">Minimum</ion-label>
+                <ion-checkbox formControlName="minimum" item-right></ion-checkbox>
             </ion-item>
 
 
@@ -132,6 +130,6 @@
         </ion-list>
 
     </div>
-
     <!--<button ion-button type="submit" [disabled]="formModel.invalid" block>Terminer</button>-->
+
 </form>

@@ -1,4 +1,4 @@
-<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)">
+<form *ngIf="formModel" [formGroup]="formModel" novalidate (ngSubmit)="onSubmit(formModel.value)" (swipe)="swipe($event)">
     <div [ngSwitch]="segment">
         <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
             <map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude" [trace]="trace"></map>
@@ -17,14 +17,13 @@
                 <ion-label floating>Type d'inventaire</ion-label>
                 <ion-select formControlName="type_inventaire" interface="popover">
                     <ion-option value="IPA">IPA</ion-option>
-                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
-                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
                     <ion-option value="Point migration">Point migration</ion-option>
-                    <ion-option value="Quadrat">Quadrat</ion-option>
-                    <ion-option value="Recherche de cadavres">Recherche de cadavres</ion-option>
-                    <ion-option value="STOC EPS">STOC EPS</ion-option>
+                    <ion-option value="Point d'écoute nocturne">Point d'écoute nocturne</ion-option>
                     <ion-option value="Transect">Transect</ion-option>
-
+                    <ion-option value="Observation fortuite">Observation fortuite</ion-option>
+                    <ion-option value="Recherche de cadavres">Recherche de cadavres</ion-option>
+                    <ion-option value="Quadrat">Quadrat</ion-option>
+                    <ion-option value="STOC EPS">STOC EPS</ion-option>
                 </ion-select>
 
             </ion-item>
@@ -59,6 +58,10 @@
             <ion-item>
                 <ion-label class="labelSpecie">Valeur estimée</ion-label>
                 <ion-checkbox formControlName="estimated" item-right></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label class="labelSpecie">Minimum</ion-label>
+                <ion-checkbox formControlName="minimum" item-right></ion-checkbox>
             </ion-item>
 
 

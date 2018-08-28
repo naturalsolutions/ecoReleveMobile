@@ -22,12 +22,11 @@ export class  InsectesComponent extends ProtocolFormComponent {
           [Validators.required]
         ],
         'nom_vernaculaire': [
-           model.nom_vernaculaire,
-          [Validators.required]
+           model.nom_vernaculaire
         ],
         'taxon': [
           model.taxon,
-         []
+          [Validators.required]
        ],
         'effectif' : [
            model.effectif,
@@ -72,7 +71,10 @@ export class  InsectesComponent extends ProtocolFormComponent {
            ],
            'taxref_id' : [
             model.taxref_id
-           ]
+           ],
+           'minimum' : [
+            model.minimum
+          ]
       });
   }
 }

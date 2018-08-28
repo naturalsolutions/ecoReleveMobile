@@ -1,7 +1,10 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Mes observations</ion-title>
+        <ion-title>Mes observations
+            <ion-icon name="help" class="help" (click)="onHelpClicked()"></ion-icon>
+        </ion-title>
+
     </ion-navbar>
 
     <!-- segment -->
@@ -21,8 +24,8 @@
 
 <ion-content padding>
     <div [ngSwitch]="obsSegment">
-        <ion-list *ngSwitchCase=" 'listes' ">
-            <ion-item *ngFor="let ob of obs " (click)="navigateToDetail(ob.protocole,ob.id)">
+        <ion-list *ngSwitchCase=" 'listes' " (swipe)="swipe($event)" class="obsList">
+            <ion-item *ngFor="let ob of obs " (click)="navigateToDetail(ob.protocole,ob.id, ob.pushed)">
                 <ion-row>
                     <ion-col width-25 class="iconObs">
                         <ion-thumbnail item-start>
@@ -36,10 +39,11 @@
                     </ion-col>
                 </ion-row>
             </ion-item>
+            <div class="obsIsEmpty" *ngIf="obs == 0">Pas d'observations stockées associées à ce projet. <br/><br/>Pour une nouvelle saisie, cliquez sur le bouton en bas. </div>
 
         </ion-list>
 
-        <ion-list *ngSwitchCase="'stations'">
+        <ion-list *ngSwitchCase="'stations'" (swipe)="swipe($event)">
 
             <div id="map" style="width: 100%; height: 300px"></div>
         </ion-list>
