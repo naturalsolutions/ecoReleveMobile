@@ -8,7 +8,8 @@ Le principe consiste à créer un projet sur le serveur et le charger sur le mob
 
 1- cloner le dépot
 
-2- à la racine du dossier : "npm install"
+2- à la racine du dossier :<br/> 
+<i>npm install</i>
 
 3- Créer le fichier config.js selon le modèle https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/config.js.default (au même dossier)
 
