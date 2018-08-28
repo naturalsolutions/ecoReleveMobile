@@ -263,7 +263,6 @@ onMapModelReady() {
 
 
     let _this = this;
-    let v = Draw
     var drawControl =  new (L as any).Control.Draw({
       edit: {
       featureGroup: drawnItems,

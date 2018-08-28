@@ -1,7 +1,7 @@
 export var config = {
     serverUrl: 'http://url.siteweb.com/',
-    defaultLastStation: true,
+    defaultLastStation: true,     /* le forkflow de la saisie boucle sur la meme station si la valeur est true */
     defautLastObsValue : true,
-    fieldName : 'type_inventaire'
+    fieldName : 'type_inventaire' /* champ renseigné par défaut avec la dernière valeur saisie */
 
 }
