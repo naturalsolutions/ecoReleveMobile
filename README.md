@@ -1,6 +1,6 @@
 # ecoReleveMobile
 
-<h3>Prérequis:</h3><br/>
+## Prérequis:
 Avoir un accès au serveur ecorelevé (https://github.com/NaturalSolutions/ecoReleve-BE)<br/>
 Le principe consiste à créer un projet sur le serveur et le charger sur le mobile (métadonnées et emprise )
 
@@ -16,8 +16,14 @@ Le principe consiste à créer un projet sur le serveur et le charger sur le mob
 3- Pour lancer le serveur : <br/> 
 <i>ionic serve</i>
 
-4- pour déploiyer l'application sur mobile :<br/>
+4- pour déployer l'application sur mobile :<br/>
 <i>ionic cordova run android</i>
 
 
+<h3>Utilisation:</h3><br/>
 
+* Charger votre projet parmi la liste de projets disponibles sur le serveur
+
+* Sélectionner votre projet en cours pour démarrer une saisie
+
+* 
