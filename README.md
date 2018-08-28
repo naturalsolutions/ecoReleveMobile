@@ -1,6 +1,10 @@
 # ecoReleveMobile
 
-Etapes d'install:
+#Prérequis:
+Avoir un accès au serveur ecorelevé (https://github.com/NaturalSolutions/ecoReleve-BE)
+
+
+#Etapes d'installation:
 
 1- cloner le dépot
 
