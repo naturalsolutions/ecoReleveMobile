@@ -1,4 +1,5 @@
 # ecoReleveMobile
+La solution numérique pour saisir vos données de terrain !
 
 ## Prérequis:
 Avoir un accès au serveur ecorelevé (https://github.com/NaturalSolutions/ecoReleve-BE)<br/>
