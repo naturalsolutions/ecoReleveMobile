@@ -4,7 +4,7 @@
 Avoir un accès au serveur ecorelevé (https://github.com/NaturalSolutions/ecoReleve-BE)<br/>
 Le principe consiste à créer un projet sur le serveur et le charger sur le mobile (métadonnées et emprise )
 
-<h3>Etapes d'installation:</h3><br/>
+## Etapes d'installation 
 
 1- cloner le dépot
 
@@ -20,10 +20,14 @@ Le principe consiste à créer un projet sur le serveur et le charger sur le mob
 <i>ionic cordova run android</i>
 
 
-<h3>Utilisation:</h3><br/>
+## Utilisation: 
 
-* Charger votre projet parmi la liste de projets disponibles sur le serveur
+* Charger le projet parmi la liste de projets disponibles sur le serveur (emprise, métadonnées, mise en cache de tuiles carto)
 
-* Sélectionner votre projet en cours pour démarrer une saisie
+* Sélectionner le projet en cours pour démarrer une saisie
 
-* 
+* Consultation / nouvelle observation
+
+* Choix d'un protocole de saisie
+
+* Nouvelle saisie
