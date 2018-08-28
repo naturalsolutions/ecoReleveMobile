@@ -25,12 +25,23 @@ Le principe consiste à créer un projet sur le serveur et le charger sur le mob
 ## Utilisation: 
 
 * Charger le projet parmi la liste de projets disponibles sur le serveur (emprise, métadonnées, mise en cache de tuiles carto)
-![ecoReleve](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/1-all%20proj.jpg)
+<br/>
+![ecoReleveMobile](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/1-all%20proj.jpg)
 
 * Sélectionner le projet en cours pour démarrer une saisie
+<br/>
+![ecoReleveMobile](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/2-my%20proj.jpg)
 
 * Consultation / nouvelle observation
+<br/>
+![ecoReleveMobile](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/3-mes_obs.jpg)
 
 * Choix d'un protocole de saisie
+<br/>
+![ecoReleveMobile](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/4-proto.jpg)
 
 * Nouvelle saisie
+<br/>
+![ecoReleveMobile](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/5-new-obs-loc.jpg)
+<br/>
+![ecoReleveMobile](https://github.com/NaturalSolutions/ecoReleveMobile/blob/master/src/assets/printscreens/6-new-obs-obligatoire.jpg)
