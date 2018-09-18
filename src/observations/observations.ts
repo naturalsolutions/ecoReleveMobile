@@ -260,7 +260,7 @@ export class ObservationsPage {
 
       //this.map.setView(center, 14)
         //TODO change icone
-        var icon = L.icon({
+        L.icon({
           iconUrl: 'assets/icon/marker.png',
          // iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
         //shadowAnchor: [4, 62],  // the same for the shadow

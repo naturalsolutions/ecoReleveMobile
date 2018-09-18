@@ -16,8 +16,6 @@ import { AdDirective } from '../shared/ad.directive'
 import { AdFormService } from './proto-form-provider'
 import { ObsProvider } from '../providers/obs/obs'
 
-declare var cordova: any;
-
 @IonicPage()
 @Component({
   selector: 'page-observation',
@@ -32,6 +30,8 @@ declare var cordova: any;
 export class ObservationPage implements OnInit, AfterViewInit {
 
   @ViewChild(AdDirective) adForm: AdDirective;
+  //@Output() gpsPickerEvent = new EventEmitter()
+  gpsPickerValue : boolean = false
 
   protocol: any;
   protocolName: any;
@@ -61,7 +61,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
     private adFormService: AdFormService,
     public toastCtrl: ToastController,
     public data : ObsProvider,
-    private camera: Camera, private file: File, 
+    private camera: Camera, 
     public storage : Storage,
     private renderer : Renderer,
     public loadingCtrl: LoadingController
@@ -202,32 +202,30 @@ export class ObservationPage implements OnInit, AfterViewInit {
     if(this.nbRelances < 4 ) {
     let subscription;
       this.platform.ready().then(() => {
-      // get current position
-       /* this.loading = this.loadingCtrl.create({
-          content: 'Aquisition des coordonnées...'
-        });
-        this.loading.present();*/
 
         this.presentToast('Aquisition des coordonnées...' , 'top' )
 
       this.geolocation.getCurrentPosition({enableHighAccuracy:true, maximumAge: 60000, timeout: 20000 }).then(pos => {
-        //this.presentToast('lat: '+ pos.coords.latitude + ", lon: " +pos.coords.longitude, 'top' )
         this.myProto.updatePosition(pos.coords.latitude, pos.coords.longitude);
-        //this.loading.dismiss();
+
 
       }, (err) => {
-        //this.loading.dismiss();
+
         this.nbRelances +=1;
         this.presentToast('erreur gps', 'top' );
-        if(this.nbRelances < 4 ) {
+        if(this.nbRelances < 3 ) {   // TODO  -> 4
           this.getPosition();
+        } else {
+
+          this.el.nativeElement.querySelector('.gpsPickerPicto').classList.remove('hidden')
+
         }
         
       });
       
 
       }).catch((error) => {
-        //console.log('Error getting location', error);
+
         this.presentToast('Error getting location : ' + error, 'top' )
         subscription.unsubscribe();
       });
@@ -245,8 +243,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
     toast.present();
   }
   takePicture() {
-    let projId = this.projId
-    let obsId = this.obsId
+
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -257,8 +254,6 @@ export class ObservationPage implements OnInit, AfterViewInit {
     // Get the data of an image
     this.platform.ready().then(() => {
 
-      let theKey
-      let theValue
       let refProto = this.myProto;
       this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL,
@@ -276,40 +271,6 @@ export class ObservationPage implements OnInit, AfterViewInit {
           //base64Data: imageData
         });
         refProto.images = images;
-        /* console.log('imageUrl', imageUrl);
-          this.file.resolveLocalFilesystemUrl(imageUrl)
-          .then((entry : any) => {
-            console.log('resolveLocalFilesystemUrl', entry);
-            entry.file((file) => {
-              console.log('file');
-              let reader = new FileReader();
-              
-              reader.onloadend = (encodedFile: any) => {
-                let src = encodedFile.target.result;
-                console.log('encodedFile', encodedFile);
-                src = src.split("base64,");
-                theValue = "data:image/jpeg;base64," +src[1];
-                theKey = imageUrl;
-                let images =  refProto.images;
-                images.push({ 
-                            path:theKey,
-                            name : file.name,
-                            base64Data : theValue
-                   });
-                refProto.images = images;
-              };
-              reader.readAsDataURL(file);
-            }, (error) => {
-              console.log('entry.file error', error);
-            })
-           
-          }, (error) => {
-            console.log(error);
-          })
-          .catch((error) =>{
-            console.log(error)
-          }); */
-
 
       }, (err) => {
         console.log(err);
@@ -329,5 +290,11 @@ export class ObservationPage implements OnInit, AfterViewInit {
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.footer'), 'display', '');
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'padding', '16px');
     }
+  }
+  onGpsPickerClick(){
+    alert('obs clic')
+    //this.gpsPickerEvent.emit(true)
+    this.gpsPickerValue = (!this.gpsPickerValue)
+    this.myProto.gpsPickerEvent = this.gpsPickerValue
   }
 }

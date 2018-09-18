@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController,Platform ,LoadingController} from 'ionic-angular';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { FormGroup} from '@angular/forms';
 import { Network } from '@ionic-native/network'
 import { ProjectsPage } from '../projects/projects';
 import {AuthService} from "../providers/auth";
 import 'rxjs/add/operator/map';
-import { errorHandler } from '@angular/platform-browser/src/browser';
 import {Storage} from "@ionic/storage";
 
 
@@ -27,8 +26,6 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private  builder: FormBuilder,
-    // added to auth
     private storage: Storage,
     private alertCtrl: AlertController,
     private auth: AuthService,

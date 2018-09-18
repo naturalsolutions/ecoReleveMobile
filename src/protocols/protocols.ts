@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 import {ProtocolsServiceProvider} from '../providers/protocols-service';
 import { ObservationPage} from '../observation/observation';
-import {Geolocation } from '@ionic-native/geolocation'
 
 
 @IonicPage()
@@ -18,7 +17,7 @@ export class ProtocolsPage {
   public projId : any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public protocolsService : ProtocolsServiceProvider,private geolocation: Geolocation,
+    public protocolsService : ProtocolsServiceProvider,
     public toastCtrl: ToastController,
   
   ) {
@@ -32,21 +31,6 @@ export class ProtocolsPage {
   }
   ionViewWillEnter(){
     console.log(' protocols  page will enter')
-
-  }
-
-  ionViewDidEnter(){
-    /*this.geolocation.getCurrentPosition({enableHighAccuracy:true, timeout: 12000, maximumAge: 0}).then(pos => {
-
-    }, (err) => {
-      let toast = this.toastCtrl.create({
-        message: 'erreur gps',
-        duration: 3000,
-        position : 'top'
-      });
-      toast.present();
-      
-    });*/
 
   }
 

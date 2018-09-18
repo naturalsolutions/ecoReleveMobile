@@ -277,7 +277,6 @@ export class ProjectsPage {
           handler: () => {
              //supprimer proj en local, mettre à jour liste et update local storage
             let listProj = [];
-            let listObs = [];
             let promises = [];
             for (let proj of this.loadedProjects) {
               if(proj.checked) {

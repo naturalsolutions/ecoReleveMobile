@@ -2,15 +2,13 @@
 declare const L: any;
 
 import { Component, ElementRef, Output, EventEmitter, Input,Renderer } from '@angular/core'
-import { NavController, NavParams,Platform,ViewController,AlertController } from 'ionic-angular'
+import { NavController, NavParams,Platform,AlertController } from 'ionic-angular'
 import  "leaflet"
 import {ProjectsServiceProvider} from '../../providers/projects-service'
 import { MapModel } from '../../shared/map.model'
 import {Geolocation } from '@ionic-native/geolocation'
 import { Storage } from '@ionic/storage'
 import { Network } from '@ionic-native/network'
-import  Draw  from 'leaflet-draw';
-
 import 'leaflet-draw';
 
 
@@ -31,6 +29,7 @@ export class MapComponent {
 @Input() latitude : number
 @Input() longitude:number
 @Input() trace:string
+@Input() gpsPickerEvent  : boolean
 
 @Output() fullsize = new EventEmitter()
 @Output() latEvent = new EventEmitter()
@@ -43,9 +42,11 @@ export class MapComponent {
   // latitude : number
   //longitude:number
   markers:any = []
+  marker : any = null
   mapModel :any
   public connectionStatus: String = 'online'
   traceLayerId : any
+  drawnItems : any =  L.featureGroup();
 
 
   constructor(
@@ -99,6 +100,29 @@ export class MapComponent {
       
 }
 
+ngOnChanges(){
+  /*
+  if(this.gpsPickerEvent) {
+    alert('on map comp')
+
+    this._map.on('click', function(e) {        
+      var popLocation= e.latlng;
+      var icon = L.icon({
+        iconUrl: 'assets/icon/picto_red2.png',
+        iconSize:     [60, 60] 
+      });
+
+      let marker = L.marker([popLocation], {icon: icon}).addTo(this.drawnItems as any)
+      console.log(popLocation)
+     
+  });
+
+  } else {
+    this._map.off('click')
+  }
+  */
+}
+
 ionViewDidEnter(){
   
 
@@ -142,6 +166,8 @@ onMapReady() {
     // disable zoom on double click
     this._map.doubleClickZoom.disable(); 
 
+    
+
     let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
       maxZoom: 25,
       subdomains:['mt0','mt1','mt2','mt3']
@@ -160,6 +186,14 @@ onMapReady() {
 }
       
       if(!this.latitude && (!this.longitude)) {
+        // set map on proj bbox if there is not marker 
+        if ( !this.marker) {
+          this.storage.get('bboxProj-'+ this.projId).then(bbox =>{
+            if (bbox) {
+              this._map.fitBounds([[bbox['minLat'],bbox['minLng']],[bbox['maxLat'],bbox['maxLng']]])
+            }
+          })
+        }
         this.geolocation.getCurrentPosition().then((position)=> {
           this.latitude = position.coords.latitude
           this.longitude = position.coords.longitude
@@ -192,7 +226,8 @@ onMapReady() {
   })
 
   // reload map tiles for current project if not yet loaded
-  let tilesLoaded = this.storage.get('tilesLoadedForProj-'+ this.projId).then(data =>{
+
+  this.storage.get('tilesLoadedForProj-'+ this.projId).then(data =>{
     if( data != true ){
       this.downloadTilesMsg()
     }
@@ -215,9 +250,9 @@ onMapReady() {
         {
           text: 'Ok',
           handler: data => {
-            let bbox = this.storage.get('bboxProj-'+ this.projId).then(data =>{
+            this.storage.get('bboxProj-'+ this.projId).then(data =>{
               if( data){
-                let dt = this.projectsService.downloadTiles(data,this.projId, this.mapModel.tileLayer)
+                this.projectsService.downloadTiles(data,this.projId, this.mapModel.tileLayer)
               }
             });
             
@@ -234,13 +269,9 @@ onMapModelReady() {
     var icon = L.icon({
       iconUrl: 'assets/icon/picto_red2.png',
       iconSize:     [60, 60] // size of the icon
-      //shadowSize:   [50, 64], // size of the shadow
-      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-      //shadowAnchor: [4, 62],  // the same for the shadow
-      //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
 
-    let  drawnItems =  L.featureGroup();
+    
     let  arrowLayer =  L.featureGroup();
     var style = {
       color: '#f44141', 
@@ -249,23 +280,22 @@ onMapModelReady() {
       fillOpacity: 1,
       fillColor: '#f44141'
     };
-    //arrowLayer.setStyle(style);
-    drawnItems['name']= 'markeur';
-    this._map.addLayer(drawnItems);
+
+    this.drawnItems['name']= 'markeur';
+    this._map.addLayer(this.drawnItems);
     this._map.addLayer(arrowLayer);
 
 
     let self = this;
     
     
-    let marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(drawnItems as any).on('click', onClick);
-
+    this.marker = L.marker([this.latitude, this.longitude], {icon: icon}).addTo(this.drawnItems as any).on('click', onClick);
 
 
     let _this = this;
     var drawControl =  new (L as any).Control.Draw({
       edit: {
-      featureGroup: drawnItems,
+      featureGroup: this.drawnItems,
       remove: true
     },
     //draw: false
@@ -307,7 +337,7 @@ onMapModelReady() {
      }
    }
 
-   marker.on('dragend', function(e) {
+   this.marker.on('dragend', function(e) {
      console.log('marker dragend event');
    });
 
@@ -374,7 +404,7 @@ onMapModelReady() {
 
     }
 
-    drawnItems.addLayer(layer);
+    this.drawnItems.addLayer(layer);
     console.log('drawControl'); 
     drawControl.setDrawingOptions({
       polyline: false
@@ -443,7 +473,7 @@ onMapModelReady() {
   
   });
   this._map.on('draw:deletestop', function (e) { 
-    var layers = e.target._layers;
+    
     var elemId = e.target._leaflet_id;
 
     if(elemId == this.traceLayerId ) {
@@ -490,7 +520,7 @@ onMapModelReady() {
 
     
   newLayer.setStyle(style);
-  drawnItems.addLayer(newLayer)
+  this.drawnItems.addLayer(newLayer)
     this.traceLayerId = newLayer['_leaflet_id']
 
     drawControl.setDrawingOptions({
@@ -545,6 +575,9 @@ removeRow(arrowLayer){
     arrowLayer.removeLayer(layer)
 
   });
+}
+handlegpsPicker(){
+  alert('event gps picker')
 }
 
 

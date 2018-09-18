@@ -1,4 +1,4 @@
-import { Component, ViewChild, HostBinding,Renderer } from '@angular/core';
+import { Component, ViewChild, HostBinding } from '@angular/core';
 import { Nav, Platform,LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 import { ProjectsPage } from '../projects/projects';
 import { LoginPage} from '../login/login';
 import {AuthService} from "../providers/auth";
-import { SQLite } from '@ionic-native/sqlite';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -29,7 +29,6 @@ export class MyApp {
               public splashScreen: SplashScreen, 
               public storage: Storage,
               private auth: AuthService,
-              private sqlite : SQLite,
               public loadingCtrl: LoadingController
               ) {
     this.initializeApp();
@@ -52,7 +51,6 @@ export class MyApp {
   }
 
   initDb(dataBaseName) {
-    var _this = this;
  
     if ((<any>window).sqlitePlugin) {
       (<any>window).plugins.sqlDB.copy(dataBaseName,'default', function () {

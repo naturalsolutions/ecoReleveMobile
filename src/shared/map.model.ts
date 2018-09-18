@@ -208,7 +208,7 @@ export class MapModel {
           var percent = Math.round(100 * done / total);
           //console.log('downloadTiles Progress', done + " / " + total + " = " + percent + "%")
           let message ='Progression ' +  done + " / " + total + " = " + percent + "%";
-          if(percent == 99) {
+          if(percent >= 95) {
             message = 'Téléchargement réussi.'
             resolve(1)
           }

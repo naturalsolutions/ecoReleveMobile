@@ -1,4 +1,4 @@
-import { Component, EventEmitter,Output,ElementRef,Renderer } from '@angular/core';
+import { Component, EventEmitter,Output,ElementRef,Renderer,Input, SimpleChanges } from '@angular/core';
 import { NavController, NavParams,AlertController, ModalController,ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {ObsProvider} from '../../../providers/obs/obs'
@@ -18,6 +18,7 @@ export class ProtocolFormComponent {
     //@Input('segment') segment: string;
     //@Input() obsId: number;
     @Output() mapfullsize = new EventEmitter()
+    private gpsPickerEvent : boolean = false
     public formModel: FormGroup;
     public dateObs : any;
     public latitude: any;
@@ -95,6 +96,16 @@ export class ProtocolFormComponent {
 
        });
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {  
+        let change = changes[propName];
+        console.log('**** changes  ****')
+        console.log(change)
+   
+    }
+  }
+  
     buildForm(model){
         this.formModel = this.getFormModel(model);
       // set date value
@@ -254,8 +265,6 @@ export class ProtocolFormComponent {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    //this.geoSub.unsubscribe();
-    //this.events.unsubscribe('formSubmit');
   }
   updatePosition(lat, lon) {
     this.handleLatChange(lat)
@@ -268,11 +277,6 @@ export class ProtocolFormComponent {
     popover.onDidDismiss(data => {
       console.log(data);
       this.formModel.patchValue(data);
-       //this.formModel.value.nom_vernaculaire = data.nom_vernaculaire
-     // this.formModel.value.nom_scientifique = data.
-
-  //this.parent.formModel.controls['nom_vernaculaire'].setValue(verna);
-  //this.parent.formModel.controls['nom_scientifique'].setValue(scientifique);
     })    
     popover.present();
 
@@ -288,9 +292,6 @@ export class ProtocolFormComponent {
   }
   handleMapSize(size) {
     this.parent.handleMapSize(size);
-    //console.log('size')
-   // console.log(size)
-    //alert('size')
   }
   deleteImage(image){
     let self = this;
@@ -330,9 +331,6 @@ export class ProtocolFormComponent {
       }
     }
     
-    
-
-
     if($event.direction === 2 && mapIsNotFull) {
       if(currentSegment =='localisation') {
         this.parent.segment = 'obligatoire';
