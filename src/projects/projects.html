@@ -22,7 +22,7 @@
 
 
 <ion-content padding>
-
+        <!--<dyn-form></dyn-form>-->
     <div [ngSwitch]="projectsSegment">
         <ion-list *ngSwitchCase="'myproj'">
             <ion-item *ngFor="let project of loadedProjects" (click)="navToProtocols(project.ID, project.isPushed)">

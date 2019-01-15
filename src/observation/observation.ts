@@ -12,9 +12,11 @@ import { IonicPage, NavController, NavParams, PopoverController, Platform, Toast
 import { Geolocation } from '@ionic-native/geolocation'
 import { CommonService } from '../shared/notification.service'  // notify exit view to childs
 import {PopoverPage} from'./popoverPage'
-import { AdDirective } from '../shared/ad.directive'
-import { AdFormService } from './proto-form-provider'
+//import { AdDirective } from '../shared/ad.directive'
+//import { AdFormService } from './proto-form-provider'
+import {DynamicFormComponent} from '../components/dynamicForms/dynamic-form.component'
 import { ObsProvider } from '../providers/obs/obs'
+import { ProtocolDataServiceProvider } from '../providers/protocol-data-service'
 
 @IonicPage()
 @Component({
@@ -23,14 +25,15 @@ import { ObsProvider } from '../providers/obs/obs'
   providers: [File,
     Transfer,
     Camera,
-    FilePath,],
+    FilePath,
+    ProtocolDataServiceProvider],
 })
 
 
 export class ObservationPage implements OnInit, AfterViewInit {
 
-  @ViewChild(AdDirective) adForm: AdDirective;
-  //@Output() gpsPickerEvent = new EventEmitter()
+  //@ViewChild(AdDirective) adForm: AdDirective;
+  @ViewChild(DynamicFormComponent) child: DynamicFormComponent
   gpsPickerValue : boolean = false
 
   protocol: any;
@@ -41,13 +44,15 @@ export class ObservationPage implements OnInit, AfterViewInit {
   actionsStatus: boolean = true;
   popover: any;
   myProto: any;
-  projId: any
+  projId: any = null
   lastImage: string = null;
   image: any;
   nbRelances = 0
   loading: any;
   sameStation: any
   editIsDisabled: any = false
+  params : any = {id : 'toto'}
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,16 +63,19 @@ export class ObservationPage implements OnInit, AfterViewInit {
     //public events: Events,
     private popoverCtrl: PopoverController,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private adFormService: AdFormService,
+    //private adFormService: AdFormService,
     public toastCtrl: ToastController,
     public data : ObsProvider,
     private camera: Camera, 
     public storage : Storage,
     private renderer : Renderer,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    private protoDataService : ProtocolDataServiceProvider
+    
   ) {
     this.protocol = navParams.data.protoObj;
     this.projId = navParams.get("projId");
+    
     // check if we can edit obs (not yet pushed)
     if (!navParams.get("isEditable")) {
       this.editIsDisabled = 'disabled';
@@ -77,17 +85,36 @@ export class ObservationPage implements OnInit, AfterViewInit {
     //console.log('in obs page, onsId =' + this.obsId)
     if (this.protocol) {
       this.protocolName = this.protocol.name;
+      //this.child.protocol = this.protocol
+    }
+
+    // params for dyn-form component
+    console.log('obs compo', this.obsId)
+    /*protoDataService.setObsId(this.obsId) 
+    protoDataService.setProjId(this.projId)
+    protoDataService.setSegment(this.segment)
+    protoDataService.setProtocol(this.protocol)*/
+    this.params= {
+      obsId : this.obsId,
+      projId : this.projId,
+      segment : this.segment,
+      protocol : this.protocol
     }
 
 
   }
 
-  ngAfterViewInit() {
+  onInitView(){
 
-    this.loadComponent();
+    
+    
+  }
+  ngAfterViewInit() {
+ 
   }
 
   ionViewDidLoad() {
+
     console.log('obs load')
     this.sameStation = false;
   }
@@ -104,7 +131,8 @@ export class ObservationPage implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    this.myProto.onSubmit(this.segment)
+    //this.myProto.onSubmit(this.segment)
+    this.child.onSubmit(this.segment)
     this.switchToNextSegment()
 
   }
@@ -123,44 +151,46 @@ export class ObservationPage implements OnInit, AfterViewInit {
       btn.innerText = 'Suivant';
       // display or hide btn "plus d'actions"
       this.actionsStatus = true;
-      this.myProto.hideEspBtn = true;
+      //this.myProto.hideEspBtn = true;
+      //this.child.hideEspBtn = true;
 
     }
     else {
       btn.innerText = 'Terminer';
       this.actionsStatus = false;
-      this.myProto.hideEspBtn = true;
+      //this.myProto.hideEspBtn = true;
     }
     if (($event._value == 'obligatoire')) {
       this.actionsStatus = false;
-      this.myProto.hideEspBtn = false;
+      //this.myProto.hideEspBtn = false;
     }
-    this.myProto.segment = this.segment;
+    //this.myProto.segment = this.segment;
+    this.child.segment = this.segment;
   }
   switchToNextSegment() {
     console.log('segment')
-    console.log(this.myProto.images)
+    //console.log(this.myProto.images)
     let btn = this.el.nativeElement.querySelector('.btnsubmit')
     if ((this.segment == 'localisation') && (btn.innerText != 'TERMINER')) {
       this.segment = 'obligatoire'
       this.actionsStatus = true
-      this.myProto.hideEspBtn = true;
+      //this.myProto.hideEspBtn = true;
     }
     else if ((this.segment == 'obligatoire') && (!this.sameStation)) {
       this.segment = 'facultatif';
       btn.innerText = 'Terminer';
-      this.myProto.hideEspBtn = false; 
+      //this.myProto.hideEspBtn = false; 
       this.actionsStatus = false;
     }
     else if (this.sameStation) {
       this.segment = 'obligatoire'
-      this.myProto.hideEspBtn = false;
+      //this.myProto.hideEspBtn = false;
     }
     else {
       this.actionsStatus = false;
-      this.myProto.hideEspBtn = true;
+      //this.myProto.hideEspBtn = true;
     }
-    this.myProto.segment = this.segment
+    //this.myProto.segment = this.segment
     this.sameStation = false
   }
 
@@ -179,7 +209,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
         });
 
   }
-  loadComponent() {
+  /*loadComponent() {
 
     let component = this.adFormService.getComponent(this.protocolName)
 
@@ -197,7 +227,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
     this.myProto.projId = this.projId;
     this.myProto.parent = this;
 
-  }
+  }*/
   async getPosition(){
     if(this.nbRelances < 4 ) {
     let subscription;
@@ -206,8 +236,8 @@ export class ObservationPage implements OnInit, AfterViewInit {
         this.presentToast('Aquisition des coordonnées...' , 'top' )
 
       this.geolocation.getCurrentPosition({enableHighAccuracy:true, maximumAge: 60000, timeout: 20000 }).then(pos => {
-        this.myProto.updatePosition(pos.coords.latitude, pos.coords.longitude);
-
+        //this.myProto.updatePosition(pos.coords.latitude, pos.coords.longitude);
+        this.child.updatePosition(pos.coords.latitude, pos.coords.longitude);
 
       }, (err) => {
 
@@ -217,7 +247,10 @@ export class ObservationPage implements OnInit, AfterViewInit {
           this.getPosition();
         } else {
 
-          this.el.nativeElement.querySelector('.gpsPickerPicto').classList.remove('hidden')
+          /*if(this.el.nativeElement.querySelector('.gpsPickerPicto').classList) {
+            this.el.nativeElement.querySelector('.gpsPickerPicto').classList.remove('hidden')
+          }*/
+          
 
         }
         
@@ -254,7 +287,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
     // Get the data of an image
     this.platform.ready().then(() => {
 
-      let refProto = this.myProto;
+      let refProto = this.child;
       this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL,
         sourceType: this.camera.PictureSourceType.CAMERA,
@@ -297,4 +330,11 @@ export class ObservationPage implements OnInit, AfterViewInit {
     this.gpsPickerValue = (!this.gpsPickerValue)
     this.myProto.gpsPickerEvent = this.gpsPickerValue
   }
+  updateSegment(segment){
+    this.segment = segment
+  }
+  updateSameStation(){
+    this.sameStation = true
+  }
+
 }

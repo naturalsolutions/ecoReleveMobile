@@ -24,9 +24,10 @@
 
 
 <ion-content padding>
-    <!-- dynamic insert protocol component : see : "https://angular.io/guide/dynamic-component-loader" -->
-    <!--  -->
-    <ng-template ad-host></ng-template>
+
+    <!--<dynamic-form></dynamic-form>-->
+    <dynamic-form (editMapSize)="handleMapSize($event)"  (editSegment)="updateSegment($event)" (updatePos)="getPosition()"  (sameStation)="updateSameStation()"  [params]="params" ></dynamic-form>
+
 </ion-content>
 <ion-footer no-shadow>
     <ion-toolbar position="bottom">

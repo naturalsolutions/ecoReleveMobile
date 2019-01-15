@@ -8,7 +8,7 @@ import _ from 'lodash'
 @Injectable()
 export class CompleteTaxaService {
   protocole : any;
-  dbFieldName :any =  'NOM_NORMALISE';
+  dbFieldName :any =  'LB_NOM';
   constructor(
     private http:Http,
     private sqlite : SQLite,
@@ -16,11 +16,14 @@ export class CompleteTaxaService {
   ) {
   }
 
-  getResults(item:string, protocole) {
+  getResults(item:string, protocole,searchField) {
     var _that = this;
-        let tableName ;
+        let tableName = protocole ;
         let itemNormalise = null;
-        switch(protocole) {
+        if(searchField){
+          this.dbFieldName = 'NOM_NORMALISE';
+        } 
+        /*switch(protocole) {
           case 'avifaune': {
             tableName = 'Bird'
             break;
@@ -51,7 +54,7 @@ export class CompleteTaxaService {
             tableName = 'avifaune'
             break;
           }
-      }
+        }*/
 
       itemNormalise = item.toLowerCase()
       itemNormalise = _.deburr(itemNormalise);

@@ -1,8 +1,7 @@
 import { Component,ElementRef,Renderer,ViewChild  } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NavController,NavParams,ViewController,Searchbar  } from 'ionic-angular';
-import { CompleteTaxaService } from '../../../providers/autocomplete-service';
-
+import { CompleteTaxaService } from '../../../providers/autocomplete-service'
 
 @Component({
     selector: 'page-autocompTaxa',
@@ -12,7 +11,9 @@ import { CompleteTaxaService } from '../../../providers/autocomplete-service';
   <ion-navbar color="primary">
     <ion-title>
       Recherche d'espèce
+      <ion-icon name="close-circle" item-right (click)="onCancel($event)"></ion-icon>
     </ion-title>
+    
   </ion-navbar>
 
   <ion-toolbar no-border-top>
@@ -52,6 +53,7 @@ export class PopoverAutocompPage {
     items: any;
     searching: any = false;
     protocole : any;
+    searchField : any
     @ViewChild(Searchbar) searchbar:Searchbar;
     
 
@@ -69,6 +71,8 @@ export class PopoverAutocompPage {
     this.searchControl = new FormControl();
 
     this.protocole = navParams.data.protocole
+    this.searchField = navParams.data.searchField
+    console.log ('theme de recherche : ' +this.searchField  )
     
 
   }
@@ -88,7 +92,7 @@ export class PopoverAutocompPage {
 
            this.setFilteredItems();
     
-           this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+           this.searchControl.valueChanges.subscribe(search => {
     
                this.searching = false;
                this.setFilteredItems();
@@ -106,7 +110,7 @@ export class PopoverAutocompPage {
     setFilteredItems() {
         if(this.searchTerm && (this.searchTerm.length > 2)) {
           this.searching = true;
-          this.completeTaxaService.getResults(this.searchTerm, this.protocole).then(data =>{
+          this.completeTaxaService.getResults(this.searchTerm, this.protocole, this.searchField ).then(data =>{
             this.items = data;
             this.searching = false;
           })
@@ -122,7 +126,11 @@ export class PopoverAutocompPage {
     this.setFilteredItems();
 }
 onCancel(e){
-   // this.searching = true;
+    this.viewCtrl.dismiss({
+        nom_vernaculaire : '',
+        taxon : '',
+        taxref_id : null
+      });
 }
 getSelected(e){
   let verna = e.label

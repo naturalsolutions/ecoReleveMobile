@@ -51,3 +51,13 @@ page-observation {
 .hidden {
     display: none;
 }
+
+.checkbox-md + .item-inner ion-label {
+    margin-top: -15px!important;
+}
+.item-checkbox {
+    margin-top: 10px!important;
+}
+.ion-md-close-circle {
+    float: right!important;
+}

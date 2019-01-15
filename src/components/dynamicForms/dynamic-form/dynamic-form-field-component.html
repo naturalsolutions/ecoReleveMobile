@@ -1,0 +1,55 @@
+<div [formGroup]="form">
+
+    <ion-item [ngSwitch]="field.controlType" [class.hide]="field.hide">
+        <ion-label [attr.for]="field.key" floating>{{field.label}}</ion-label>
+        <ion-input *ngSwitchCase="'text'" [formControlName]="field.key"></ion-input>
+        <ion-input *ngSwitchCase="'number'" [formControlName]="field.key" type="number"></ion-input>
+        <ion-select *ngSwitchCase="'select'" [formControlName]="field.key" interface="popover">
+            <ion-option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</ion-option>
+        </ion-select>
+
+        <ion-input *ngSwitchCase="'autocomplete'" disabled="true" [formControlName]="field.key" (click)="presentPopoverAutocomp('avifaune')"></ion-input>
+
+        <ion-checkbox *ngSwitchCase="'checkbox'" [formControlName]="field.key" value="field.value" ></ion-checkbox>
+
+        <ion-datetime *ngSwitchCase="'date'" displayFormat="DD/MM/YYYY HH:mm" [formControlName]="field.key"></ion-datetime>
+
+        <!-- marche pas à l'interieur d'un item-->
+        <!--<ion-list radio-group *ngSwitchCase="'radio'" [formControlName]="field.key">
+
+            <div *ngFor="let opt of field.options">
+
+                <ion-label>{{opt.value}}</ion-label>
+                <ion-radio value="opt.value"></ion-radio>
+            </div>
+        </ion-list> -->
+
+
+
+        <div class="errorMessage" *ngIf="!isValid">{{field.label}} is required</div>
+    </ion-item>
+
+
+    <ion-content *ngIf="field.controlType == 'radio'" class="contentRadio">
+        <ion-list radio-group [formControlName]="field.key">
+            <ion-item *ngFor="let item of field.options">
+                <ion-label>{{item.value}}</ion-label>
+                <ion-radio value="{{item.value}}">
+                </ion-radio>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

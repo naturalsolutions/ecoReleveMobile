@@ -9,6 +9,8 @@ import {PopoverHelpPage} from'./popoverHelpPage'
 import {ProjectsServiceProvider} from '../providers/projects-service';
 import {config }  from '../config';
 import * as L from 'leaflet';
+//import { Subscription } from 'rxjs/Subscription';
+//import { ProtocolDataServiceProvider } from '../providers/protocol-data-service'
 //import {MapComponent} from '../components/map/map'
 //import { Subscription } from 'rxjs/Subscription'
 //import { MapNotificationService } from '../shared/map.notification.service'
@@ -20,7 +22,8 @@ import * as L from 'leaflet';
   templateUrl: 'observations.html',
   providers : [
     ProtocolsServiceProvider,
-    ProjectsServiceProvider
+    ProjectsServiceProvider,
+    //ProtocolDataServiceProvider
   ]
 })
 export class ObservationsPage {
@@ -43,6 +46,7 @@ export class ObservationsPage {
   public storage : Storage,
   public projectsService : ProjectsServiceProvider,
   private popoverCtrl: PopoverController,
+  //private protoDataService : ProtocolDataServiceProvider
   //public map : MapComponent,
   //private NotificationService: MapNotificationService
 
@@ -91,7 +95,11 @@ export class ObservationsPage {
     // get selected protocol
     let protocol = this.protocols.find(x => x.name === protocole);
     console.log(protocol, id);
+    
+
     this.navCtrl.push(ObservationPage, {protoObj:protocol, obsId : id, 'projId' : this.projId, 'isEditable' : !(pushed)});
+
+
   }
   newObs(){
     console.log('new obs');
@@ -132,6 +140,8 @@ export class ObservationsPage {
         case "Insectes":
         label="Insectes";  
         break;
+        default:
+        label=protocolName;
     }
     return label
   }
@@ -164,6 +174,8 @@ export class ObservationsPage {
             case "Insectes":
             src="insect_sync.png";  
             break;
+            default:
+            src= protocole + "_sync.png"
       }
 
     } 
@@ -191,6 +203,8 @@ export class ObservationsPage {
             case "Insectes":
             src="insect.png";  
             break;
+            default:
+            src= protocole + ".png"
       }
 
     } else {
@@ -215,6 +229,8 @@ export class ObservationsPage {
             case "Insectes":
             src="insect_progress.png";  
             break;
+            default:
+            src= protocole + "_progress.png"
       }
 
     }

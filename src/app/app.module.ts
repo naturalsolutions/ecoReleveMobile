@@ -19,20 +19,25 @@ import {AuthService} from "../providers/auth";;
 import { CommonService } from '../shared/notification.service';
 import {GeoService} from '../shared/geolocation.notification.service';
 import { MapNotificationService } from '../shared/map.notification.service'; 
-import { ProtocolFormComponent } from '../components/protocol-form/protocol-form';
-import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
-import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
-import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
-import { ChiropteresComponent } from '../observation/proto-forms/chiropteres/chiropteres';  
-import { FloreComponent } from '../observation/proto-forms/flore/flore';  
-import { InsectesComponent } from '../observation/proto-forms/insectes/insectes';  
+//import { ProtocolFormComponent } from '../components/protocol-form/protocol-form';
+//import { AvifauneComponent } from '../observation/proto-forms/avifaune/avifaune';  
+//import { MammofauneComponent } from '../observation/proto-forms//mammofaune/mammofaune';
+//import { HerpetofauneComponent } from '../observation/proto-forms/herpetofaune/herpetofaune';  
+//import { ChiropteresComponent } from '../observation/proto-forms/chiropteres/chiropteres';  
+//import { FloreComponent } from '../observation/proto-forms/flore/flore';  
+//import { InsectesComponent } from '../observation/proto-forms/insectes/insectes';  
+
+//import { DynamicFormFieldComponentModule } from '../components/dynamicForms/dynamic-form/dynamic-form-field.module';
+//import { DynFormComponentModule }         from '../components/dynamicForms/dynamic-form.module'
+
 
 import {PopoverPage} from'../observation/popoverPage';
 import {PopoverHelpPage} from'../observations/popoverHelpPage';
-import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
+//import {PopoverAutocompPage} from'../observation/proto-forms/protocol-form/popoverAutocompPage'
+//import {PopoverAutocompPage} from'./dynamic-form//popoverAutocompPage'
 import {PopoverHelpProj} from'../projects/popoverHelpProj'
 
-import { AdFormService} from '../observation/proto-form-provider'
+//import { AdFormService} from '../observation/proto-form-provider'
 import { SQLite } from '@ionic-native/sqlite';
 import { MapComponentModule } from '../components/map/map.module';
 import { LoginPageModule } from '../login/login.module';
@@ -41,34 +46,43 @@ import { ObservationsPageModule } from '../observations/observations.module';
 import { ProjectsPageModule } from '../projects/projects.module';
 import { ProtocolsPageModule } from '../protocols/protocols.module';
 
+//import {ComponentsModule} from '../components/components.module'
+
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ProtocolFormComponent,
-    AvifauneComponent,
-    MammofauneComponent,
-    HerpetofauneComponent,
-    ChiropteresComponent,
-    FloreComponent,
-    InsectesComponent,
+
+    //ProtocolFormComponent,
+    //AvifauneComponent,
+    //MammofauneComponent,
+    //HerpetofauneComponent,
+    //ChiropteresComponent,
+    //FloreComponent,
+    //InsectesComponent,
     PopoverPage,
-    PopoverAutocompPage,
+    //PopoverAutocompPage,
     PopoverHelpPage,
-    PopoverHelpProj
+    PopoverHelpProj,
+
     
   ],
   imports: [
+    //ComponentsModule,
     HttpModule,
     MapComponentModule,
+    //DynamicFormFieldComponentModule,
+    //DynFormComponentModule,
     BrowserModule,
     LoginPageModule,
     ObservationPageModule,
     ObservationsPageModule,
     ProjectsPageModule,
     ProtocolsPageModule,
+    
+   
     IonicModule.forRoot(MyApp, {
       mode: 'md',
     }),
@@ -81,13 +95,13 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     PopoverPage,
     PopoverHelpPage,
     PopoverHelpProj,
-    PopoverAutocompPage,
-    AvifauneComponent,
-    HerpetofauneComponent,
-    ChiropteresComponent,
-    MammofauneComponent,
-    FloreComponent,
-    InsectesComponent
+    //PopoverAutocompPage,
+    //AvifauneComponent,
+    //HerpetofauneComponent,
+    //ChiropteresComponent,
+    //MammofauneComponent,
+    //FloreComponent,
+    //InsectesComponent
     
 
   ],
@@ -104,7 +118,7 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     CommonService,
     MapNotificationService,
     GeoService,
-    AdFormService,
+   // AdFormService,
     AuthService,
     SQLite
 

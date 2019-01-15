@@ -23,6 +23,7 @@
 
 
 <ion-content padding>
+  
     <div [ngSwitch]="obsSegment">
         <ion-list *ngSwitchCase=" 'listes' " (swipe)="swipe($event)" class="obsList">
             <ion-item *ngFor="let ob of obs " (click)="navigateToDetail(ob.protocole,ob.id, ob.pushed)">

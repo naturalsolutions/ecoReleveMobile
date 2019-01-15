@@ -10,43 +10,52 @@ import {Geolocation } from '@ionic-native/geolocation'
 import { Storage } from '@ionic/storage'
 import { Network } from '@ionic-native/network'
 import 'leaflet-draw';
-
-
+import { ProtocolDataServiceProvider } from '../../providers/protocol-data-service'
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
   selector: 'map',
   templateUrl: 'map.html',
   providers : [
-    ProjectsServiceProvider
+    ProjectsServiceProvider,ProtocolDataServiceProvider
   ]
 })
 
 export class MapComponent {
 
   
-@Input() projId : number
-@Input() latitude : number
-@Input() longitude:number
-@Input() trace:string
-@Input() gpsPickerEvent  : boolean
 
+@Input() gpsPickerEvent  : boolean
+/*@Input() latitude
+@Input() longitude
+@Input() projId*/
+@Input() mapParams : object = {}
 @Output() fullsize = new EventEmitter()
 @Output() latEvent = new EventEmitter()
 @Output() lonEvent = new EventEmitter()
 @Output() jsonEvent = new EventEmitter()
+
+
+
+
   //private mapModel: MapModel
    private _map: any
    public mapEl
    //private _bounds: any
-  // latitude : number
-  //longitude:number
+  latitude : number = 34
+  longitude:number = 5
+  projId : any
   markers:any = []
   marker : any = null
   mapModel :any
   public connectionStatus: String = 'online'
   traceLayerId : any
   drawnItems : any =  L.featureGroup();
+  //private projId
+
+  private trace
+  subscription: Subscription
 
 
   constructor(
@@ -62,7 +71,10 @@ export class MapComponent {
     public platform :Platform,
     private renderer : Renderer,
     private alertCtrl: AlertController,
+    private protoDataService : ProtocolDataServiceProvider
+    
    // private elRef:ElementRef
+  
 
   ) {
 
@@ -70,8 +82,44 @@ export class MapComponent {
 
   ngOnInit() {
 
+    this.latitude = this.mapParams['latitude']
+    this.longitude = this.mapParams['longitude']
+    this.projId = this.mapParams['projId']
+    this.trace = this.mapParams['trace']
+    // get shared protocol data
+    
+    /*this.subscription = this.protoDataService.getProjId.subscribe(
+      (projId) => {
+        this.projId = projId;
+      }
+    );*/
 
-    this.mapModel = new MapModel()
+   /* this.subscription = this.protoDataService.latitude.subscribe(
+      (latitude) => {
+        this.latitude = latitude;
+      }
+    );
+
+    this.subscription = this.protoDataService.longitude.subscribe(
+      (longitude) => {
+        this.longitude = longitude;
+        
+      }
+    );*/
+
+   /* this.subscription = this.protoDataService.getTrace.subscribe(
+      (trace) => {
+        this.trace = trace;
+      }
+    );*/
+
+
+    
+
+      
+}
+initMap(){
+  this.mapModel = new MapModel()
     let folderName = 'tuilesProj-' + this.projId;
     this.mapModel.initialize({'folder' : folderName })
       .then(() => {
@@ -96,8 +144,6 @@ export class MapComponent {
       }, error=> {
         console.log(error)
       });
-
-      
 }
 
 ngOnChanges(){
@@ -126,6 +172,9 @@ ngOnChanges(){
 ionViewDidEnter(){
   
 
+}
+ngAfterViewInit() {
+  this.initMap()
 }
 displayfull(){
   //this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', 'none' );
@@ -404,7 +453,21 @@ onMapModelReady() {
 
     }
 
-    this.drawnItems.addLayer(layer);
+    if(this.drawnItems){
+      this.drawnItems.addLayer(layer);
+    } else {
+
+     // console.log(this._layers)
+      for (let key in this._layers) {
+        let drawlayer = this._layers[key]
+        if(drawlayer['name'] && (drawlayer['name']=='markeur')) {
+          console.log(this._layers[key]);
+          drawlayer.addLayer(layer);
+        }
+        
+    }
+    }
+    
     console.log('drawControl'); 
     drawControl.setDrawingOptions({
       polyline: false
@@ -578,6 +641,13 @@ removeRow(arrowLayer){
 }
 handlegpsPicker(){
   alert('event gps picker')
+}
+ngOnDestroy() {
+ // this.subscription.unsubscribe();
+}
+updatePosition(lat, lng){
+  this.marker.setLatLng([lat, lng]).update();
+  this._map.panTo(new L.LatLng(lat,lng),{animate: false});
 }
 
 
