@@ -1,3 +1,4 @@
+
 <div [formGroup]="form">
 
     <ion-item [ngSwitch]="field.controlType" [class.hide]="field.hide">
@@ -10,9 +11,12 @@
 
         <ion-input *ngSwitchCase="'autocomplete'" disabled="true" [formControlName]="field.key" (click)="presentPopoverAutocomp('avifaune')"></ion-input>
 
-        <ion-checkbox *ngSwitchCase="'checkbox'" [formControlName]="field.key" value="field.value" ></ion-checkbox>
+        <ion-checkbox *ngSwitchCase="'checkbox'" [formControlName]="field.key" value="field.value" item-end></ion-checkbox>
 
         <ion-datetime *ngSwitchCase="'date'" displayFormat="DD/MM/YYYY HH:mm" [formControlName]="field.key"></ion-datetime>
+
+        <ion-toggle *ngSwitchCase="'toggle'"  [formControlName]="field.key" value="false" ></ion-toggle>
+
 
         <!-- marche pas à l'interieur d'un item-->
         <!--<ion-list radio-group *ngSwitchCase="'radio'" [formControlName]="field.key">
@@ -40,6 +44,71 @@
         </ion-list>
 
     </ion-content>
+
+
+    <!-- ion taxon list control -->
+
+
+    <!-- list of taxons -->
+    <ion-content *ngIf="field.controlType == 'taxonlist'" class="contentTaxonList">
+    <div formArrayName="taxons">
+        <ion-item *ngFor="let taxon of field.controls; let i=index">
+            <!-- address header, show remove button when more than one address available -->
+            <div>
+                <span>Taxon {{i + 1}}</span>
+                <span *ngIf="form.controls.taxons.controls.length > 1" 
+                    (click)="removeTaxon(i)">
+                </span>
+            </div>
+
+            <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+            <div [formGroupName]="i">
+                <!--street-->
+                <div>
+                    <label>Taxon</label>
+    
+                    <ion-input  formControlName="taxon" (click)="presentPopoverAutocomp('avifaune')"></ion-input>
+                    <!--display error message if street is not valid-->
+                    <small [hidden]="form.controls.taxons.controls[i].controls.taxon.valid">
+                        Taxon is required
+                    </small>
+                </div>
+                <!--postcode-->
+                <div>
+                    <label>nb</label>
+                    <ion-input formControlName="number" type="number"></ion-input>
+                </div>
+            <div>
+        </div>
+    </div>
+    </ion-item>
+    </div>
+
+</ion-content>
+
+<!--
+    <ion-content *ngIf="field.controlType == 'taxonlist'" class="contentTaxonList">
+        
+        <ion-item>
+            <ion-row>
+                <ion-col width-75 class="iconObs">
+                    <ion-input *ngSwitchCase="'autocomplete'" disabled="true" [formControlName]="field.key" (click)="presentPopoverAutocomp('avifaune')"></ion-input>
+                </ion-col>
+                <ion-col width-25 class="obsValue">
+                    <p class="protoName">Nb</p>
+                    <ion-input [formControlName]="field.key" type="number"></ion-input>
+                    
+                </ion-col>
+            </ion-row>
+        </ion-item>
+
+
+    </ion-content>
+-->
+
+
+
+
 
 
 

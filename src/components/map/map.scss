@@ -65,3 +65,9 @@ page-map {
 .leaflet-draw-tooltip {
     display: none!important;
 }
+
+.leaflet-touch .leaflet-draw-actions {
+    display: block;
+    z-index: 100;
+    top: -80px!important;
+}

@@ -52,6 +52,15 @@
             "hide" : true
         },
         {
+            "type": "taxonlist",
+            "key": "taxa_list",
+            "label": "taxa list",
+            "value": "",
+            "required": false,
+            "order": 2,
+            "hide" : false
+        },
+        {
             "type": "number",
             "key": "effectif",
             "label": "Effectif",
@@ -968,6 +977,4 @@
         }
     ]
 }
-    
-
 ]

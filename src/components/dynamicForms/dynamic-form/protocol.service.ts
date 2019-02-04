@@ -10,6 +10,8 @@ import { AutocompField} from './field-autocomplete';
 import {CheckboxField} from './field-checkbox';
 import {RadioField} from './field-radio';
 import {DateField} from './field-date';
+import {ToggleField} from './field-toggle'
+import {Taxonlist} from './field-taxonList'
 
 
 
@@ -62,6 +64,11 @@ export class FieldService {
               options: field.options 
             });
           break;
+          case "toggle" :
+          formFied = new ToggleField({
+            options: field.options 
+          });
+        break;
         case "autocomplete" :
             formFied = new AutocompField({
             });
@@ -73,6 +80,12 @@ export class FieldService {
         formFied = new DateField({
         });
         break;
+
+        case "taxonlist":
+        formFied = new Taxonlist({
+          options: field.options 
+        });
+        break;
     }
     formFied.key = field.key;
     formFied.label = field.label;
@@ -80,6 +93,7 @@ export class FieldService {
     formFied.required = field.required;
     formFied.hide = field.hide;
     formFied.options = field.options || '';
+    formFied.value = field.value ;
     console.log(formFied)
 
 

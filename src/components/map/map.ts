@@ -56,6 +56,9 @@ export class MapComponent {
 
   private trace
   subscription: Subscription
+  style : any
+  removeCtr : any
+  drawControl : any
 
 
   constructor(
@@ -330,6 +333,8 @@ onMapModelReady() {
       fillColor: '#f44141'
     };
 
+    this.style = style
+
     this.drawnItems['name']= 'markeur';
     this._map.addLayer(this.drawnItems);
     this._map.addLayer(arrowLayer);
@@ -362,6 +367,8 @@ onMapModelReady() {
       rectangle : false
       }
   });
+
+  this.drawControl = drawControl
 
   function onClick(e) {
     // alert(e.latlng);
@@ -399,6 +406,7 @@ onMapModelReady() {
   let removeCtr = _this.el.nativeElement.querySelector('.leaflet-draw-edit-remove');
    _this.renderer.setElementAttribute(removeCtr, 'disabled', 'disabled');
   
+   this.removeCtr = removeCtr
     
   this._map.on((L as any).Draw.Event.CREATED, function (e) {
     var type = e.layerType,
@@ -435,21 +443,10 @@ onMapModelReady() {
       
       
 
-  
-     /* var arrowHead = (L as any).polylineDecorator(layer, {
-            patterns: [
-                {offset: '100%', repeat: 0, symbol: (L as any).Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
-            ]
-      });*/
-
       if (arrowHead) {
         arrowLayer.addLayer(arrowHead);
       }
       
-      //arrowLayer.setStyle(style);
-
-
-      //layer.setStyle(function(feature) { return style; });
 
     }
 
@@ -468,13 +465,12 @@ onMapModelReady() {
     }
     }
     
-    console.log('drawControl'); 
+
     drawControl.setDrawingOptions({
       polyline: false
   });
     drawControl.draw = false;
-    console.log(drawControl); 
-    console.log(_this.el);
+
     // disable draw mode
     let drawCtr = _this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
     _this.renderer.setElementAttribute(drawCtr, 'disabled', 'disabled');
@@ -562,24 +558,11 @@ onMapModelReady() {
     let trace = JSON.parse(this.trace)
 
     let traceLayer = L.geoJSON(trace,
-      /*{ style: function (f) {
-              return f.properties;
-      }}*/
-  )
-  //traceLayer.setStyle(function(feature) { return style; });
 
-    // select the geometry, assuming only 1
+  )
+  
   var newLayer = traceLayer.getLayers()[0];
   newLayer['name']='trace'
-  /*newLayer['options']['style'] = {
-    color: '#f44141', 
-    weight: 6,
-    opacity: 1,
-    fillOpacity: 1,
-    fillColor: '#f44141'
-  };*/
-  //var layerStyle = { fillColor: '#f44141', color: '#f44141', weight: 6,  opacity: 1,  fillOpacity: 1 };
-  //newLayer.setStyle(function(feature) { return layerStyle; });
 
     
   newLayer.setStyle(style);
@@ -607,6 +590,8 @@ onMapModelReady() {
     _this.renderer.setElementAttribute(removeCtr, 'disabled', null);
   
   }
+
+  this.checkTraceLayer()
 
 }
 goOnline() {
@@ -646,8 +631,53 @@ ngOnDestroy() {
  // this.subscription.unsubscribe();
 }
 updatePosition(lat, lng){
-  this.marker.setLatLng([lat, lng]).update();
-  this._map.panTo(new L.LatLng(lat,lng),{animate: false});
+  let i=0
+  if (this.marker){
+    this.updateMarker(lat,lng)
+     return
+  } else {
+    setTimeout(() => {
+      this.updateMarker(lat,lng)
+    }, 1000);
+  }
+}
+updateMarker(lat,lng){
+  if (this.marker){
+    this.marker.setLatLng([lat, lng]).update();
+    this._map.panTo(new L.LatLng(lat,lng),{animate: false});
+  } else {
+    this.latitude = lat
+    this.longitude = lng
+    this.onMapModelReady()
+  }
+
+}
+checkTraceLayer(){
+// check if trace layer is added, add it if not
+    setTimeout(()=> {
+      let layers  = this.drawnItems._layers
+      var length = Object.keys(layers).length;
+      if((length == 1) && (this.mapParams['trace'])) {
+        let trace = JSON.parse(this.mapParams['trace'])
+        let traceLayer = L.geoJSON(trace)
+        var newLayer = traceLayer.getLayers()[0];
+        newLayer['name']='trace'
+        newLayer.setStyle(this.style);
+      this.drawnItems.addLayer(newLayer)
+        this.traceLayerId = newLayer['_leaflet_id']
+
+        this.drawControl.setDrawingOptions({
+          polyline: false
+        });
+        
+        // disable  draw btn
+        let drawCtr = this.el.nativeElement.querySelector('.leaflet-draw-draw-polyline');
+        this.renderer.setElementAttribute(drawCtr, 'disabled', 'disabled');
+        this.renderer.setElementAttribute(this.removeCtr, 'disabled', null);
+      }
+    },500)
+
+ 
 }
 
 

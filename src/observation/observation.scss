@@ -52,7 +52,7 @@ page-observation {
     display: none;
 }
 
-.checkbox-md + .item-inner ion-label {
+.checkbox-md + .item-inner ion-label  {
     margin-top: -15px!important;
 }
 .item-checkbox {
@@ -61,3 +61,17 @@ page-observation {
 .ion-md-close-circle {
     float: right!important;
 }
+.item-toggle  .label-md  {
+    margin-top: -15px!important;
+}
+.item-checkbox ion-label {
+    margin-top: -15px!important;
+}
+.checkbox-icon  {
+    border-radius: 50px!important;
+    width: 20px!important;
+    height: 20px!important;
+}
+
+
+

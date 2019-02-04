@@ -11,9 +11,23 @@ export class FieldControlService {
     let group: any = {};
 
     fields.forEach(field => {
-      group[field.key] = field.required ? new FormControl(field.value || '', Validators.required)
-                                              : new FormControl(field.value || '');
-    });
+      if(field.controlType!="taxonlist") {
+        group[field.key] = field.required ? new FormControl(field.value || '', Validators.required) : new FormControl(field.value || '');
+      } else {
+
+        group['taxons'] = new FormGroup({
+          'taxon': new FormControl('', Validators.required),
+          'number': new FormControl(0 , Validators.required)
+        });
+      }
+
+
+      //field.setValue(field.value)
+    }
+    );
     return new FormGroup(group);
   }
 }
+
+
+

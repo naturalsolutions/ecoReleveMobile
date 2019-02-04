@@ -24,5 +24,8 @@ export class FieldBase<T> {
       this.controlType = options.controlType || '';
       this.hide = options.hide || false; 
     }
+    setValue(value){
+      this.value = value
+    }
   }
   

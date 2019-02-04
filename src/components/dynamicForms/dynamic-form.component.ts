@@ -47,7 +47,6 @@ export class DynamicFormComponent  {
   public  obsId : number  
   public projId : number  
 
-  mapPrams : any = {}
   service : any
   mapParams : any = {}
 
@@ -163,11 +162,15 @@ export class DynamicFormComponent  {
 
          for(var key in obs) {
            if(this.form.controls[key]) {
-            this.form.controls[key].setValue( obs[key]);
-            if(key=='trace'){
-              this.trace = obs[key]
-            }
+            this.form.controls[key].setValue( obs[key])
            }
+           if(key=='images'){
+            this.images = obs[key]
+          }
+          if(key=='trace'){
+            this.trace = obs[key]
+            this.mapParams.trace = obs[key]
+          }
         }
 
         
@@ -185,12 +188,12 @@ export class DynamicFormComponent  {
           this.child.updatePosition(this.latitude,this.longitude)
 
           // get json trace if exists
-          if(this.instance.trace) {
+          /*if(this.instance.trace) {
             this.trace = this.instance.trace
           } else {
             this.trace = null;
-          }
-          this.mapPrams.trace = this.trace
+          }*/
+          //this.mapParams.trace = this.trace
           //this.mapPrams.projId= this.projId
 
 
@@ -200,8 +203,15 @@ export class DynamicFormComponent  {
       });
 
     } else {
-    
+      /*console.log('*** this form  **')
+      console.log(this.form)
+      console.log(this.fields)
       //this.buildForm()
+      for(var key in this.form.controls) {
+        let value = this.form.controls[key].value
+        this.form.controls[key].setValue(value)
+      }*/
+       
     }
 
 
@@ -245,12 +255,13 @@ export class DynamicFormComponent  {
           let fieldvalue = null
           let fieldName = null
           if(config.defautLastObsValue) {
-            fieldName = config.fieldName
+            fieldName = config['fieldName']
             fieldvalue = this.form.value[fieldName]
           }
           if(config.defaultLastStation){
             this.sameStation.emit(true) 
           }
+          this.mapParams.trace = ""
           this.reinitform(latitude,longitude,fieldName, fieldvalue);
     
 
@@ -331,7 +342,9 @@ reinitform(latitude,longitude,fieldName,fieldvalue){
     }
      
   }
-  this.form.value['obsId'] = 0
+  this.obsId = 0
+  this.trace =  ""
+  
 
   
   if(config.defaultLastStation) {
@@ -342,14 +355,16 @@ reinitform(latitude,longitude,fieldName,fieldvalue){
     this.editSegment.emit('obligatoire');
     this.form.value.latitude = latitude;
     this.form.value.longitude = longitude;
+    // display coordinates
+    this.latitude = parseFloat(latitude)
+    this.longitude = parseFloat(longitude)
+
   } else {
     //this.parent.segment = 'localisation';
     this.editSegment.emit('localisation');
     this.updatePos.emit(true);
   
-    // display coordinates
-    this.latitude = this.instance.latitude;
-    this.longitude = this.instance.longitude;
+
   }
   if(config.defautLastObsValue) {
     //this.form.value[fieldName] = fieldvalue
@@ -380,7 +395,7 @@ buildForm(){
   this.form.valueChanges.subscribe(data => {
     this.formChanged = true;
   })
-
+  
 }
 
 presentAlert() {
@@ -441,5 +456,6 @@ handleTraceChange(json){
   this.mapParams.trace = JSON.stringify(json) 
 
 }
+
 
 }

@@ -20,7 +20,14 @@ export class DynamicFormFieldComponent {
   ) {
 
   }
-  get isValid() { return this.form.controls[this.field.key].valid; }
+  get isValid() { 
+    let returnVal = false
+    if(this.form.controls[this.field.key] && this.form.controls[this.field.key].valid) {
+      returnVal = this.form.controls[this.field.key].valid;
+    }
+    return returnVal
+  
+  }
   presentPopoverAutocomp(name){
     //this.form.controls['nom_verna'].setValue('test');
     if(this.form.controls['taxon']){
@@ -37,5 +44,8 @@ export class DynamicFormFieldComponent {
       this.form.patchValue(data);
     })    
     popover.present();
+  }
+  removeTaxon(i){
+
   }
 }
