@@ -35,6 +35,7 @@ export class ObservationsPage {
   public map : any
   public projId : any
   newObsDisabled = false
+  hideLocation : boolean = false
   //private subscription: Subscription;
 
   constructor(
@@ -56,6 +57,9 @@ export class ObservationsPage {
       this.newObsDisabled = navParams.get("isPushed")
     }
     this.loadProtocols()
+    if(config.disableLocalisation) {
+      this.hideLocation = true;
+    }
   }
 
   ionViewDidLoad() {
@@ -70,9 +74,10 @@ export class ObservationsPage {
       let points= [];
       for (let dt in data) {
         let label, protocolName;
-        protocolName = data[dt]['protocole'];
+        protocolName = data[dt]['label'];
         label = this.getLabel(protocolName);
-        label = label + ': ' +  data[dt]['type_inventaire'] 
+        let inventaire =  '  ' + (data[dt]['type_inventaire'] || '')
+        label = label +  inventaire
         if(label.length>32) {
           label = label.substring(0,28) + '...';
         }

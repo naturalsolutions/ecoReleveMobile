@@ -1,4 +1,4 @@
-import { Component,  Input, Output,EventEmitter,ViewChild }  from '@angular/core';
+import { Component,  Input, Output,EventEmitter,ViewChild,ElementRef }  from '@angular/core';
 import { AlertController,ToastController  } from 'ionic-angular';
 import { FormGroup }                 from '@angular/forms';
 
@@ -50,6 +50,7 @@ export class DynamicFormComponent  {
   service : any
   mapParams : any = {}
 
+
   //segment = 'obligatoire'
 
   
@@ -61,7 +62,9 @@ export class DynamicFormComponent  {
     public commonService: CommonService,
     private alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private protoDataService : ProtocolDataServiceProvider
+    private protoDataService : ProtocolDataServiceProvider,
+    private el: ElementRef,
+    
 
     ) {
 
@@ -104,6 +107,9 @@ export class DynamicFormComponent  {
       longitude : 0,
       trace :''
     }
+ 
+
+   
 
 
     /*console.log(this.protoDataService.toto)
@@ -154,6 +160,7 @@ export class DynamicFormComponent  {
    }
 
    initform(){
+    
 
     if(this.obsId){
       this.instance = this.form.value
@@ -185,7 +192,10 @@ export class DynamicFormComponent  {
           this.dateObs = obs['dateObs']
           //this.mapPrams.latitude = this.latitude
           //this.mapPrams.longitude = this.longitude
-          this.child.updatePosition(this.latitude,this.longitude)
+          if(!config.disableLocalisation) {
+            this.child.updatePosition(this.latitude,this.longitude)
+          }
+          
 
           // get json trace if exists
           /*if(this.instance.trace) {
@@ -203,6 +213,10 @@ export class DynamicFormComponent  {
       });
 
     } else {
+      this.form.valueChanges.subscribe(data => {
+        this.formChanged = true;
+      })
+    
       /*console.log('*** this form  **')
       console.log(this.form)
       console.log(this.fields)
@@ -219,11 +233,15 @@ export class DynamicFormComponent  {
 
     // subscription to notify exit view obsto store data
    this.subscription = this.commonService.notifyObservable$.subscribe((res) => {
-     if(!this.obsSaved  && (this.formChanged)) {    // && (!this.obsId)
+     if( (!this.obsId) && (!this.obsSaved)  && (this.formChanged)) {    // && (!this.obsId)
            this.saveCurrent()
      }
 
   });
+
+    if(config.disableLocalisation) {
+      this.segment = 'obligatoire';
+    }
 
    }
 
@@ -238,10 +256,15 @@ export class DynamicFormComponent  {
 
         console.log(this.form.value)
         if ((!this.form.invalid) &&(this.segment =='facultatif')) {
-          if((!this.latitude)||(!this.longitude)) {
-            this.presentToast('Coordonnées non renseignées. Erreur GPS', 'top' )
-            return
+
+          if(!config.disableLocalisation){
+            if((!this.latitude)||(!this.longitude)) {
+              this.presentToast('Coordonnées non renseignées. Erreur GPS', 'top' )
+              return
+            }
           }
+
+
           this.form.value.finished = true;
           this.form.value.images= this.images;
           this.form.value.trace = this.trace
@@ -328,6 +351,10 @@ formUpdateData() {
 saveCurrent(){
   let value = this.form.value;
   value.finished = false;
+  value.dateObs = this.dateObs
+  value.projId = this.projId
+  value.protocole = this.protocol.name
+  value.label = this.protocol.label
   this.formUpdateData();
 }
 
@@ -387,6 +414,7 @@ reinitform(latitude,longitude,fieldName,fieldvalue){
 buildForm(){
   // set date value
   this.dateObs = Date.now();//  Date.now().getTime();
+  //let elem  = this.el.nativeElement.querySelectorAll('.checkbox-icon')
   if(this.form.value.images && (this.form.value.images.length >0)) {
     this.images = this.form.value.images;
   }
@@ -444,7 +472,7 @@ presentToast(message, position) {
 }
 
 ngOnDestroy() {
-  //this.subscription.unsubscribe();
+  this.subscription.unsubscribe();
 }
 handleMapSize($event){
   this.editMapSize.emit($event)

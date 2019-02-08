@@ -17,6 +17,7 @@ import {PopoverPage} from'./popoverPage'
 import {DynamicFormComponent} from '../components/dynamicForms/dynamic-form.component'
 import { ObsProvider } from '../providers/obs/obs'
 import { ProtocolDataServiceProvider } from '../providers/protocol-data-service'
+import {config } from '../config';
 
 @IonicPage()
 @Component({
@@ -52,6 +53,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
   sameStation: any
   editIsDisabled: any = false
   params : any = {id : 'toto'}
+  hideLocation : boolean = false
 
 
   constructor(public navCtrl: NavController,
@@ -60,10 +62,8 @@ export class ObservationPage implements OnInit, AfterViewInit {
     private geolocation: Geolocation,
     private commonService: CommonService,
     private el: ElementRef,
-    //public events: Events,
     private popoverCtrl: PopoverController,
     private componentFactoryResolver: ComponentFactoryResolver,
-    //private adFormService: AdFormService,
     public toastCtrl: ToastController,
     public data : ObsProvider,
     private camera: Camera, 
@@ -85,15 +85,10 @@ export class ObservationPage implements OnInit, AfterViewInit {
     //console.log('in obs page, onsId =' + this.obsId)
     if (this.protocol) {
       this.protocolName = this.protocol.name;
-      //this.child.protocol = this.protocol
     }
 
     // params for dyn-form component
-    console.log('obs compo', this.obsId)
-    /*protoDataService.setObsId(this.obsId) 
-    protoDataService.setProjId(this.projId)
-    protoDataService.setSegment(this.segment)
-    protoDataService.setProtocol(this.protocol)*/
+
     this.params= {
       obsId : this.obsId,
       projId : this.projId,
@@ -101,6 +96,10 @@ export class ObservationPage implements OnInit, AfterViewInit {
       protocol : this.protocol
     }
 
+    if(config.disableLocalisation) {
+      this.segment = 'obligatoire';
+      this.hideLocation = true;
+    }
 
   }
 
@@ -124,8 +123,12 @@ export class ObservationPage implements OnInit, AfterViewInit {
     this.title = this.protocol.label;
     // get coordinates for new obs
     if (this.obsId == 0) {
-      this.getPosition();
+      if(!config.disableLocalisation){
+        this.getPosition();
+      }
+      
     }
+  
     //this.geoServ.notifyOther();
 
   }

@@ -2,7 +2,7 @@
     <form *ngIf="form" (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
 
         <div [ngSwitch]="segment">
-            <ion-list *ngSwitchCase="'localisation'" ngSelected="selected">
+            <ion-list *ngSwitchCase="'localisation'" ngSelected="selected" >
                 <!--<map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude" [trace]="trace"></map>-->
                 <br/>
                 
@@ -17,9 +17,7 @@
             </ion-list>
 
             <ion-list *ngSwitchCase="'obligatoire'">
-                <br/>
-                <br/>
-                <br/>
+
 
                 <div *ngFor="let field of fields" class="form-row">
                   
@@ -33,7 +31,7 @@
 
             </ion-list>  
 
-            <ion-list *ngSwitchCase="'facultatif'">
+            <ion-list *ngSwitchCase="'facultatif'" >
 
                     <div *ngFor="let field of fields" class="form-row">
                            

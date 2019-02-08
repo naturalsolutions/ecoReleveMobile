@@ -75,7 +75,7 @@
             "order": 4
         },
         {
-            "type": "checkbox",
+            "type": "toggle",
             "key": "estimated",
             "label": "Valeur estimée",
             "value": false,
@@ -976,5 +976,74 @@
             "order": 10
         }
     ]
+},    {
+    "name": "Carnet_de_sante_arbres",
+    "label": "Carnet de santé arbres",
+    "image": "./assets/icones_protocoles/Carnet_de_sante_arbres.png",
+    "id": 8,
+    "fields": [
+    {
+        "type": "date",
+        "key": "date_intervention",
+        "label": "Date intervention",
+        "required": true,
+        "order": 1
+    },
+    {
+        "type": "date",
+        "key": "date_prochaine_intervention",
+        "label": "Date de la prochaine intervention",
+        "value": "",
+        "required": true,
+        "order": 2
+    },
+    {
+        "type": "toggle",
+        "key": "elagage",
+        "label": "Elagage",
+        "value": false,
+        "required": true,
+        "order": 3
+    },
+    {
+        "type": "toggle",
+        "key": "arrosage",
+        "label": "Arrosage",
+        "value": false,
+        "required": true,
+        "order": 4
+    },  
+    {
+        "type": "toggle",
+        "key": "traitement",
+        "label": "Traitement",
+        "value": false,
+        "required": true,
+        "order": 4
+    },
+    {
+        "type": "number",
+        "key": "nb",
+        "label": "Diamètre (cm)",
+        "required": true,
+        "order": 5
+    }, 
+    {
+        "type": "text",
+        "key": "prestataire",
+        "label": "Prestataire",
+        "value": "",
+        "required": false,
+        "order": 6 
+    },
+    {
+        "type": "text",
+        "key": "Comments",
+        "label": "Remarques",
+        "value": "",
+        "required": false,
+        "order": 7
+    }
+]
 }
 ]

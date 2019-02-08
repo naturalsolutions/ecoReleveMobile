@@ -12,7 +12,8 @@ export class FieldControlService {
 
     fields.forEach(field => {
       if(field.controlType!="taxonlist") {
-        group[field.key] = field.required ? new FormControl(field.value || '', Validators.required) : new FormControl(field.value || '');
+        let val = field.value != null && field.value != undefined ? field.value : '';
+        group[field.key] = field.required ? new FormControl(val, Validators.required) : new FormControl(val);
       } else {
 
         group['taxons'] = new FormGroup({

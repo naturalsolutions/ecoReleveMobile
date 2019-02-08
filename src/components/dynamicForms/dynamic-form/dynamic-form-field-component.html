@@ -11,11 +11,11 @@
 
         <ion-input *ngSwitchCase="'autocomplete'" disabled="true" [formControlName]="field.key" (click)="presentPopoverAutocomp('avifaune')"></ion-input>
 
-        <ion-checkbox *ngSwitchCase="'checkbox'" [formControlName]="field.key" value="field.value" item-end></ion-checkbox>
+        <ion-checkbox *ngSwitchCase="'checkbox'" [formControlName]="field.key"  [checked]="false"  item-end></ion-checkbox>
 
-        <ion-datetime *ngSwitchCase="'date'" displayFormat="DD/MM/YYYY HH:mm" [formControlName]="field.key"></ion-datetime>
+        <ion-datetime *ngSwitchCase="'date'" displayFormat="DD/MM/YYYY" [formControlName]="field.key"></ion-datetime>
 
-        <ion-toggle *ngSwitchCase="'toggle'"  [formControlName]="field.key" value="false" ></ion-toggle>
+        <ion-toggle *ngSwitchCase="'toggle'"  [formControlName]="field.key" [checked]=false></ion-toggle>
 
 
         <!-- marche pas à l'interieur d'un item-->
