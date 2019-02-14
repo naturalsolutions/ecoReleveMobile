@@ -8,7 +8,7 @@
 
     <ion-toolbar primary no-border-top class="with-segment floating-ion-toolbar toolbar-bottom">
         <ion-segment [(ngModel)]="segment" (ionChange)="onSegmentChanged($event)" (swipe)="swipe($event)">
-            <ion-segment-button value="localisation" (swipe)="swipe($event)" [hidden]="true">
+            <ion-segment-button value="localisation" (swipe)="swipe($event)" [hidden]="hideLocation">
                 Localisation
             </ion-segment-button>
             <ion-segment-button value="obligatoire" (swipe)="swipe($event)">
