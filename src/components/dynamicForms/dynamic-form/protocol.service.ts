@@ -10,6 +10,7 @@ import { AutocompField} from './field-autocomplete';
 import {CheckboxField} from './field-checkbox';
 import {RadioField} from './field-radio';
 import {DateField} from './field-date';
+import {TimeField} from './field-time';
 import {ToggleField} from './field-toggle'
 import {Taxonlist} from './field-taxonList'
 
@@ -78,6 +79,11 @@ export class FieldService {
             break;
         case "date" :
         formFied = new DateField({
+        });
+        break;
+
+        case "time" :
+        formFied = new TimeField({
         });
         break;
 

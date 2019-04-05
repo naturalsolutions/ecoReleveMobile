@@ -5,8 +5,6 @@ import {Storage} from "@ionic/storage";
 import {JwtHelper} from "angular2-jwt";
 import * as JsSHA from 'jssha';
 import 'rxjs/add/operator/map';
-import {config }  from '../config';
-
 
 
 @Injectable()
@@ -18,12 +16,34 @@ export class AuthService {
   error: string;
   jwtHelper = new JwtHelper();
 
-  private LOGIN_URL = config.serverUrl +    "portal/security/login";
-  private checkuser_url = config.serverUrl +  "portal/checkUser";
-  private authorizeUrl = config.serverUrl + "portal/authorize";
+  private LOGIN_URL : any;
+  private checkuser_url : any;
+  private authorizeUrl : any;
 
   
   constructor(public http: Http,private storage: Storage, private alertCtrl: AlertController) {
+
+    this.storage.get('serverUrl').then((data)=>{
+      if(data) {
+        this.LOGIN_URL = data +    "portal/security/login";
+       this.checkuser_url = data +  "portal/checkUser";
+       this.authorizeUrl = data + "portal/authorize";
+
+      } else {
+
+        setTimeout(() => {
+          this.storage.get('serverUrl').then((data)=>{
+            this.LOGIN_URL = data +    "portal/security/login";
+            this.checkuser_url = data +  "portal/checkUser";
+            this.authorizeUrl = data + "portal/authorize";
+
+          });
+        }, 2000);
+      }
+
+    });
+
+
       this.http = http;
       this.isLoggedin = false;
       this.AuthToken = null;

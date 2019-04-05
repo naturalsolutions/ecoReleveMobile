@@ -4,6 +4,7 @@ import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map'
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import _ from 'lodash'
+import {config }  from '../config';
 
 @Injectable()
 export class CompleteTaxaService {
@@ -23,38 +24,6 @@ export class CompleteTaxaService {
         if(searchField){
           this.dbFieldName = 'NOM_NORMALISE';
         } 
-        /*switch(protocole) {
-          case 'avifaune': {
-            tableName = 'Bird'
-            break;
-          }
-          case 'herpetofaune': {
-            tableName = 'Reptil'
-            break;
-          }
-          case 'mammofaune': {
-            tableName = 'Mammal'
-            break;
-          }
-          case 'chiro' : {
-            tableName = 'Chiroptera'
-            break;
-          }
-          case 'flore' : {
-            tableName = 'Flore';
-            this.dbFieldName = 'LB_NOM';
-            break;
-          }
-          case 'insectes' : {
-            tableName = 'Insect',
-            this.dbFieldName = 'LB_NOM';
-            break;
-          }
-          default: {
-            tableName = 'avifaune'
-            break;
-          }
-        }*/
 
       itemNormalise = item.toLowerCase()
       itemNormalise = _.deburr(itemNormalise);
@@ -86,7 +55,7 @@ export class CompleteTaxaService {
               resolve(tab)
             } else {
                   _that.sqlite.create({
-                    name: 'Sydoni.db',
+                    name: 'bd_ecoreleve.db',
                     location: 'default'
                   })
                     .then((db: SQLiteObject) => { 

@@ -6,7 +6,9 @@ import { Storage } from '@ionic/storage';
 
 import { ProjectsPage } from '../projects/projects';
 import { LoginPage} from '../login/login';
+import { ParamsPage} from '../params/params';
 import {AuthService} from "../providers/auth";
+import {config }  from '../config';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,12 +32,21 @@ export class MyApp {
               public storage: Storage,
               private auth: AuthService,
               public loadingCtrl: LoadingController
-              ) {
+              ) 
+              
+  {
+    this.storage.get('serverUrl').then((data)=>{
+      if(!data) {
+        this.storage.set('serverUrl' , config.serverUrl)
+      }
+    });
+
     this.initializeApp();
 
     this.pages = [
       { title: 'Projets', component: ProjectsPage},
-      { title: 'Déconnexion', component: LoginPage},
+      { title: 'Déconnexion', component: LoginPage}//,
+     // {title : 'Paramètres' , component : ParamsPage}
     ];
 
   }
@@ -51,6 +62,7 @@ export class MyApp {
   }
 
   initDb(dataBaseName) {
+
  
     if ((<any>window).sqlitePlugin) {
       (<any>window).plugins.sqlDB.copy(dataBaseName,'default', function () {
@@ -63,7 +75,7 @@ export class MyApp {
 
   initializeApp() {
 
-    let dataBasesNameArray = ['Sydoni.db'];
+    let dataBasesNameArray = ['bd_ecoreleve.db'];
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

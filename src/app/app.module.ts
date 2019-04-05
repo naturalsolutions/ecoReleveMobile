@@ -45,6 +45,7 @@ import { ObservationPageModule } from '../observation/observation.module';
 import { ObservationsPageModule } from '../observations/observations.module';
 import { ProjectsPageModule } from '../projects/projects.module';
 import { ProtocolsPageModule } from '../protocols/protocols.module';
+import {ParamsPageModule } from '../params/params.module'
 
 //import {ComponentsModule} from '../components/components.module'
 
@@ -81,6 +82,7 @@ import { ProtocolsPageModule } from '../protocols/protocols.module';
     ObservationsPageModule,
     ProjectsPageModule,
     ProtocolsPageModule,
+    ParamsPageModule,
     
    
     IonicModule.forRoot(MyApp, {

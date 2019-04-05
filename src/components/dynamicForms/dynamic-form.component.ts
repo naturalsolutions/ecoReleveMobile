@@ -93,9 +93,7 @@ export class DynamicFormComponent  {
     
   }
   ngOnInit() {
-    console.log('ngOnInit form')
-    console.log('********** params')
-    console.log(this.params)
+
     this.obsId = this.params['obsId']
     this.projId = this.params['projId']
     this.protocol = this.params['protocol']
@@ -107,10 +105,6 @@ export class DynamicFormComponent  {
       longitude : 0,
       trace :''
     }
- 
-
-   
-
 
     /*console.log(this.protoDataService.toto)
     this.subscription = this.protoDataService.getObsId.subscribe(
@@ -192,7 +186,7 @@ export class DynamicFormComponent  {
           this.dateObs = obs['dateObs']
           //this.mapPrams.latitude = this.latitude
           //this.mapPrams.longitude = this.longitude
-          if(!config.disableLocalisation) {
+          if(!config.disableLocalisation && (! this.protocol['disableLocalisation'])) {
             this.child.updatePosition(this.latitude,this.longitude)
           }
           
@@ -239,7 +233,7 @@ export class DynamicFormComponent  {
 
   });
 
-    if(config.disableLocalisation) {
+    if(config.disableLocalisation || (this.protocol['disableLocalisation'])) {
       this.segment = 'obligatoire';
     }
 
@@ -257,7 +251,7 @@ export class DynamicFormComponent  {
         console.log(this.form.value)
         if ((!this.form.invalid) &&(this.segment =='facultatif')) {
 
-          if(!config.disableLocalisation){
+          if((!config.disableLocalisation) && (! this.protocol['disableLocalisation'])){
             if((!this.latitude)||(!this.longitude)) {
               this.presentToast('Coordonnées non renseignées. Erreur GPS', 'top' )
               return
@@ -275,17 +269,26 @@ export class DynamicFormComponent  {
           this.presentToast('Observation enregistrée.', 'top' )
           let latitude = this.latitude
           let longitude = this.longitude
-          let fieldvalue = null
-          let fieldName = null
+          // update map params
+          this.mapParams.longitude = this.longitude
+          this.mapParams.latitude = this.latitude
+
+          let fieldsvalue = {}
+          let fieldsName = []
           if(config.defautLastObsValue) {
-            fieldName = config['fieldName']
-            fieldvalue = this.form.value[fieldName]
+            fieldsName = config['fieldsName']
+            fieldsName.forEach(element => {
+              if(this.form.value[element]) {
+                fieldsvalue[element] = this.form.value[element]
+              }
+            });
+            //fieldsvalues = this.form.value[fieldName]
           }
           if(config.defaultLastStation){
             this.sameStation.emit(true) 
           }
           this.mapParams.trace = ""
-          this.reinitform(latitude,longitude,fieldName, fieldvalue);
+          this.reinitform(latitude,longitude,fieldsvalue);
     
 
         } else {
@@ -358,7 +361,7 @@ saveCurrent(){
   this.formUpdateData();
 }
 
-reinitform(latitude,longitude,fieldName,fieldvalue){
+reinitform(latitude,longitude,fieldsvalue){
     
   /*this.formModel.valueChanges.subscribe(data => {
     this.formChanged = true;
@@ -395,7 +398,13 @@ reinitform(latitude,longitude,fieldName,fieldvalue){
   }
   if(config.defautLastObsValue) {
     //this.form.value[fieldName] = fieldvalue
-    this.form.controls[fieldName].setValue( fieldvalue);
+    for (let key in fieldsvalue) {
+      let value = fieldsvalue[key];
+      if(this.form.controls[key]){
+        this.form.controls[key].setValue( value);
+      }
+  }
+   
     //this.instance[fieldName] = fieldvalue
   }
   

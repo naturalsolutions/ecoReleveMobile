@@ -96,7 +96,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
       protocol : this.protocol
     }
 
-    if(config.disableLocalisation) {
+    if(config.disableLocalisation || this.protocol['disableLocalisation']) {
       this.segment = 'obligatoire';
       this.hideLocation = true;
     }
@@ -123,7 +123,7 @@ export class ObservationPage implements OnInit, AfterViewInit {
     this.title = this.protocol.label;
     // get coordinates for new obs
     if (this.obsId == 0) {
-      if(!config.disableLocalisation){
+      if((!config.disableLocalisation) && (! this.protocol['disableLocalisation'])){
         this.getPosition();
       }
       
@@ -320,11 +320,13 @@ export class ObservationPage implements OnInit, AfterViewInit {
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.footer'), 'display', 'none');
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'margin-top', '0px');
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'padding', '0px');
+      this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'margin-bottom', '0px');
     } else {
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', '');
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'margin-top', '112px');
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.footer'), 'display', '');
       this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'padding', '16px');
+      this.renderer.setElementStyle(this.el.nativeElement.querySelector('.scroll-content'), 'margin-bottom', '56px');
     }
   }
   onGpsPickerClick(){

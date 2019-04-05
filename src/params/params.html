@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>paramètres de l'application</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h3>Adresse du serveur:</h3>
+  <!--<label>{{serverUrl}}</label> -->
+
+
+  <!--<div *ngIf="editUrl" > 
+    <form [formGroup]="serverForm" class="list-form">
+        <ion-item no-padding class="animated fadeInUp">
+          <ion-input color="secondary" type="text" formControlName="url"></ion-input>
+        </ion-item>
+
+    </form> -->
+<!--</div> -->
+  <div padding>
+      <button ion-button block (click)="updateUrl()">Mettre à jour</button>
+  </div>
+
+  <div padding>
+      <button ion-button block color="light" (click)="reset()">Annuler</button>
+  </div>
+
+</ion-content>

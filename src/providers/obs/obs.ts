@@ -4,15 +4,25 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
 import _ from 'lodash';
-import {config }  from '../../config';
 
 
 @Injectable()
 export class ObsProvider {
     data:any;
+    serverUrl : any;
 
   constructor(public http: Http, public storage : Storage,private alertCtrl: AlertController) {
-
+    this.storage.get('serverUrl').then((data)=>{
+      if(data) {
+        this.serverUrl = data;
+      } else {
+        setTimeout(() => {
+          this.storage.get('serverUrl').then((data)=>{
+            this.serverUrl = data;
+          });
+        }, 2000);
+      }
+    });
   }
 
   getObs(projId){
@@ -205,7 +215,7 @@ export class ObsProvider {
     return max.id || 0 ;
   }
   pushObs(obs){
-    let url = config.serverUrl;
+    let url = this.serverUrl;
 
 
 

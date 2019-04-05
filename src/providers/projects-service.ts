@@ -7,7 +7,7 @@ import { MapModel } from '../shared/map.model'
 import _ from 'lodash';
 import * as geojsonBounds from 'geojson-bounds';
 import { ToastController  } from 'ionic-angular'
-import {config }  from '../config';
+
 
 @Injectable()
 export class ProjectsServiceProvider {
@@ -18,6 +18,18 @@ export class ProjectsServiceProvider {
   contentHeader = new Headers({'Content-Type': 'application/json'});
   constructor(public http: Http, public storage : Storage,private auth: AuthService,  public toastCtrl: ToastController) {
     this.mapModel.parent = this;
+    this.storage.get('serverUrl').then((data)=>{
+      if(data) {
+        this.serverUrl = data;
+      } else {
+        setTimeout(() => {
+          this.storage.get('serverUrl').then((data)=>{
+            this.serverUrl = data;
+          });
+        }, 2000);
+      }
+      
+  });
   }
   load(){
     if(this.data){
@@ -25,7 +37,7 @@ export class ProjectsServiceProvider {
     }
 
     return new Promise((resolve , reject) =>{
-      let url = config.serverUrl;
+      let url = this.serverUrl;
       url+= 'ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1';
       this.http.get(url, { headers: this.contentHeader , withCredentials: true })
       .map(res => res.json())
@@ -57,7 +69,7 @@ export class ProjectsServiceProvider {
   }
 
   loadGeometry(id){
-    let url = config.serverUrl;
+    let url = this.serverUrl;
     url += 'ecoReleve-Core/projects/'+ id ;
 
     return new Promise(resolve =>{

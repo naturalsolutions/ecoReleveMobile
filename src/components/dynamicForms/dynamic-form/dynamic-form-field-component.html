@@ -1,6 +1,8 @@
 
 <div [formGroup]="form">
 
+       
+
     <ion-item [ngSwitch]="field.controlType" [class.hide]="field.hide">
         <ion-label [attr.for]="field.key" floating>{{field.label}}</ion-label>
         <ion-input *ngSwitchCase="'text'" [formControlName]="field.key"></ion-input>
@@ -13,7 +15,12 @@
 
         <ion-checkbox *ngSwitchCase="'checkbox'" [formControlName]="field.key"  [checked]="false"  item-end></ion-checkbox>
 
+        <ion-datetime *ngSwitchCase="'time'" displayFormat="HH:mm" [formControlName]="field.key"></ion-datetime>
+
         <ion-datetime *ngSwitchCase="'date'" displayFormat="DD/MM/YYYY" [formControlName]="field.key"></ion-datetime>
+
+        
+
 
         <ion-toggle *ngSwitchCase="'toggle'"  [formControlName]="field.key" [checked]=false></ion-toggle>
 
