@@ -47,6 +47,9 @@ import { ProjectsPageModule } from '../projects/projects.module';
 import { ProtocolsPageModule } from '../protocols/protocols.module';
 import {ParamsPageModule } from '../params/params.module'
 
+import { File } from '@ionic-native/file';
+
+
 //import {ComponentsModule} from '../components/components.module'
 
 
@@ -122,7 +125,8 @@ import {ParamsPageModule } from '../params/params.module'
     GeoService,
    // AdFormService,
     AuthService,
-    SQLite
+    SQLite,
+    File
 
   ]
 })

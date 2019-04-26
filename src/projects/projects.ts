@@ -67,6 +67,7 @@ export class ProjectsPage {
           this.projectsService.getProj().then(data =>{
             
                   this.loadedProjects = data;
+
                   if(!this.loadedProjects) {
                     this.projectsSegment = 'allproj';
                     this.displayMyProjs = false;
@@ -182,6 +183,7 @@ export class ProjectsPage {
     // 1- for each checked project load geometry
     let nbToload = 0;
     let loaded = 0 ;
+
     for (let proj of this.projects) {
       if(proj.checked) {
         this.disabled = "disabled";
@@ -214,6 +216,7 @@ export class ProjectsPage {
 
             if(this.loadedProjects){
               let tab  = _.concat(this.loadedProjects, list);
+
               this.loadedProjects = tab;
               this.projectsService.update(tab);
 
@@ -221,6 +224,8 @@ export class ProjectsPage {
               this.loadedProjects =list;
               this.projectsService.update(list);
             }
+
+            this.loadedProjects =  _.uniqBy(this.loadedProjects, 'ID');
             
             
             //this.loadedProjects = list;
@@ -240,6 +245,8 @@ export class ProjectsPage {
         })
       }
     }
+    
+
   }
   disableChecked(list){
     for (let proj of list) {
@@ -263,7 +270,7 @@ export class ProjectsPage {
 
     let  alert = this.alertCtrl.create({
       title: 'Suppression de projet(s)',
-      message: 'Etes vous sur(e) de supprimer le(s) projet(s) sélectionné(s)?',
+      message: 'Etes vous sur(e) de supprimer le(s) projet(s) sélectionné(s)? Avant la suppression, vérifiez sur le serveur que vos données ont bien été synchronisées si vous l\'avez fait sur smartphone !' ,
       buttons: [
         {
           text: 'Annuler',
@@ -382,14 +389,14 @@ export class ProjectsPage {
 
                     let p= new Promise((resolve, reject) => {
                       this.data.pushObs(observation).then(data =>{
-                        console.log('*** id serveur obs :');
-                        console.log(data);
+                          console.log('*** id serveur obs :');
+                          console.log(data);
                           obs[dt]['serverId']= data['id']; 
                           obs[dt]['pushed']= true; 
                           console.log(obs);
                           //this.data.saveObsById(obs[dt]['id'],obs[dt]);
                           obsListToUpdate.push({id:obs[dt]['id'], value : obs[dt]});
-                            resolve(data['id']);
+                          resolve(data['id']);
                         })
                       })
                       promises.push(p);

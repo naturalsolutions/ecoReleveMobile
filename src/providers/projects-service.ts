@@ -99,6 +99,7 @@ export class ProjectsServiceProvider {
 
     return new Promise(resolve =>{
       this.storage.get('projects').then((data)=>{
+        data= _.uniqBy(data, 'ID');
         resolve(data);
       });
     });
@@ -125,6 +126,7 @@ export class ProjectsServiceProvider {
       let array = [];
       array.push(proj);
       toStore = array;
+      toStore= _.uniqBy(toStore, 'ID');
 
       this.storage.set('projects', toStore).then((data)=>{
 
@@ -136,6 +138,7 @@ export class ProjectsServiceProvider {
 
 
   update(projects){
+    projects= _.uniqBy(projects, 'ID');
     this.storage.set('projects', projects).then((data)=>{
     });
   }

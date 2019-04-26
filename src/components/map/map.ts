@@ -76,7 +76,7 @@ export class MapComponent {
     public platform: Platform,
     private renderer: Renderer,
     private alertCtrl: AlertController,
-    private protoDataService: ProtocolDataServiceProvider
+    //private protoDataService: ProtocolDataServiceProvider
 
     // private elRef:ElementRef
 
@@ -95,7 +95,6 @@ export class MapComponent {
     function getEvtType(evt) {
       //console.group();
 
-      let currEvent = evt.type;
       console.log(evt.target);
       console.log(evt.target.className.indexOf('leaflet-pane'))
       if (evt.target.className.indexOf('leaflet-pane') > -1) {
@@ -705,7 +704,7 @@ export class MapComponent {
     // this.subscription.unsubscribe();
   }
   updatePosition(lat, lng) {
-    let i = 0
+
     if (this.marker) {
       this.updateMarker(lat, lng)
       return

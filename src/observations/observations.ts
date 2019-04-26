@@ -9,6 +9,7 @@ import {PopoverHelpPage} from'./popoverHelpPage'
 import {ProjectsServiceProvider} from '../providers/projects-service';
 import {config }  from '../config';
 import * as L from 'leaflet';
+//import  '../../assets/leaflet/leaflet.js'
 //import { Subscription } from 'rxjs/Subscription';
 //import { ProtocolDataServiceProvider } from '../providers/protocol-data-service'
 //import {MapComponent} from '../components/map/map'

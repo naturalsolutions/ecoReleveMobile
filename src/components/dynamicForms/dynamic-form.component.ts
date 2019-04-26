@@ -106,34 +106,6 @@ export class DynamicFormComponent  {
       trace :''
     }
 
-    /*console.log(this.protoDataService.toto)
-    this.subscription = this.protoDataService.getObsId.subscribe(
-      (obsId) => {
-        console.log('ngOnInit form  obsId', obsId)
-        this.obsId = obsId;
-      }
-    );
-
-    this.subscription = this.protoDataService.getProjId.subscribe(
-      (projId) => {
-        this.projId = projId;
-        this.data.getObs(this.projId);
-      }
-    );
-
-    this.subscription = this.protoDataService.getSegment.subscribe(
-      (segment) => {
-        this.segment = segment;
-      }
-    );
-
-    this.subscription = this.protoDataService.getProtocol.subscribe(
-      (protocol) => {
-        this.protocol = protocol;
-      }
-    );*/
-
-
 
           // update existing obs
           let protocolId = this.protocol.id
@@ -358,6 +330,9 @@ saveCurrent(){
   value.projId = this.projId
   value.protocole = this.protocol.name
   value.label = this.protocol.label
+  //let guid = Guid.create();
+  value.guid =     
+  //console.log(this.guid);*/
   this.formUpdateData();
 }
 
