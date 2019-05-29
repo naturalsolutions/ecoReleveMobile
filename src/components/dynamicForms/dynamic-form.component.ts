@@ -458,9 +458,9 @@ presentToast(message, position) {
 ngOnDestroy() {
   this.subscription.unsubscribe();
 }
-handleMapSize($event){
+/*handleMapSize($event){
   this.editMapSize.emit($event)
-}
+}*/
 handleTraceChange(json){
   console.log('*****json******')
   console.log(json)

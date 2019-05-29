@@ -6,6 +6,9 @@ import { AlertController } from 'ionic-angular';
 import _ from 'lodash';
 import { File } from '@ionic-native/file';
 import { Guid } from "guid-typescript";
+import {config } from '../../config';
+
+
 
 @Injectable()
 export class ObsProvider {
@@ -179,7 +182,10 @@ export class ObsProvider {
         console.log('****obs updated****')
         console.log(data)
         //backup obs in csv file
+        
         //this.backupData(data)
+        
+    
 
       } else {
         // storage is empty
@@ -189,10 +195,15 @@ export class ObsProvider {
         array.push(value);
         this.storage.set('observations', array);
         //backup obs in csv file
-        //this.backupData(array)
+        
+        //  this.backupData(array)
+       
         
       }
-      this.backupObs(value)
+
+      if(config.activateCsvBackup) {
+        this.backupObs(value)
+      }
 
       
     });

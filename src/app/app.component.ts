@@ -75,7 +75,7 @@ export class MyApp {
 
   initializeApp() {
 
-    let dataBasesNameArray = ['bd_ecoreleve.db'];
+    let dataBasesNameArray = [config.databaseName];
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

@@ -55,7 +55,7 @@ export class CompleteTaxaService {
               resolve(tab)
             } else {
                   _that.sqlite.create({
-                    name: 'bd_ecoreleve.db',
+                    name: config.databaseName,
                     location: 'default'
                   })
                     .then((db: SQLiteObject) => { 

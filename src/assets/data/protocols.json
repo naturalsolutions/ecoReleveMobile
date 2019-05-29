@@ -1,25 +1,55 @@
 [
-
     {
         "name": "Avifaune",
         "label": "Avifaune",
         "image": "./assets/icones_protocoles/avifaune.png",
         "id": 1,
         "fields": [
-    
             {
                 "type": "select",
                 "key": "type_inventaire",
                 "label": "Type d'inventaire",
                 "options": [
-                    { "key": "IPA", "value": "IPA" },
-                    { "key": "Point migration", "value": "Point migration" },
-                    { "key": "Point d'écoute nocturne", "value": "Point d'écoute nocturne" },
-                    { "key": "Transect", "value": "Transect" },
-                    { "key": "Observation fortuite", "value": "Observation fortuite" },
-                    { "key": "Recherche de cadavres", "value": "Recherche de cadavres" },   
-                    { "key": "Quadrat", "value": "Quadrat" },
-                    { "key": "STOC EPS", "value": "STOC EPS" }
+                    {
+                        "key": "Avifaune générale",
+                        "value": "Avifaune générale"
+                    },
+                    {
+                        "key": "IPA",
+                        "value": "IPA"
+                    },
+                    {
+                        "key": "Observation fortuite",
+                        "value": "Observation fortuite"
+                    },
+                    {
+                        "key": "Point migration",
+                        "value": "Point migration"
+                    },
+                    {
+                        "key": "Point d'écoute nocturne",
+                        "value": "Point d'écoute nocturne"
+                    },
+                    {
+                        "key": "Quadrat",
+                        "value": "Quadrat"
+                    },
+                    {
+                        "key": "Rapaces",
+                        "value": "Rapaces"
+                    },
+                    {
+                        "key": "Recherche de cadavres",
+                        "value": "Recherche de cadavres"
+                    },
+                    {
+                        "key": "STOC EPS",
+                        "value": "STOC EPS"
+                    },
+                    {
+                        "key": "Transect",
+                        "value": "Transect"
+                    }
                 ],
                 "order": 1,
                 "required": true
@@ -29,17 +59,50 @@
                 "key": "observateur1",
                 "label": "Observateur",
                 "options": [
-                    { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                    { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                    { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                    { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                    { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                    { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                    { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                    { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                    { "key": "Autre 1", "value": "Autre 1" },
-                    { "key": "Autre 2", "value": "Autre 2" },
-                    { "key": "Autre 3", "value": "Autre 3" }
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
                 ],
                 "order": 2,
                 "required": true
@@ -50,8 +113,8 @@
                 "label": "Nom vernaculaire",
                 "required": true,
                 "order": 3,
-                "protocol" : "Bird",
-                "searchField" : "vernaculaire"
+                "protocol": "Bird",
+                "searchField": "vernaculaire"
             },
             {
                 "type": "text",
@@ -60,7 +123,7 @@
                 "value": "",
                 "required": false,
                 "order": 4,
-                "hide" : true
+                "hide": true
             },
             {
                 "type": "number",
@@ -68,7 +131,7 @@
                 "label": "Effectif",
                 "required": true,
                 "order": 5
-            },  
+            },
             {
                 "type": "checkbox",
                 "key": "estimated",
@@ -90,75 +153,257 @@
                 "key": "type_milieu",
                 "label": "Type de milieu",
                 "options": [
-                    { "key": "Autre", "value": "Autre" },
-                    { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-                    { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-                    { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-                    { "key": "Culture extensive", "value": "Culture extensive" },
-                    { "key": "Culture intensive", "value": "Culture intensive" },
-                    { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-                    { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-                    { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-                    { "key": "Forêt mixte", "value": "Forêt mixte" },
-                    { "key": "Friche/Lande", "value": "Friche/Lande" },
-                    { "key": "Haie", "value": "Haie" },
-                    { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-                    { "key": "Mer/Océan", "value": "Mer/Océan" },
-                    { "key": "Milieu bocager", "value": "Milieu bocager" },
-                    { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-                    { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-                    { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-                    { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-                    { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-                    { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-                    { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-                    { "key": "Ripisylve", "value": "Ripisylve" },
-                    { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-                    { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-                    { "key": "Sol nu", "value": "Sol nu" },
-                    { "key": "Tourbière", "value": "Tourbière" },
-                    { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Sol nu",
+                        "value": "Sol nu"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
                 ],
                 "order": 8,
                 "required": false
             },
-            
             {
                 "type": "select",
                 "key": "situation",
                 "label": "Situation",
                 "options": [
-                    { "key": "Posé", "value": "Posé" }, 
-                    { "key": "Perché", "value": "Perché" },
-                    { "key": "Vol", "value": "Vol" },
-                    { "key": "Indéterminé", "value": "Indéterminé" }
+                    {
+                        "key": "Posé",
+                        "value": "Posé"
+                    },
+                    {
+                        "key": "Perché",
+                        "value": "Perché"
+                    },
+                    {
+                        "key": "Vol",
+                        "value": "Vol"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
                 ],
                 "order": 9,
                 "required": false
             },
-    
             {
                 "type": "select",
                 "key": "comportement",
                 "label": "Comportement/indice",
                 "options": [
-                    { "key": "Accouplement", "value": "Accouplement" },
-                    { "key": "Alimentation", "value": "Alimentation" },
-                    { "key": "Autre", "value": "Autre" },
-                    { "key": "Chant/Parade", "value": "Chant/Parade" },
-                    { "key": "Cri/Alerte", "value": "Cri/Alerte" },
-                    { "key": "Mort", "value": "Mort" },
-                    { "key": "Pelotes/Traces", "value": "Pelotes/Traces" },
-                    { "key": "Repos/Halte", "value": "Repos/Halte" },  
-                    { "key": "Vol (déplacement local)", "value": "Vol (déplacement local)" },
-                    { "key": "Vol (migration)", "value": "Vol (migration)" },
-                    { "key": "Vol (bifurcation)", "value": "Vol (bifurcation)" },   
-                    { "key": "Vol (plongeon)", "value": "Vol (plongeon)" },   
-                    { "key": "Vol (survol)", "value": "Vol (survol)" },
-                    { "key": "Vol (traversée)", "value": "Vol (traversée)" },
-                    { "key": "Vol ascendant", "value": "Vol ascendant" },
-                    { "key": "Vol de chasse", "value": "Vol de chasse" }, 
-                    { "key": "Feston", "value": "Feston" }
+                    {
+                        "key": "Accouplement",
+                        "value": "Accouplement"
+                    },
+                    {
+                        "key": "Alimentation",
+                        "value": "Alimentation"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Chant/Parade",
+                        "value": "Chant/Parade"
+                    },
+                    {
+                        "key": "Cri/Alerte",
+                        "value": "Cri/Alerte"
+                    },
+                    {
+                        "key": "Mort",
+                        "value": "Mort"
+                    },
+                    {
+                        "key": "Pelotes/Traces",
+                        "value": "Pelotes/Traces"
+                    },
+                    {
+                        "key": "Repos/Halte",
+                        "value": "Repos/Halte"
+                    },
+                    {
+                        "key": "Vol (déplacement local)",
+                        "value": "Vol (déplacement local)"
+                    },
+                    {
+                        "key": "Vol (migration)",
+                        "value": "Vol (migration)"
+                    },
+                    {
+                        "key": "Vol (bifurcation)",
+                        "value": "Vol (bifurcation)"
+                    },
+                    {
+                        "key": "Vol (plongeon)",
+                        "value": "Vol (plongeon)"
+                    },
+                    {
+                        "key": "Vol (survol)",
+                        "value": "Vol (survol)"
+                    },
+                    {
+                        "key": "Vol (traversée)",
+                        "value": "Vol (traversée)"
+                    },
+                    {
+                        "key": "Vol ascendant",
+                        "value": "Vol ascendant"
+                    },
+                    {
+                        "key": "Vol de chasse",
+                        "value": "Vol de chasse"
+                    },
+                    {
+                        "key": "Feston",
+                        "value": "Feston"
+                    }
+                ],
+                "order": 10,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "face_eolienne",
+                "label": "Face à l'éolienne",
+                "options": [
+                    {
+                        "key": "Non concerné",
+                        "value": "Non concerné"
+                    },
+                    {
+                        "key": "Bifurcation",
+                        "value": "Bifurcation"
+                    },
+                    {
+                        "key": "Plongeon",
+                        "value": "Plongeon"
+                    },
+                    {
+                        "key": "Survol",
+                        "value": "Survol"
+                    },
+                    {
+                        "key": "Contournement",
+                        "value": "Contournement"
+                    },
+                    {
+                        "key": "Traversée",
+                        "value": "Traversée"
+                    },
+                    {
+                        "key": "Retournement",
+                        "value": "Retournement"
+                    }
                 ],
                 "order": 10,
                 "required": false
@@ -168,9 +413,18 @@
                 "key": "stade",
                 "label": "Stade/Age",
                 "options": [
-                    { "key": "Adulte", "value": "Adulte" },
-                    { "key": "Juv/imm", "value": "Juv/imm" },
-                    { "key": "Indéterminé", "value": "Indéterminé" }
+                    {
+                        "key": "Adulte",
+                        "value": "Adulte"
+                    },
+                    {
+                        "key": "Juv/imm",
+                        "value": "Juv/imm"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
                 ],
                 "order": 11,
                 "required": false
@@ -180,10 +434,22 @@
                 "key": "sexe",
                 "label": "Sexe",
                 "options": [
-                    { "key": "Mâle", "value": "Mâle" },  
-                    { "key": "Femelle", "value": "Femelle" },
-                    { "key": "Couple", "value": "Couple" },
-                    { "key": "Indéterminé", "value": "Indéterminé" }
+                    {
+                        "key": "Mâle",
+                        "value": "Mâle"
+                    },
+                    {
+                        "key": "Femelle",
+                        "value": "Femelle"
+                    },
+                    {
+                        "key": "Couple",
+                        "value": "Couple"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
                 ],
                 "order": 12,
                 "required": false
@@ -193,10 +459,99 @@
                 "key": "code_atlas",
                 "label": "Code atlas",
                 "options": [
-                    { "key": "non", "value": "non" },
-                    { "key": "possible", "value": "possible" },
-                    { "key": "probable", "value": "probable" },
-                    { "key": "certain", "value": "certain" }
+                    {
+                        "key": "01 Espèce observée durant la saison de reproduction dans un habitat favorable à la nidification",
+                        "value": "01 Espèce observée durant la saison de reproduction dans un habitat favorable à la nidification"
+                    },
+                    {
+                        "key": "02 Mâle chanteur (ou cris de nidification) en période de reproduction",
+                        "value": "02 Mâle chanteur (ou cris de nidification) en période de reproduction"
+                    },
+                    {
+                        "key": "03 Couple observé dans un habitat favorable durant la saison de reproduction",
+                        "value": "03 Couple observé dans un habitat favorable durant la saison de reproduction"
+                    },
+                    {
+                        "key": "04 Territoire permanent présumé en fonction de l’observation de comportements territoriaux ou de l’observation à 8 jours d’intervalle au moins d’un individu au même endroit",
+                        "value": "04 Territoire permanent présumé en fonction de l’observation de comportements territoriaux ou de l’observation à 8 jours d’intervalle au moins d’un individu au même endroit"
+                    },
+                    {
+                        "key": "05 Parades nuptiales",
+                        "value": "05 Parades nuptiales"
+                    },
+                    {
+                        "key": "06 Fréquentation d’un site de nid potentiel",
+                        "value": "06 Fréquentation d’un site de nid potentiel"
+                    },
+                    {
+                        "key": "07 Signes ou cri d’inquiétude d’un individu adulte",
+                        "value": "07 Signes ou cri d’inquiétude d’un individu adulte"
+                    },
+                    {
+                        "key": "08 Présence de plaques incubatrices",
+                        "value": "08 Présence de plaques incubatrices"
+                    },
+                    {
+                        "key": "09 Construction d’un nid ou creusement d’une cavité",
+                        "value": "09 Construction d’un nid ou creusement d’une cavité"
+                    },
+                    {
+                        "key": "10 Adulte feignant une blessure ou cherchant à détourner l’attention",
+                        "value": "10 Adulte feignant une blessure ou cherchant à détourner l’attention"
+                    },
+                    {
+                        "key": "11 Nid utilisé récemment ou coquille vide (œuf pondu pendant l’enquête)",
+                        "value": "11 Nid utilisé récemment ou coquille vide (œuf pondu pendant l’enquête)"
+                    },
+                    {
+                        "key": "12 Jeunes fraîchement envolés (espèces nidicoles) ou poussins (espèces nidifuges)",
+                        "value": "12 Jeunes fraîchement envolés (espèces nidicoles) ou poussins (espèces nidifuges)"
+                    },
+                    {
+                        "key": "13 Adulte entrant ou quittant un site de nid laissant supposer un nid occupé (incluant les nids situés trop haut ou les cavités et nichoirs et le contenu du nid n’ayant pu être examiné) ou adulte en train de couver",
+                        "value": "13 Adulte entrant ou quittant un site de nid laissant supposer un nid occupé (incluant les nids situés trop haut ou les cavités et nichoirs et le contenu du nid n’ayant pu être examiné) ou adulte en train de couver"
+                    },
+                    {
+                        "key": "14 Adulte transportant des sacs fécaux ou de la nourriture pour les jeunes",
+                        "value": "14 Adulte transportant des sacs fécaux ou de la nourriture pour les jeunes"
+                    },
+                    {
+                        "key": "15 Nid avec œuf(s)",
+                        "value": "15 Nid avec œuf(s)"
+                    },
+                    {
+                        "key": "16 Nid avec jeune(s) (vu ou entendu)",
+                        "value": "16 Nid avec jeune(s) (vu ou entendu)"
+                    }
+                ],
+                "order": 13,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "statut_biologique",
+                "label": "Statut biologique",
+                "options": [
+                    {
+                        "key": "Sédentaire",
+                        "value": "Sédentaire"
+                    },
+                    {
+                        "key": "Hivernant",
+                        "value": "Hivernant"
+                    },
+                    {
+                        "key": "Migrateur",
+                        "value": "Migrateur"
+                    },
+                    {
+                        "key": "Nicheur",
+                        "value": "Nicheur"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
                 ],
                 "order": 13,
                 "required": false
@@ -206,11 +561,47 @@
                 "key": "hauteur_vol",
                 "label": "Hauteur du vol",
                 "options": [
-                    { "key": "H0", "value": "H0" },
-                    { "key": "H1", "value": "H1" },
-                    { "key": "H2", "value": "H2" },
-                    { "key": "H3", "value": "H3" },
-                    { "key": "H4", "value": "H4" }
+                    {
+                        "key": "H0",
+                        "value": "H0"
+                    },
+                    {
+                        "key": "H1",
+                        "value": "H1"
+                    },
+                    {
+                        "key": "H2",
+                        "value": "H2"
+                    },
+                    {
+                        "key": "H3",
+                        "value": "H3"
+                    },
+                    {
+                        "key": "H4",
+                        "value": "H4"
+                    }
+                ],
+                "order": 14,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "distance",
+                "label": "Distance",
+                "options": [
+                    {
+                        "key": "< 25 m",
+                        "value": "< 25 m"
+                    },
+                    {
+                        "key": "25 à 100 m",
+                        "value": "25 à 100 m"
+                    },
+                    {
+                        "key": "> 100 m",
+                        "value": "> 100 m"
+                    }
                 ],
                 "order": 14,
                 "required": false
@@ -223,7 +614,6 @@
                 "required": true,
                 "order": 15
             },
-    
             {
                 "type": "text",
                 "key": "Comments",
@@ -248,617 +638,407 @@
         "image": "./assets/icones_protocoles/chiro.png",
         "id": 5,
         "fields": [
-
-        {
-            "type": "select",
-            "key": "type_inventaire",
-            "label": "Type d'inventaire",
-            "options": [
-                { "key": "Enregistrement manuel au sol", "value": "Enregistrement manuel au sol" },
-                { "key": "SM2BAT", "value": "SM2BAT" },
-                { "key": "SM3BAT", "value": "SM3BAT" },
-                { "key": "SM4BAT", "value": "SM4BAT" }, 
-                { "key": "D240X", "value": "D240X" },
-                { "key": "EMT2PRO", "value": "EMT2PRO" },
-                { "key": "Enregistrement automatique sur mât", "value": "Enregistrement automatique sur mât" },
-                { "key": "Enregistrement automatique en nacelle", "value": "Enregistrement automatique en nacelle" },   
-                { "key": "Observation en sortie de gîte", "value": "Observation en sortie de gîte" },
-                { "key": "Recherche de gîte estival/reproduction", "value": "Recherche de gîte estival/reproduction" },
-                { "key": "Recherche de gîte de parturition", "value": "Recherche de gîte de parturition" },
-                { "key": "Recherche de gîte d'hibernation", "value": "Recherche de gîte d'hibernation" },
-                { "key": "Observation à vue", "value": "Observation à vue" },
-                { "key": "Enregistrement automatique en canopée", "value": "Enregistrement automatique en canopée" },
-                { "key": "Capture au filet", "value": "Capture au filet" },
-                { "key": "Analyse génétique", "value": "Analyse génétique" },
-                { "key": "Autre enregistreur", "value": "Autre enregistreur" }
-
-            ],
-            "order": 1,
-            "required": true
-        },
-        {
-            "type": "select",
-            "key": "observateur1",
-            "label": "Observateur",
-            "options": [
-                { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                { "key": "Autre 1", "value": "Autre 1" },
-                { "key": "Autre 2", "value": "Autre 2" },
-                { "key": "Autre 3", "value": "Autre 3" }
-            ],
-            "order": 2,
-            "required": true
-        },
-        {
-            "type": "autocomplete",
-            "key": "nom_vernaculaire",
-            "label": "Nom vernaculaire",
-            "required": true,
-            "order": 3,
-            "searchField" : "vernaculaire",
-            "protocol" : "Chiroptera"
-        },
-        {
-            "type": "text",
-            "key": "taxref_id",
-            "label": "taxref_id",
-            "value": "",
-            "required": false,
-            "order": 4,
-            "hide" : true
-        },
-        {
-            "type": "number",
-            "key": "effectif",
-            "label": "Effectif",
-            "required": true,
-            "order": 5
-        },  
-        {
-            "type": "number",
-            "key": "nb_contact",
-            "label": "Nombre de contacts",
-            "required": false,
-            "order": 6
-        },
-        {
-            "type": "toggle",
-            "key": "estimated",
-            "label": "Valeur estimée",
-            "value": false,
-            "required": false,
-            "order": 7
-        },
-        {
-            "type": "checkbox",
-            "key": "minimum",
-            "label": "Minimum",
-            "value": false,
-            "required": false,
-            "order": 8
-        },
-        {
-            "type": "select",
-            "key": "type_milieu",
-            "label": "Type de milieu",
-            "options": [
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-                { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-                { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-                { "key": "Culture extensive", "value": "Culture extensive" },
-                { "key": "Culture intensive", "value": "Culture intensive" },
-                { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-                { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-                { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-                { "key": "Forêt mixte", "value": "Forêt mixte" },
-                { "key": "Friche/Lande", "value": "Friche/Lande" },
-                { "key": "Haie", "value": "Haie" },
-                { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-                { "key": "Mer/Océan", "value": "Mer/Océan" },
-                { "key": "Milieu bocager", "value": "Milieu bocager" },
-                { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-                { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-                { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-                { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-                { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-                { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-                { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-                { "key": "Ripisylve", "value": "Ripisylve" },
-                { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-                { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-                { "key": "Tourbière", "value": "Tourbière" },
-                { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
-            ],
-            "order": 9,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "comportement",
-            "label": "Comportement",
-            "options": [
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Chasse", "value": "Chasse" },
-                { "key": "Cri/Alerte", "value": "Cri/Alerte" },
-                { "key": "Déplacement/migration", "value": "Déplacement/migration" },
-                { "key": "Guanos", "value": "Guanos" },
-                { "key": "Mort", "value": "Mort" },
-                { "key": "Nurserie", "value": "Nurserie" },
-                { "key": "Posé/repos", "value": "Posé/repos" }
-            ],
-            "order": 10,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "stade",
-            "label": "Stade/Age",
-            "options": [
-                { "key": "Adulte", "value": "Adulte" },
-                { "key": "Jeune", "value": "Jeune" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 11,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "sexe",
-            "label": "Sexe",
-            "options": [
-                { "key": "Mâle", "value": "Mâle" },
-                { "key": "Femelle", "value": "Femelle" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 12,
-            "required": false
-        },
-        {
-            "type": "number",
-            "key": "hauteur_detection",
-            "label": "Hauteur de détection (m)",
-            "required": false,
-            "order": 13
-        },
-        
-        {
-            "type": "text",
-            "key": "point_protocole",
-            "label": "Point protocole",
-            "value": "",
-            "required": true,
-            "order": 14
-        },
-
-        {
-            "type": "text",
-            "key": "Comments",
-            "label": "Remarques",
-            "value": "",
-            "required": false,
-            "order": 15
-        },
-        {
+            {
+                "type": "select",
+                "key": "type_inventaire",
+                "label": "Type d'inventaire",
+                "options": [
+                    {
+                        "key": "Enregistrement manuel au sol",
+                        "value": "Enregistrement manuel au sol"
+                    },
+                    {
+                        "key": "SM2BAT",
+                        "value": "SM2BAT"
+                    },
+                    {
+                        "key": "SM3BAT",
+                        "value": "SM3BAT"
+                    },
+                    {
+                        "key": "SM4BAT",
+                        "value": "SM4BAT"
+                    },
+                    {
+                        "key": "D240X",
+                        "value": "D240X"
+                    },
+                    {
+                        "key": "EMT2PRO",
+                        "value": "EMT2PRO"
+                    },
+                    {
+                        "key": "Enregistrement automatique sur mât",
+                        "value": "Enregistrement automatique sur mât"
+                    },
+                    {
+                        "key": "Enregistrement automatique en nacelle",
+                        "value": "Enregistrement automatique en nacelle"
+                    },
+                    {
+                        "key": "Observation en sortie de gîte",
+                        "value": "Observation en sortie de gîte"
+                    },
+                    {
+                        "key": "Recherche de gîte estival/reproduction",
+                        "value": "Recherche de gîte estival/reproduction"
+                    },
+                    {
+                        "key": "Recherche de gîte de parturition",
+                        "value": "Recherche de gîte de parturition"
+                    },
+                    {
+                        "key": "Recherche de gîte d'hibernation",
+                        "value": "Recherche de gîte d'hibernation"
+                    },
+                    {
+                        "key": "Observation à vue",
+                        "value": "Observation à vue"
+                    },
+                    {
+                        "key": "Enregistrement automatique en canopée",
+                        "value": "Enregistrement automatique en canopée"
+                    },
+                    {
+                        "key": "Capture au filet",
+                        "value": "Capture au filet"
+                    },
+                    {
+                        "key": "Analyse génétique",
+                        "value": "Analyse génétique"
+                    },
+                    {
+                        "key": "Autre enregistreur",
+                        "value": "Autre enregistreur"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "observateur1",
+                "label": "Observateur",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 2,
+                "required": true
+            },
+            {
+                "type": "autocomplete",
+                "key": "nom_vernaculaire",
+                "label": "Nom vernaculaire",
+                "required": true,
+                "order": 3,
+                "searchField": "vernaculaire",
+                "protocol": "Chiroptera"
+            },
+            {
                 "type": "text",
-                "key": "idCarto",
-                "label": "Id carto",
+                "key": "taxref_id",
+                "label": "taxref_id",
                 "value": "",
                 "required": false,
-                "order": 16
-        }
-    ]
-},
-{
-    "name": "conditions_observation",
-    "label": "Conditions d'observation",
-    "image": "./assets/icones_protocoles/conditions_observation.png",
-    "id": 10,
-    "disableLocalisation" : true,
-    "fields": [ 
+                "order": 4,
+                "hide": true
+            },
             {
-            "type": "select",
-            "key": "observateur1",
-            "label": "Observateur 1",
-            "options": [
-                { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                { "key": "Autre 1", "value": "Autre 1" },
-                { "key": "Autre 2", "value": "Autre 2" },
-                { "key": "Autre 3", "value": "Autre 3" }
-            ],
-            "order": 1,
-            "required": true
-        },
-        {
-            "type": "select",
-            "key": "observateur2",
-            "label": "Observateur 2",
-            "options": [
-                { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                { "key": "Autre 1", "value": "Autre 1" },
-                { "key": "Autre 2", "value": "Autre 2" },
-                { "key": "Autre 3", "value": "Autre 3" }
-            ],
-            "order": 2,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "vent_direction",
-            "label": "Vent direction",
-            "options": [
-                { "key": "N", "value": "N" }, 
-                { "key": "NE", "value": "NE" },
-                { "key": "E", "value": "E" },
-                { "key": "SE", "value": "SE" },
-                { "key": "S", "value": "S" },
-                { "key": "SO", "value": "SO" },
-                { "key": "O", "value": "O" },
-                { "key": "NO", "value": "NO" },
-                { "key": "/", "value": "/" }
-            ],
-            "order": 3,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "vent_force",
-            "label": "Vent Force",     
-            "options": [
-                { "key": "Nulle", "value": "Nulle" }, 
-                { "key": "Faible", "value": "Faible" },
-                { "key": "Moyenne", "value": "Moyenne" },
-                { "key": "Forte", "value": "Forte" },
-                { "key": "Très forte", "value": "Très forte" }
-            ],
-            "order": 4,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "temperature_min",
-            "label": "Température min",     
-            "options": [
-                { "key": "-10", "value": "-10" },    
-                { "key": "-5", "value": "-5" },
-                { "key": "0", "value": "0" },
-                { "key": "5", "value": "5" },
-                { "key": "10", "value": "10" },
-                { "key": "15", "value": "15" },
-                { "key": "20", "value": "20" },
-                { "key": "25", "value": "25" },
-                { "key": "30", "value": "30" },
-                { "key": "35", "value": "35" }
-            ],
-            "order": 5,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "temperature_max",
-            "label": "Température max",     
-            "options": [
-                { "key": "-10", "value": "-10" },    
-                { "key": "-5", "value": "-5" },
-                { "key": "0", "value": "0" },
-                { "key": "5", "value": "5" },
-                { "key": "10", "value": "10" },
-                { "key": "15", "value": "15" },
-                { "key": "20", "value": "20" },
-                { "key": "25", "value": "25" },
-                { "key": "30", "value": "30" },
-                { "key": "35", "value": "35" }
-            ],
-            "order": 6,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "nebulosite",
-            "label": "Nébulosité",     
-            "options": [
-                { "key": "Nulle", "value": "Nulle" },    
-                { "key": "Faible", "value": "Faible" },
-                { "key": "Moyenne", "value": "Moyenne" },
-                { "key": "Forte", "value": "Forte" },
-                { "key": "Très forte", "value": "Très forte" }
-            ],
-            "order": 7,
-            "required": false
-        },
-
-        {
-            "type": "select",
-            "key": "precipitation",
-            "label": "Précipitation",     
-            "options": [
-                { "key": "Nulle", "value": "Nulle" },    
-                { "key": "Faible", "value": "Faible" },
-                { "key": "Moyenne", "value": "Moyenne" },
-                { "key": "Forte", "value": "Forte" },
-                { "key": "Très forte", "value": "Très forte" }
-            ],
-            "order": 8,
-            "required": false
-        },
-
-        {
-            "type": "select",
-            "key": "visibilite",
-            "label": "Visibilité",     
-            "options": [
-                { "key": "Nulle", "value": "Nulle" },    
-                { "key": "Faible", "value": "Faible" },
-                { "key": "Moyenne", "value": "Moyenne" },
-                { "key": "Bonne", "value": "Bonne" },
-                { "key": "Très bonne", "value": "Très bonne" }
-            ],
-            "order": 9,
-            "required": false
-        },  
-        {
-            "type": "time",
-            "key": "heure_debut",
-            "label": "Heure début",
-            "value": "",
-            "required": false,
-            "order": 10
-        },
-        {
-            "type": "time",
-            "key": "heure_fin",
-            "label": "Heure fin",
-            "value": "",
-            "required": false,
-            "order": 11
-        },
-
-        {
-            "type": "text",
-            "key": "type_suivi",
-            "label": "type de suivi",
-            "value": "",
-            "required": false,
-            "order": 12
-        },
-        {
-            "type": "text",
-            "key": "Comments",
-            "label": "Remarques",
-            "value": "",
-            "required": false,
-            "order": 13
-        }
-    ]
-
-},
-{
-    "name": "Insectes",
-    "label": "Entomofaune",
-    "image": "./assets/icones_protocoles/insect.png",
-    "id": 7,
-    "fields": [
-
-        {
-            "type": "select",
-            "key": "type_inventaire",
-            "label": "Type d'inventaire",
-            "options": [
-                { "key": "A vue", "value": "A vue" },
-                { "key": "Observation fortuite", "value": "Observation fortuite" },
-                { "key": "Transect", "value": "Transect" },
-                { "key": "Troubleau", "value": "Troubleau" },
-                { "key": "Filet", "value": "Filet" },
-                { "key": "Nasse/piège aquatique", "value": "Nasse/piège aquatique" },   
-                { "key": "ADNe", "value": "ADNe" }
-            ],
-            "order": 1,
-            "required": true
-        },
-        {
-            "type": "select",
-            "key": "observateur1",
-            "label": "Observateur",
-            "options": [
-                { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                { "key": "Autre 1", "value": "Autre 1" },
-                { "key": "Autre 2", "value": "Autre 2" },
-                { "key": "Autre 3", "value": "Autre 3" }
-            ],
-            "order": 2,
-            "required": true
-        },
-        {
-            "type": "autocomplete",
-            "key": "nom_vernaculaire",
-            "label": "Nom vernaculaire",
-            "required": true,
-            "order": 3,
-            "searchField" : "vernaculaire",
-            "protocol" : "Insect"
-        },
-        {
-            "type": "text",
-            "key": "taxref_id",
-            "label": "taxref_id",
-            "value": "",
-            "required": false,
-            "order": 4,
-            "hide" : true
-        },
-        {
-            "type": "number",
-            "key": "effectif",
-            "label": "Effectif",
-            "required": true,
-            "order": 5
-        },  
-        {
-            "type": "checkbox",
-            "key": "estimated",
-            "label": "Valeur estimée",
-            "value": false,
-            "required": false,
-            "order": 6
-        },
-        {
-            "type": "checkbox",
-            "key": "minimum",
-            "label": "Minimum",
-            "value": false,
-            "required": false,
-            "order": 7
-        },
-        {
-            "type": "select",
-            "key": "type_milieu",
-            "label": "Type de milieu",
-            "options": [
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-                { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-                { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-                { "key": "Culture extensive", "value": "Culture extensive" },
-                { "key": "Culture intensive", "value": "Culture intensive" },
-                { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-                { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-                { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-                { "key": "Forêt mixte", "value": "Forêt mixte" },
-                { "key": "Friche/Lande", "value": "Friche/Lande" },
-                { "key": "Haie", "value": "Haie" },
-                { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-                { "key": "Mer/Océan", "value": "Mer/Océan" },
-                { "key": "Milieu bocager", "value": "Milieu bocager" },
-                { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-                { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-                { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-                { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-                { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-                { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-                { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-                { "key": "Ripisylve", "value": "Ripisylve" },
-                { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-                { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-                { "key": "Sol nu", "value": "Sol nu" },
-                { "key": "Tourbière", "value": "Tourbière" },
-                { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
-            ],
-            "order": 8,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "comportement",
-            "label": "Comportement",
-            "options": [
-                { "key": "Accouplement", "value": "Accouplement" },
-                { "key": "Alimentation", "value": "Alimentation" },
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Chant", "value": "Chant" },
-                { "key": "Exuvie/chrysalide", "value": "Exuvie/chrysalide" },
-                { "key": "Mort", "value": "Mort" },   
-                { "key": "Posé/repos", "value": "Posé/repos" },
-                { "key": "Vol", "value": "Vol" }
-            ],
-            "order": 9,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "stade",
-            "label": "Stade/Age",
-            "options": [
-                { "key": "Larve", "value": "Larve" },
-                { "key": "Œuf", "value": "Œuf" },
-                { "key": "Chenille", "value": "Chenille" },
-                { "key": "Chrysalide", "value": "Chrysalide" },
-                { "key": "Exuvie", "value": "Exuvie" },
-                { "key": "Imago", "value": "Imago"}, 
-                { "key": "Autre", "value": "Autre" }
-            ],
-            "order": 10,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "sexe",
-            "label": "Sexe",
-            "options": [
-                { "key": "Mâle", "value": "Mâle" },
-                { "key": "Femelle", "value": "Femelle" },
-                { "key": "Couple", "value": "Couple" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 11,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "reproduction",
-            "label": "Reproduction",
-            "options": [
-                { "key": "Non", "value": "Non" },
-                { "key": "Possible", "value": "Possible" },
-                { "key": "Probable", "value": "Probable" },
-                { "key": "Certain", "value": "Certain" }
-            ],
-            "order": 12,
-            "required": false
-        },
-        {
-            "type": "text",
-            "key": "plante_hote",
-            "label": "Plante hôte",
-            "value": "",
-            "required": false,
-            "order": 13
-        },
-        {
-            "type": "text",
-            "key": "point_protocole",
-            "label": "Point protocole",
-            "value": "",
-            "required": true,
-            "order": 14
-        },
-
-        {
-            "type": "text",
-            "key": "Comments",
-            "label": "Remarques",
-            "value": "",
-            "required": false,
-            "order": 15
-        },
-        
+                "type": "number",
+                "key": "effectif",
+                "label": "Effectif",
+                "required": true,
+                "order": 5
+            },
+            {
+                "type": "number",
+                "key": "nb_contact",
+                "label": "Nombre de contacts",
+                "required": false,
+                "order": 6
+            },
+            {
+                "type": "toggle",
+                "key": "estimated",
+                "label": "Valeur estimée",
+                "value": false,
+                "required": false,
+                "order": 7
+            },
+            {
+                "type": "checkbox",
+                "key": "minimum",
+                "label": "Minimum",
+                "value": false,
+                "required": false,
+                "order": 8
+            },
+            {
+                "type": "select",
+                "key": "type_milieu",
+                "label": "Type de milieu",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "comportement",
+                "label": "Comportement",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Chasse",
+                        "value": "Chasse"
+                    },
+                    {
+                        "key": "Cri/Alerte",
+                        "value": "Cri/Alerte"
+                    },
+                    {
+                        "key": "Déplacement/migration",
+                        "value": "Déplacement/migration"
+                    },
+                    {
+                        "key": "Guanos",
+                        "value": "Guanos"
+                    },
+                    {
+                        "key": "Mort",
+                        "value": "Mort"
+                    },
+                    {
+                        "key": "Nurserie",
+                        "value": "Nurserie"
+                    },
+                    {
+                        "key": "Posé/repos",
+                        "value": "Posé/repos"
+                    }
+                ],
+                "order": 10,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "stade",
+                "label": "Stade/Age",
+                "options": [
+                    {
+                        "key": "Adulte",
+                        "value": "Adulte"
+                    },
+                    {
+                        "key": "Jeune",
+                        "value": "Jeune"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 11,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "sexe",
+                "label": "Sexe",
+                "options": [
+                    {
+                        "key": "Mâle",
+                        "value": "Mâle"
+                    },
+                    {
+                        "key": "Femelle",
+                        "value": "Femelle"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 12,
+                "required": false
+            },
+            {
+                "type": "number",
+                "key": "hauteur_detection",
+                "label": "Hauteur de détection (m)",
+                "required": false,
+                "order": 13
+            },
+            {
+                "type": "text",
+                "key": "point_protocole",
+                "label": "Point protocole",
+                "value": "",
+                "required": true,
+                "order": 14
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 15
+            },
             {
                 "type": "text",
                 "key": "idCarto",
@@ -867,577 +1047,1638 @@
                 "required": false,
                 "order": 16
             }
-    ]
-},
-
-
-
-{
-    "name": "Herpeto",
-    "label": "Herpétofaune",
-    "image": "./assets/icones_protocoles/herpeto.png",
-    "id": 2,
-    "fields": [
-
-        {
-            "type": "select",
-            "key": "type_inventaire",
-            "label": "Type d'inventaire",
-            "options": [
-                { "key": "Recherche à vue", "value": "Recherche à vue" },
-                { "key": "Observation fortuite", "value": "Observation fortuite" },
-                { "key": "Troubleau", "value": "Troubleau" },
-                { "key": "Point d'écoute nocturne", "value": "Point d'écoute nocturne" },
-                { "key": "Crapaudrome/crapauduc", "value": "Crapaudrome/crapauduc" },
-                { "key": "Nasse/piège aquatique", "value": "Nasse/piège aquatique" },   
-                { "key": "ADNe", "value": "ADNe" },
-                { "key": "Plaque à reptiles", "value": "Plaque à reptiles" }
-            ],
-            "order": 1,
-            "required": true
-        },
-        {
-            "type": "select",
-            "key": "observateur1",
-            "label": "Observateur",
-            "options": [
-                { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                { "key": "Autre 1", "value": "Autre 1" },
-                { "key": "Autre 2", "value": "Autre 2" },
-                { "key": "Autre 3", "value": "Autre 3" }
-            ],
-            "order": 2,
-            "required": true
-        },
-        {
-            "type": "autocomplete",
-            "key": "nom_vernaculaire",
-            "label": "Nom vernaculaire",
-            "required": true,
-            "order": 3,
-            "protocol" : "Reptil",
-            "searchField" : "vernaculaire"
-        },
-        {
-            "type": "text",
-            "key": "taxref_id",
-            "label": "taxref_id",
-            "value": "",
-            "required": false,
-            "order": 4,
-            "hide" : true
-        },
-        {
-            "type": "number",
-            "key": "effectif",
-            "label": "Effectif",
-            "required": true,
-            "order": 5
-        },  
-        {
-            "type": "checkbox",
-            "key": "estimated",
-            "label": "Valeur estimée",
-            "value": false,
-            "required": false,
-            "order": 6
-        },
-        {
-            "type": "checkbox",
-            "key": "minimum",
-            "label": "Minimum",
-            "value": false,
-            "required": false,
-            "order": 7
-        },
-        {
-            "type": "select",
-            "key": "type_milieu",
-            "label": "Type de milieu",
-            "options": [
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-                { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-                { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-                { "key": "Culture extensive", "value": "Culture extensive" },
-                { "key": "Culture intensive", "value": "Culture intensive" },
-                { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-                { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-                { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-                { "key": "Forêt mixte", "value": "Forêt mixte" },
-                { "key": "Friche/Lande", "value": "Friche/Lande" },
-                { "key": "Haie", "value": "Haie" },
-                { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-                { "key": "Mer/Océan", "value": "Mer/Océan" },
-                { "key": "Milieu bocager", "value": "Milieu bocager" },
-                { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-                { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-                { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-                { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-                { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-                { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-                { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-                { "key": "Ripisylve", "value": "Ripisylve" },
-                { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-                { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-                { "key": "Sol nu", "value": "Sol nu" },
-                { "key": "Tourbière", "value": "Tourbière" },
-                { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
-            ],
-            "order": 8,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "comportement",
-            "label": "Comportement/indice",
-            "options": [
-                { "key": "Accouplement/amplexus", "value": "Accouplement/amplexus" },
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Déplacement", "value": "Déplacement" },
-                { "key": "Hivernage", "value": "Hivernage" },
-                { "key": "Mort", "value": "Mort" },
-                { "key": "Mue", "value": "Mue" },
-                { "key": "Ponte", "value": "Ponte" },
-                { "key": "Repos/basking", "value": "Repos/basking" },
-                { "key": "Têtard/larve", "value": "Têtard/larve" }
-            ],
-            "order": 9,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "stade",
-            "label": "Stade/Age",
-            "options": [
-                { "key": "Adulte", "value": "Adulte" },
-                { "key": "Ponte", "value": "Ponte" },
-                { "key": "Tétard", "value": "Tétard" },
-                { "key": "Juv/imm", "value": "Juv/imm" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 10,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "sexe",
-            "label": "Sexe",   
-            "options": [
-                { "key": "Mâle", "value": "Mâle" },
-                { "key": "Femelle", "value": "Femelle" },
-                { "key": "Couple", "value": "Couple" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 11,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "reproduction",
-            "label": "Reproduction",
-            "options": [
-                { "key": "Non", "value": "Non" },
-                { "key": "Possible", "value": "Possible" },
-                { "key": "Probable", "value": "Probable" },
-                { "key": "Certain", "value": "Certain" }
-            ],
-            "order": 12,
-            "required": false
-        },
-        {
-            "type": "text",
-            "key": "point_protocole",
-            "label": "Point protocole",
-            "value": "",
-            "required": true,
-            "order": 13
-        },
-
-        {
-            "type": "text",
-            "key": "Comments",
-            "label": "Remarques",
-            "value": "",
-            "required": false,
-            "order": 14
-        },
-        
-        {
+        ]
+    },
+    {
+        "name": "conditions_observation",
+        "label": "Conditions d'observation",
+        "image": "./assets/icones_protocoles/conditions_observation.png",
+        "id": 10,
+        "disableLocalisation": true,
+        "fields": [
+            {
+                "type": "select",
+                "key": "observateur1",
+                "label": "Observateur 1",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "observateur2",
+                "label": "Observateur 2",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 2,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "vent_direction",
+                "label": "Vent direction",
+                "options": [
+                    {
+                        "key": "N",
+                        "value": "N"
+                    },
+                    {
+                        "key": "NE",
+                        "value": "NE"
+                    },
+                    {
+                        "key": "E",
+                        "value": "E"
+                    },
+                    {
+                        "key": "SE",
+                        "value": "SE"
+                    },
+                    {
+                        "key": "S",
+                        "value": "S"
+                    },
+                    {
+                        "key": "SO",
+                        "value": "SO"
+                    },
+                    {
+                        "key": "O",
+                        "value": "O"
+                    },
+                    {
+                        "key": "NO",
+                        "value": "NO"
+                    },
+                    {
+                        "key": "/",
+                        "value": "/"
+                    }
+                ],
+                "order": 3,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "vent_force",
+                "label": "Vent Force",
+                "options": [
+                    {
+                        "key": "Nulle",
+                        "value": "Nulle"
+                    },
+                    {
+                        "key": "Faible",
+                        "value": "Faible"
+                    },
+                    {
+                        "key": "Moyenne",
+                        "value": "Moyenne"
+                    },
+                    {
+                        "key": "Forte",
+                        "value": "Forte"
+                    },
+                    {
+                        "key": "Très forte",
+                        "value": "Très forte"
+                    }
+                ],
+                "order": 4,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "temperature_min",
+                "label": "Température min",
+                "options": [
+                    {
+                        "key": "-10",
+                        "value": "-10"
+                    },
+                    {
+                        "key": "-5",
+                        "value": "-5"
+                    },
+                    {
+                        "key": "0",
+                        "value": "0"
+                    },
+                    {
+                        "key": "5",
+                        "value": "5"
+                    },
+                    {
+                        "key": "10",
+                        "value": "10"
+                    },
+                    {
+                        "key": "15",
+                        "value": "15"
+                    },
+                    {
+                        "key": "20",
+                        "value": "20"
+                    },
+                    {
+                        "key": "25",
+                        "value": "25"
+                    },
+                    {
+                        "key": "30",
+                        "value": "30"
+                    },
+                    {
+                        "key": "35",
+                        "value": "35"
+                    }
+                ],
+                "order": 5,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "temperature_max",
+                "label": "Température max",
+                "options": [
+                    {
+                        "key": "-10",
+                        "value": "-10"
+                    },
+                    {
+                        "key": "-5",
+                        "value": "-5"
+                    },
+                    {
+                        "key": "0",
+                        "value": "0"
+                    },
+                    {
+                        "key": "5",
+                        "value": "5"
+                    },
+                    {
+                        "key": "10",
+                        "value": "10"
+                    },
+                    {
+                        "key": "15",
+                        "value": "15"
+                    },
+                    {
+                        "key": "20",
+                        "value": "20"
+                    },
+                    {
+                        "key": "25",
+                        "value": "25"
+                    },
+                    {
+                        "key": "30",
+                        "value": "30"
+                    },
+                    {
+                        "key": "35",
+                        "value": "35"
+                    }
+                ],
+                "order": 6,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "nebulosite",
+                "label": "Nébulosité",
+                "options": [
+                    {
+                        "key": "Nulle",
+                        "value": "Nulle"
+                    },
+                    {
+                        "key": "Faible",
+                        "value": "Faible"
+                    },
+                    {
+                        "key": "Moyenne",
+                        "value": "Moyenne"
+                    },
+                    {
+                        "key": "Forte",
+                        "value": "Forte"
+                    },
+                    {
+                        "key": "Très forte",
+                        "value": "Très forte"
+                    }
+                ],
+                "order": 7,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "precipitation",
+                "label": "Précipitation",
+                "options": [
+                    {
+                        "key": "Nulle",
+                        "value": "Nulle"
+                    },
+                    {
+                        "key": "Faible",
+                        "value": "Faible"
+                    },
+                    {
+                        "key": "Moyenne",
+                        "value": "Moyenne"
+                    },
+                    {
+                        "key": "Forte",
+                        "value": "Forte"
+                    },
+                    {
+                        "key": "Très forte",
+                        "value": "Très forte"
+                    }
+                ],
+                "order": 8,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "visibilite",
+                "label": "Visibilité",
+                "options": [
+                    {
+                        "key": "Nulle",
+                        "value": "Nulle"
+                    },
+                    {
+                        "key": "Faible",
+                        "value": "Faible"
+                    },
+                    {
+                        "key": "Moyenne",
+                        "value": "Moyenne"
+                    },
+                    {
+                        "key": "Bonne",
+                        "value": "Bonne"
+                    },
+                    {
+                        "key": "Très bonne",
+                        "value": "Très bonne"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "time",
+                "key": "heure_debut",
+                "label": "Heure début",
+                "value": "",
+                "required": false,
+                "order": 10
+            },
+            {
+                "type": "time",
+                "key": "heure_fin",
+                "label": "Heure fin",
+                "value": "",
+                "required": false,
+                "order": 11
+            },
+            {
+                "type": "text",
+                "key": "type_suivi",
+                "label": "type de suivi",
+                "value": "",
+                "required": false,
+                "order": 12
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 13
+            }
+        ]
+    },
+    {
+        "name": "Insectes",
+        "label": "Entomofaune",
+        "image": "./assets/icones_protocoles/insect.png",
+        "id": 7,
+        "fields": [
+            {
+                "type": "select",
+                "key": "type_inventaire",
+                "label": "Type d'inventaire",
+                "options": [
+                    {
+                        "key": "A vue",
+                        "value": "A vue"
+                    },
+                    {
+                        "key": "Observation fortuite",
+                        "value": "Observation fortuite"
+                    },
+                    {
+                        "key": "Transect",
+                        "value": "Transect"
+                    },
+                    {
+                        "key": "Troubleau",
+                        "value": "Troubleau"
+                    },
+                    {
+                        "key": "Filet",
+                        "value": "Filet"
+                    },
+                    {
+                        "key": "Nasse/piège aquatique",
+                        "value": "Nasse/piège aquatique"
+                    },
+                    {
+                        "key": "ADNe",
+                        "value": "ADNe"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "observateur1",
+                "label": "Observateur",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 2,
+                "required": true
+            },
+            {
+                "type": "autocomplete",
+                "key": "nom_vernaculaire",
+                "label": "Nom vernaculaire",
+                "required": true,
+                "order": 3,
+                "searchField": "vernaculaire",
+                "protocol": "Insect"
+            },
+            {
+                "type": "text",
+                "key": "taxref_id",
+                "label": "taxref_id",
+                "value": "",
+                "required": false,
+                "order": 4,
+                "hide": true
+            },
+            {
+                "type": "select",
+                "key": "groupe",
+                "label": "Groupe",
+                "options": [
+                    {
+                        "key": "Lépidoptères",
+                        "value": "Lépidoptères"
+                    },
+                    {
+                        "key": "Odonates",
+                        "value": "Odonates"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    }
+                ],
+                "order": 4,
+                "required": true
+            },
+            {
+                "type": "number",
+                "key": "effectif",
+                "label": "Effectif",
+                "required": true,
+                "order": 5
+            },
+            {
+                "type": "checkbox",
+                "key": "estimated",
+                "label": "Valeur estimée",
+                "value": false,
+                "required": false,
+                "order": 6
+            },
+            {
+                "type": "checkbox",
+                "key": "minimum",
+                "label": "Minimum",
+                "value": false,
+                "required": false,
+                "order": 7
+            },
+            {
+                "type": "select",
+                "key": "type_milieu",
+                "label": "Type de milieu",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Sol nu",
+                        "value": "Sol nu"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
+                ],
+                "order": 8,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "comportement",
+                "label": "Comportement",
+                "options": [
+                    {
+                        "key": "Accouplement",
+                        "value": "Accouplement"
+                    },
+                    {
+                        "key": "Alimentation",
+                        "value": "Alimentation"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Chant",
+                        "value": "Chant"
+                    },
+                    {
+                        "key": "Exuvie/chrysalide",
+                        "value": "Exuvie/chrysalide"
+                    },
+                    {
+                        "key": "Mort",
+                        "value": "Mort"
+                    },
+                    {
+                        "key": "Posé/repos",
+                        "value": "Posé/repos"
+                    },
+                    {
+                        "key": "Vol",
+                        "value": "Vol"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "stade",
+                "label": "Stade/Age",
+                "options": [
+                    {
+                        "key": "Larve",
+                        "value": "Larve"
+                    },
+                    {
+                        "key": "Œuf",
+                        "value": "Œuf"
+                    },
+                    {
+                        "key": "Chenille",
+                        "value": "Chenille"
+                    },
+                    {
+                        "key": "Chrysalide",
+                        "value": "Chrysalide"
+                    },
+                    {
+                        "key": "Exuvie",
+                        "value": "Exuvie"
+                    },
+                    {
+                        "key": "Sub-imago",
+                        "value": "Sub-imago"
+                    },
+                    {
+                        "key": "Imago",
+                        "value": "Imago"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    }
+                ],
+                "order": 10,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "sexe",
+                "label": "Sexe",
+                "options": [
+                    {
+                        "key": "Mâle",
+                        "value": "Mâle"
+                    },
+                    {
+                        "key": "Femelle",
+                        "value": "Femelle"
+                    },
+                    {
+                        "key": "Couple",
+                        "value": "Couple"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 11,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "reproduction",
+                "label": "Reproduction",
+                "options": [
+                    {
+                        "key": "Non",
+                        "value": "Non"
+                    },
+                    {
+                        "key": "Possible",
+                        "value": "Possible"
+                    },
+                    {
+                        "key": "Probable",
+                        "value": "Probable"
+                    },
+                    {
+                        "key": "Certain",
+                        "value": "Certain"
+                    }
+                ],
+                "order": 12,
+                "required": false
+            },
+            {
+                "type": "text",
+                "key": "plante_hote",
+                "label": "Plante hôte",
+                "value": "",
+                "required": false,
+                "order": 13
+            },
+            {
+                "type": "text",
+                "key": "point_protocole",
+                "label": "Point protocole",
+                "value": "",
+                "required": false,
+                "order": 14
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 15
+            },
+            {
                 "type": "text",
                 "key": "idCarto",
                 "label": "Id carto",
                 "value": "",
                 "required": false,
                 "order": 16
-        }
-    ]
-} ,
-{
-    "name": "Flore",
-    "label": "Plantes",
-    "image": "./assets/icones_protocoles/flore.png",
-    "id": 6,
-    "fields": [
-
-        {
-            "type": "select",
-            "key": "type_inventaire",
-            "label": "Type d'inventaire",
-            "options": [
-                { "key": "Relevé qualitatif", "value": "Relevé qualitatif" },
-                { "key": "Relevé phytosociologique", "value": "Relevé phytosociologique" },
-                { "key": "Relevé fortuit", "value": "Relevé fortuit" }
-            ],
-            "order": 1,
-            "required": true
-        },
-        {
-            "type": "select",
-            "key": "observateur1",
-            "label": "Observateur",
-            "options": [
-                { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-                { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-                { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-                { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-                { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-                { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-                { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-                { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-                { "key": "Autre 1", "value": "Autre 1" },
-                { "key": "Autre 2", "value": "Autre 2" },
-                { "key": "Autre 3", "value": "Autre 3" }
-            ],
-            "order": 2,
-            "required": true
-        },
-        {
-            "type": "autocomplete",
-            "key": "taxon",
-            "label": "Nom scientifique",
-            "required": true,
-            "order": 3,
-            "protocol" : "Flore"
-        },
-        {
-            "type": "text",
-            "key": "taxref_id",
-            "label": "taxref_id",
-            "value": "",
-            "required": false,
-            "order": 4,
-            "hide" : true
-        },
-        {
-            "type": "select",
-            "key": "type_milieu",
-            "label": "Type de milieu",
-            "options": [
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-                { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-                { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-                { "key": "Culture extensive", "value": "Culture extensive" },
-                { "key": "Culture intensive", "value": "Culture intensive" },
-                { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-                { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-                { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-                { "key": "Forêt mixte", "value": "Forêt mixte" },
-                { "key": "Friche/Lande", "value": "Friche/Lande" },
-                { "key": "Haie", "value": "Haie" },
-                { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-                { "key": "Mer/Océan", "value": "Mer/Océan" },
-                { "key": "Milieu bocager", "value": "Milieu bocager" },
-                { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-                { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-                { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-                { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-                { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-                { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-                { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-                { "key": "Ripisylve", "value": "Ripisylve" },
-                { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-                { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-                { "key": "Tourbière", "value": "Tourbière" },
-                { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
-            ],
-            "order": 5,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "abondance_dominance",
-            "label": "Coef. abondance/dominance",
-            "options": [
-                { "key": "i", "value": "i" },
-                { "key": "r", "value": "r" },
-                { "key": "+", "value": "+" },
-                { "key": "1", "value": "1" },
-                { "key": "2", "value": "2" },
-                { "key": "3", "value": "3" },
-                { "key": "4", "value": "4" },
-                { "key": "5", "value": "5" }
-            ],
-            "order": 6,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "strate",
-            "label": "Strate",
-            "options": [
-                { "key": "Arborée", "value": "Arborée" },
-                { "key": "Arbustive", "value": "Arbustive" },
-                { "key": "Herbacée", "value": "Herbacée" },
-                { "key": "Jmuscinale", "value": "Jmuscinale" }
-            ],
-            "order": 7,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "stade",
-            "label": "Stade végétatif",
-            "options": [
-                { "key": "Végétatif", "value": "Végétatif" },
-                { "key": "En fleur", "value": "En fleur" },
-                { "key": "En fruits", "value": "En fruits" },
-                { "key": "Fané", "value": "Fané" },
-                { "key": "Mort sur pied", "value": "Mort sur pied" }
-            ],
-            "order": 8,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "surface",
-            "label": "Surface (m²)",
-            "options": [
-                { "key": "0 à 25", "value": "0 à 25" },
-                { "key": "25 à 50", "value": "25 à 50" },
-                { "key": "50 à 100", "value": "50 à 100" },
-                { "key": "plus de 100", "value": "plus de 100" }
-            ],
-            "order": 9,
-            "required": false
-        },
-        {
-            "type": "text",
-            "key": "point_protocole",
-            "label": "Point protocole",
-            "value": "",
-            "required": true,
-            "order": 10
-        },
-
-        {
-            "type": "text",
-            "key": "Comments",
-            "label": "Remarques",
-            "value": "",
-            "required": false,
-            "order": 11
-        },
-        {
+            }
+        ]
+    },
+    {
+        "name": "Herpeto",
+        "label": "Herpétofaune",
+        "image": "./assets/icones_protocoles/herpeto.png",
+        "id": 2,
+        "fields": [
+            {
+                "type": "select",
+                "key": "type_inventaire",
+                "label": "Type d'inventaire",
+                "options": [
+                    {
+                        "key": "Recherche à vue",
+                        "value": "Recherche à vue"
+                    },
+                    {
+                        "key": "Observation fortuite",
+                        "value": "Observation fortuite"
+                    },
+                    {
+                        "key": "Troubleau",
+                        "value": "Troubleau"
+                    },
+                    {
+                        "key": "Point d'écoute nocturne",
+                        "value": "Point d'écoute nocturne"
+                    },
+                    {
+                        "key": "Crapaudrome/crapauduc",
+                        "value": "Crapaudrome/crapauduc"
+                    },
+                    {
+                        "key": "Nasse/piège aquatique",
+                        "value": "Nasse/piège aquatique"
+                    },
+                    {
+                        "key": "ADNe",
+                        "value": "ADNe"
+                    },
+                    {
+                        "key": "Plaque à reptiles",
+                        "value": "Plaque à reptiles"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "observateur1",
+                "label": "Observateur",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 2,
+                "required": true
+            },
+            {
+                "type": "autocomplete",
+                "key": "nom_vernaculaire",
+                "label": "Nom vernaculaire",
+                "required": true,
+                "order": 3,
+                "protocol": "Reptil",
+                "searchField": "vernaculaire"
+            },
+            {
+                "type": "text",
+                "key": "taxref_id",
+                "label": "taxref_id",
+                "value": "",
+                "required": false,
+                "order": 4,
+                "hide": true
+            },
+            {
+                "type": "select",
+                "key": "groupe",
+                "label": "Groupe",
+                "options": [
+                    {
+                        "key": "Amphibien",
+                        "value": "Amphibien"
+                    },
+                    {
+                        "key": "Reptile",
+                        "value": "Reptile"
+                    }
+                ],
+                "order": 4,
+                "required": true
+            },
+            {
+                "type": "number",
+                "key": "effectif",
+                "label": "Effectif",
+                "required": true,
+                "order": 5
+            },
+            {
+                "type": "checkbox",
+                "key": "estimated",
+                "label": "Valeur estimée",
+                "value": false,
+                "required": false,
+                "order": 6
+            },
+            {
+                "type": "checkbox",
+                "key": "minimum",
+                "label": "Minimum",
+                "value": false,
+                "required": false,
+                "order": 7
+            },
+            {
+                "type": "select",
+                "key": "type_milieu",
+                "label": "Type de milieu",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Sol nu",
+                        "value": "Sol nu"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
+                ],
+                "order": 8,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "comportement",
+                "label": "Comportement/indice",
+                "options": [
+                    {
+                        "key": "Accouplement/amplexus",
+                        "value": "Accouplement/amplexus"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Déplacement",
+                        "value": "Déplacement"
+                    },
+                    {
+                        "key": "Hivernage",
+                        "value": "Hivernage"
+                    },
+                    {
+                        "key": "Mort",
+                        "value": "Mort"
+                    },
+                    {
+                        "key": "Mue",
+                        "value": "Mue"
+                    },
+                    {
+                        "key": "Ponte",
+                        "value": "Ponte"
+                    },
+                    {
+                        "key": "Repos/basking",
+                        "value": "Repos/basking"
+                    },
+                    {
+                        "key": "Têtard/larve",
+                        "value": "Têtard/larve"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "stade",
+                "label": "Stade/Age",
+                "options": [
+                    {
+                        "key": "Adulte",
+                        "value": "Adulte"
+                    },
+                    {
+                        "key": "Ponte",
+                        "value": "Ponte"
+                    },
+                    {
+                        "key": "Tétard",
+                        "value": "Tétard"
+                    },
+                    {
+                        "key": "Juv/imm",
+                        "value": "Juv/imm"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 10,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "sexe",
+                "label": "Sexe",
+                "options": [
+                    {
+                        "key": "Mâle",
+                        "value": "Mâle"
+                    },
+                    {
+                        "key": "Femelle",
+                        "value": "Femelle"
+                    },
+                    {
+                        "key": "Couple",
+                        "value": "Couple"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 11,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "reproduction",
+                "label": "Reproduction",
+                "options": [
+                    {
+                        "key": "Non",
+                        "value": "Non"
+                    },
+                    {
+                        "key": "Possible",
+                        "value": "Possible"
+                    },
+                    {
+                        "key": "Probable",
+                        "value": "Probable"
+                    },
+                    {
+                        "key": "Certain",
+                        "value": "Certain"
+                    }
+                ],
+                "order": 12,
+                "required": false
+            },
+            {
+                "type": "text",
+                "key": "point_protocole",
+                "label": "Point protocole",
+                "value": "",
+                "required": false,
+                "order": 13
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 14
+            },
+            {
                 "type": "text",
                 "key": "idCarto",
                 "label": "Id carto",
                 "value": "",
                 "required": false,
-                "order": 17
-        }
-    ]
-},
-{
-    "name": "Mammo",
-    "label": "Mammifères terrestres",
-    "image": "./assets/icones_protocoles/mammo.png",
-    "id": 3,
-    "fields": [
-
-        {
-            "type": "select",
-            "key": "type_inventaire",
-            "label": "Type d'inventaire",
-            "options": [
-                { "key": "Recherche à vue ou écoute", "value": "Recherche à vue ou écoute" },
-                { "key": "Observation fortuite", "value": "Observation fortuite" },
-                { "key": "Piège photographique", "value": "Piège photographique" },
-                { "key": "IKA", "value": "IKA" },
-                { "key": "Piège non vulnérant", "value": "Piège non vulnérant" },
-                { "key": "Piège photographique", "value": "Piège photographique" },
-                { "key": "Affût", "value": "Affût" },   
-                { "key": "Comptage au phare", "value": "Comptage au phare" },
-                { "key": "Analyse de pelotes de réjection", "value": "Analyse de pelotes de réjection" },
-                { "key": "ADNe", "value": "ADNe" }
-            ],
-            "order": 1,
-            "required": true
-        },
-        {
-            "type": "autocomplete",
-            "key": "nom_vernaculaire",
-            "label": "Nom vernaculaire",
-            "required": true,
-            "order": 2,
-            "protocol" : "Mammal",
-            "searchField" : "vernaculaire"
-        },
-        {
-            "type": "text",
-            "key": "taxref_id",
-            "label": "taxref_id",
-            "value": "",
-            "required": false,
-            "order": 2,
-            "hide" : true
-        },
-        {
-            "type": "number",
-            "key": "effectif",
-            "label": "Effectif",
-            "required": true,
-            "order": 3
-        },  
-        {
-            "type": "checkbox",
-            "key": "estimated",
-            "label": "Valeur estimée",
-            "value": false,
-            "required": false,
-            "order": 4
-        },
-        {
-            "type": "checkbox",
-            "key": "minimum",
-            "label": "Minimum",
-            "value": false,
-            "required": false,
-            "order": 5
-        },
-        {
-            "type": "select",
-            "key": "type_milieu",
-            "label": "Type de milieu",
-            "options": [
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-                { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-                { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-                { "key": "Culture extensive", "value": "Culture extensive" },
-                { "key": "Culture intensive", "value": "Culture intensive" },
-                { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-                { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-                { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-                { "key": "Forêt mixte", "value": "Forêt mixte" },
-                { "key": "Friche/Lande", "value": "Friche/Lande" },
-                { "key": "Haie", "value": "Haie" },
-                { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-                { "key": "Mer/Océan", "value": "Mer/Océan" },
-                { "key": "Milieu bocager", "value": "Milieu bocager" },
-                { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-                { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-                { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-                { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-                { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-                { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-                { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-                { "key": "Ripisylve", "value": "Ripisylve" },
-                { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-                { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-                { "key": "Sol nu", "value": "Sol nu" },
-                { "key": "Tourbière", "value": "Tourbière" },
-                { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
-            ],
-            "order": 6,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "comportement",
-            "label": "Comportement/indice",
-            "options": [
-                { "key": "Accouplement", "value": "Accouplement" },
-                { "key": "Alimentation", "value": "Alimentation" },
-                { "key": "Autre", "value": "Autre" },
-                { "key": "Contact auditif", "value": "Contact auditif" },
-                { "key": "Déplacement/fuite", "value": "Déplacement/fuite" },
-                { "key": "Empreintes", "value": "Empreintes" },
-                { "key": "Hiberne", "value": "Hiberne" },
-                { "key": "Indices de repas", "value": "Indices de repas" },
-                { "key": "Laissées/crottier", "value": "Laissées/crottier" },
-                { "key": "Mort", "value": "Mort" },   
-                { "key": "Poils", "value": "Poils" },   
-                { "key": "Repos", "value": "Repos" },
-                { "key": "Terrier/gîte/nid/taupinière", "value": "Terrier/gîte/nid/taupinière" }
-            ],
-            "order": 7,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "age",
-            "label": "Age",
-            "options": [
-                { "key": "Adulte", "value": "Adulte" },
-                { "key": "Juv/imm", "value": "Juv/imm" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 8,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "sexe",
-            "label": "Sexe",
-            "options": [
-                { "key": "Mâle", "value": "Mâle" },
-                { "key": "Femelle", "value": "Femelle" },
-                { "key": "Couple", "value": "Couple" },
-                { "key": "Indéterminé", "value": "Indéterminé" }
-            ],
-            "order": 9,
-            "required": false
-        },
-        {
-            "type": "select",
-            "key": "reproduction",
-            "label": "Reproduction",
-            "options": [
-                { "key": "Non", "value": "Non" },
-                { "key": "Possible", "value": "Possible" },
-                { "key": "Probable", "value": "Probable" },
-                { "key": "Certain", "value": "Certain" }
-            ],
-            "order": 10,
-            "required": false
-        },
-        {
-            "type": "text",
-            "key": "point_protocole",
-            "label": "Point protocole",
-            "value": "",
-            "required": true,
-            "order": 11
-        },
-
-        {
-            "type": "text",
-            "key": "Comments",
-            "label": "Remarques",
-            "value": "",
-            "required": false,
-            "order": 12
-        }
-        ,
+                "order": 16
+            }
+        ]
+    },
+    {
+        "name": "Flore",
+        "label": "Plantes",
+        "image": "./assets/icones_protocoles/flore.png",
+        "id": 6,
+        "fields": [
+            {
+                "type": "select",
+                "key": "type_inventaire",
+                "label": "Type d'inventaire",
+                "options": [
+                    {
+                        "key": "Relevé qualitatif",
+                        "value": "Relevé qualitatif"
+                    },
+                    {
+                        "key": "Relevé phytosociologique",
+                        "value": "Relevé phytosociologique"
+                    },
+                    {
+                        "key": "Relevé fortuit",
+                        "value": "Relevé fortuit"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "observateur1",
+                "label": "Observateur",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 2,
+                "required": true
+            },
+            {
+                "type": "autocomplete",
+                "key": "taxon",
+                "label": "Nom scientifique",
+                "required": true,
+                "order": 3,
+                "protocol": "Flore"
+            },
+            {
+                "type": "text",
+                "key": "taxref_id",
+                "label": "taxref_id",
+                "value": "",
+                "required": false,
+                "order": 4,
+                "hide": true
+            },
+            {
+                "type": "select",
+                "key": "type_milieu",
+                "label": "Type de milieu",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
+                ],
+                "order": 5,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "abondance_dominance",
+                "label": "Coef. abondance/dominance",
+                "options": [
+                    {
+                        "key": "i",
+                        "value": "i"
+                    },
+                    {
+                        "key": "r",
+                        "value": "r"
+                    },
+                    {
+                        "key": "+",
+                        "value": "+"
+                    },
+                    {
+                        "key": "1",
+                        "value": "1"
+                    },
+                    {
+                        "key": "2",
+                        "value": "2"
+                    },
+                    {
+                        "key": "3",
+                        "value": "3"
+                    },
+                    {
+                        "key": "4",
+                        "value": "4"
+                    },
+                    {
+                        "key": "5",
+                        "value": "5"
+                    }
+                ],
+                "order": 6,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "strate",
+                "label": "Strate",
+                "options": [
+                    {
+                        "key": "Arborée",
+                        "value": "Arborée"
+                    },
+                    {
+                        "key": "Arbustive",
+                        "value": "Arbustive"
+                    },
+                    {
+                        "key": "Herbacée",
+                        "value": "Herbacée"
+                    },
+                    {
+                        "key": "Jmuscinale",
+                        "value": "Jmuscinale"
+                    }
+                ],
+                "order": 7,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "stade",
+                "label": "Stade végétatif",
+                "options": [
+                    {
+                        "key": "Végétatif",
+                        "value": "Végétatif"
+                    },
+                    {
+                        "key": "En fleur",
+                        "value": "En fleur"
+                    },
+                    {
+                        "key": "En fruits",
+                        "value": "En fruits"
+                    },
+                    {
+                        "key": "Fané",
+                        "value": "Fané"
+                    },
+                    {
+                        "key": "Mort sur pied",
+                        "value": "Mort sur pied"
+                    }
+                ],
+                "order": 8,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "surface",
+                "label": "Surface (m²)",
+                "options": [
+                    {
+                        "key": "0 à 25",
+                        "value": "0 à 25"
+                    },
+                    {
+                        "key": "25 à 50",
+                        "value": "25 à 50"
+                    },
+                    {
+                        "key": "50 à 100",
+                        "value": "50 à 100"
+                    },
+                    {
+                        "key": "plus de 100",
+                        "value": "plus de 100"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "text",
+                "key": "point_protocole",
+                "label": "Point protocole",
+                "value": "",
+                "required": true,
+                "order": 10
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 11
+            },
             {
                 "type": "text",
                 "key": "idCarto",
@@ -1446,251 +2687,833 @@
                 "required": false,
                 "order": 17
             }
-    ]
-},
-{
-    "name": "mortalite",
-    "label": "Mortalité",
-    "image": "./assets/icones_protocoles/mortalite.png",
-    "id": 9,
-    "fields": [
-    {  
-           
-            "type": "select",
-            "key": "type_inventaire",
-            "label": "Type d'inventaire",
-            "options": [
-                { "key": "Recherche de cadavres", "value": "Recherche de cadavres" },
-                { "key": "IPA", "value": "IPA" },
-                { "key": "Migration", "value": "Migration" },
-                { "key": "Observation fortuite", "value": "Observation fortuite" },
-                { "key": "Autre Protocole", "value": "Autre Protocole" },
-                { "key": "Hors protocole", "value": "Hors protocole" }
-            ],
-            "order": 1,
-            "required": true
-    }, 
-    {
-        "type": "select",
-        "key": "observateur1",
-        "label": "Observateur",
-        "options": [
-            { "key": "Jérôme Fuselier", "value": "Jérôme Fuselier" },
-            { "key": "Gaëtan Hartané", "value": "Gaëtan Hartané" },
-            { "key": "Emilie Pacheco", "value": "Emilie Pacheco" },
-            { "key": "Sandra Garnier", "value": "Sandra Garnier" },
-            { "key": "Vivien Boucher", "value": "Vivien Boucher" },
-            { "key": "Maggie Bonmort", "value": "Maggie Bonmort" },
-            { "key": "Jennifer Bourdenet", "value": "Jennifer Bourdenet" },
-            { "key": "Mathilde Poirot", "value": "Mathilde Poirot" },  
-            { "key": "Autre 1", "value": "Autre 1" },
-            { "key": "Autre 2", "value": "Autre 2" },
-            { "key": "Autre 3", "value": "Autre 3" }
-        ],
-        "order": 2,
-        "required": true
-    },
-            
-        
-    {
-        "type": "text",
-        "key": "parc_eolien",
-        "label": "Parc éolien",
-        "required": true,
-        "order": 3
-    },  
-    {
-        "type": "text",
-        "key": "numero_eolienne",
-        "label": "Numéro éolienne",
-        "required": true,
-        "order": 4
-    },   
-    { 
-           
-        "type": "select",
-        "key": "type_cadavre",
-        "label": "Type de cadavre",
-        "options": [
-            { "key": "Avifaune", "value": "Avifaune" },
-            { "key": "Chiroptère", "value": "Chiroptère" }
-        ],
-        "order": 5,
-        "required": true
-},
-{
-    "type": "autocomplete",
-    "key": "nom_vernaculaire",
-    "label": "Nom vernaculaire",
-    "required": true,
-    "order": 6,
-    "protocol" : "Mortalite",
-    "searchField" : "vernaculaire"
-},
-{
-    "type": "text",
-    "key": "taxref_id",
-    "label": "taxref_id",
-    "value": "",
-    "required": false,
-    "order": 6,
-    "hide" : true
-},
-
-    {
-        "type": "time",
-        "key": "heure_decouverte",
-        "label": "Heure découverte",
-        "required": true,
-        "order": 7
+        ]
     },
     {
-        "type": "number",
-        "key": "distance_mat",
-        "label": "Distance mât",
-        "value": false,
-        "required": true,
-        "order": 8
+        "name": "Mammo",
+        "label": "Mammifères terrestres",
+        "image": "./assets/icones_protocoles/mammo.png",
+        "id": 3,
+        "fields": [
+            {
+                "type": "select",
+                "key": "type_inventaire",
+                "label": "Type d'inventaire",
+                "options": [
+                    {
+                        "key": "Recherche à vue ou écoute",
+                        "value": "Recherche à vue ou écoute"
+                    },
+                    {
+                        "key": "Observation fortuite",
+                        "value": "Observation fortuite"
+                    },
+                    {
+                        "key": "Piège photographique",
+                        "value": "Piège photographique"
+                    },
+                    {
+                        "key": "IKA",
+                        "value": "IKA"
+                    },
+                    {
+                        "key": "Piège non vulnérant",
+                        "value": "Piège non vulnérant"
+                    },
+                    {
+                        "key": "Piège photographique",
+                        "value": "Piège photographique"
+                    },
+                    {
+                        "key": "Affût",
+                        "value": "Affût"
+                    },
+                    {
+                        "key": "Comptage au phare",
+                        "value": "Comptage au phare"
+                    },
+                    {
+                        "key": "Analyse de pelotes de réjection",
+                        "value": "Analyse de pelotes de réjection"
+                    },
+                    {
+                        "key": "ADNe",
+                        "value": "ADNe"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "autocomplete",
+                "key": "nom_vernaculaire",
+                "label": "Nom vernaculaire",
+                "required": true,
+                "order": 2,
+                "protocol": "Mammal",
+                "searchField": "vernaculaire"
+            },
+            {
+                "type": "text",
+                "key": "taxref_id",
+                "label": "taxref_id",
+                "value": "",
+                "required": false,
+                "order": 2,
+                "hide": true
+            },
+            {
+                "type": "number",
+                "key": "effectif",
+                "label": "Effectif",
+                "required": true,
+                "order": 3
+            },
+            {
+                "type": "checkbox",
+                "key": "estimated",
+                "label": "Valeur estimée",
+                "value": false,
+                "required": false,
+                "order": 4
+            },
+            {
+                "type": "checkbox",
+                "key": "minimum",
+                "label": "Minimum",
+                "value": false,
+                "required": false,
+                "order": 5
+            },
+            {
+                "type": "select",
+                "key": "type_milieu",
+                "label": "Type de milieu",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Sol nu",
+                        "value": "Sol nu"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
+                ],
+                "order": 6,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "comportement",
+                "label": "Comportement/indice",
+                "options": [
+                    {
+                        "key": "Accouplement",
+                        "value": "Accouplement"
+                    },
+                    {
+                        "key": "Alimentation",
+                        "value": "Alimentation"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Contact auditif",
+                        "value": "Contact auditif"
+                    },
+                    {
+                        "key": "Déplacement/fuite",
+                        "value": "Déplacement/fuite"
+                    },
+                    {
+                        "key": "Empreintes",
+                        "value": "Empreintes"
+                    },
+                    {
+                        "key": "Hiberne",
+                        "value": "Hiberne"
+                    },
+                    {
+                        "key": "Indices de repas",
+                        "value": "Indices de repas"
+                    },
+                    {
+                        "key": "Laissées/crottier",
+                        "value": "Laissées/crottier"
+                    },
+                    {
+                        "key": "Mort",
+                        "value": "Mort"
+                    },
+                    {
+                        "key": "Poils",
+                        "value": "Poils"
+                    },
+                    {
+                        "key": "Repos",
+                        "value": "Repos"
+                    },
+                    {
+                        "key": "Terrier/gîte/nid/taupinière",
+                        "value": "Terrier/gîte/nid/taupinière"
+                    }
+                ],
+                "order": 7,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "age",
+                "label": "Age",
+                "options": [
+                    {
+                        "key": "Adulte",
+                        "value": "Adulte"
+                    },
+                    {
+                        "key": "Juv/imm",
+                        "value": "Juv/imm"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 8,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "sexe",
+                "label": "Sexe",
+                "options": [
+                    {
+                        "key": "Mâle",
+                        "value": "Mâle"
+                    },
+                    {
+                        "key": "Femelle",
+                        "value": "Femelle"
+                    },
+                    {
+                        "key": "Couple",
+                        "value": "Couple"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "reproduction",
+                "label": "Reproduction",
+                "options": [
+                    {
+                        "key": "Non",
+                        "value": "Non"
+                    },
+                    {
+                        "key": "Possible",
+                        "value": "Possible"
+                    },
+                    {
+                        "key": "Probable",
+                        "value": "Probable"
+                    },
+                    {
+                        "key": "Certain",
+                        "value": "Certain"
+                    }
+                ],
+                "order": 10,
+                "required": false
+            },
+            {
+                "type": "text",
+                "key": "point_protocole",
+                "label": "Point protocole",
+                "value": "",
+                "required": true,
+                "order": 11
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 12
+            },
+            {
+                "type": "text",
+                "key": "idCarto",
+                "label": "Id carto",
+                "value": "",
+                "required": false,
+                "order": 17
+            }
+        ]
     },
-    { 
-           
-        "type": "select",
-        "key": "orientation_mat",
-        "label": "Orientation mât",
-        "options": [
-            { "key": "N", "value": "N" },   
-            { "key": "NE", "value": "NE" },
-            { "key": "E", "value": "E" },
-            { "key": "SE", "value": "SE" },
-            { "key": "S", "value": "S" },
-            { "key": "SO", "value": "SO" },
-            { "key": "O", "value": "O" },
-            { "key": "NO", "value": "NO" }
-        ],
-        "order": 9,
-        "required": true
-},
-{
-    "type": "select",
-    "key": "type_milieu",
-    "label": "Type de milieu",
-    "options": [
-        { "key": "Autre", "value": "Autre" },
-        { "key": "Cavité/Grotte", "value": "Cavité/Grotte" },
-        { "key": "Cours d'eau permanent", "value": "Cours d'eau permanent" },
-        { "key": "Cours d'eau temporaire", "value": "Cours d'eau temporaire" },
-        { "key": "Culture extensive", "value": "Culture extensive" },
-        { "key": "Culture intensive", "value": "Culture intensive" },
-        { "key": "Etang/Mare/Marais", "value": "Etang/Mare/Marais" },
-        { "key": "Forêt de conifères", "value": "Forêt de conifères" },
-        { "key": "Forêt de feuillus", "value": "Forêt de feuillus" },
-        { "key": "Forêt mixte", "value": "Forêt mixte" },
-        { "key": "Friche/Lande", "value": "Friche/Lande" },
-        { "key": "Haie", "value": "Haie" },
-        { "key": "Maquis/Garrigue", "value": "Maquis/Garrigue" },
-        { "key": "Mer/Océan", "value": "Mer/Océan" },
-        { "key": "Milieu bocager", "value": "Milieu bocager" },
-        { "key": "Milieu rupestre", "value": "Milieu rupestre" },
-        { "key": "Milieu urbain/Bâtis", "value": "Milieu urbain/Bâtis" },
-        { "key": "Pelouse naturelle", "value": "Pelouse naturelle" },
-        { "key": "Plage/Vasière/Lagune", "value": "Plage/Vasière/Lagune" },
-        { "key": "Plantation d'arbres", "value": "Plantation d'arbres" },
-        { "key": "Plaine céréalière", "value": "Plaine céréalière" },
-        { "key": "Prairie/Pâture", "value": "Prairie/Pâture" },
-        { "key": "Ripisylve", "value": "Ripisylve" },
-        { "key": "Rivière/Canal", "value": "Rivière/Canal" },
-        { "key": "Roselière/Mégaphorbiaie", "value": "Roselière/Mégaphorbiaie" },
-        { "key": "Tourbière", "value": "Tourbière" },
-        { "key": "Verger/Vignoble", "value": "Verger/Vignoble" }
-    ],
-    "order": 9,
-    "required": false
-},
-
     {
-        "type": "select",
-        "key": "etat_cadavre",
-        "label": "Etat du cadavre",
-        "options": [
-            { "key": "Avancé", "value": "Avancé" },      
-            { "key": "Crâne", "value": "Crâne" },
-            { "key": "En décomposition", "value": "En décomposition" },
-            { "key": "Os/squelette", "value": "Os/squelette" },
-            { "key": "Os et plumes", "value": "Os et plumes" },
-            { "key": "Plumée", "value": "Plumée" },
-            { "key": "Sec", "value": "Sec" },
-            { "key": "Vivant", "value": "Vivant" }
-        ],
-        "required": false,
-        "order": 10
-    },
-    {   
-        "type": "select",
-        "key": "cause_presumee",
-        "label": "Cause présumée",
-        "options": [
-            { "key": "Collision", "value": "Collision" },     
-            { "key": "Barotraumatisme", "value": "Barotraumatisme" },
-            { "key": "Inconnue", "value": "Inconnue" },
-            { "key": "Autre", "value": "Autre" }
-        ],
-        "required": false,
-        "order": 11
-    },
-    {
-        "type": "select",
-        "key": "age",
-        "label": "Age",
-        "options": [
-            { "key": "Adulte", "value": "Adulte" },
-            { "key": "Juv/imm", "value": "Juv/imm" },
-            { "key": "Indéterminé", "value": "Indéterminé" }
-        ],
-        "order": 12,
-        "required": false
-    },
-    {
-        "type": "select",
-        "key": "sexe",
-        "label": "Sexe",
-        "options": [
-            { "key": "Mâle", "value": "Mâle" },
-            { "key": "Femelle", "value": "Femelle" },    
-            { "key": "Couple", "value": "Couple" },
-            { "key": "Indéterminé", "value": "Indéterminé" }
-        ],
-        "order": 13,
-        "required": false
-    },
-
-    
-    {
-        "type": "text",
-        "key": "point_protocole",
-        "label": "Point protocole",
-        "value": "",
-        "required": true,
-        "order": 14
-    },
-    {
-        "type": "text",
-        "key": "Comments",
-        "label": "Remarques",
-        "value": "",
-        "required": false,
-        "order": 15
-    },
-    {
-        "type": "text",
-        "key": "idCarto",
-        "label": "Id carto",
-        "value": "",
-        "required": false,
-        "order": 17
+        "name": "mortalite",
+        "label": "Mortalité",
+        "image": "./assets/icones_protocoles/mortalite.png",
+        "id": 9,
+        "fields": [
+            {
+                "type": "select",
+                "key": "type_inventaire",
+                "label": "Type d'inventaire",
+                "options": [
+                    {
+                        "key": "Recherche de cadavres",
+                        "value": "Recherche de cadavres"
+                    },
+                    {
+                        "key": "IPA",
+                        "value": "IPA"
+                    },
+                    {
+                        "key": "Migration",
+                        "value": "Migration"
+                    },
+                    {
+                        "key": "Observation fortuite",
+                        "value": "Observation fortuite"
+                    },
+                    {
+                        "key": "Autre Protocole",
+                        "value": "Autre Protocole"
+                    },
+                    {
+                        "key": "Hors protocole",
+                        "value": "Hors protocole"
+                    }
+                ],
+                "order": 1,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "observateur1",
+                "label": "Observateur",
+                "options": [
+                    {
+                        "key": "Jérôme Fuselier",
+                        "value": "Jérôme Fuselier"
+                    },
+                    {
+                        "key": "Gaëtan Hartané",
+                        "value": "Gaëtan Hartané"
+                    },
+                    {
+                        "key": "Emilie Pacheco",
+                        "value": "Emilie Pacheco"
+                    },
+                    {
+                        "key": "Sandra Garnier",
+                        "value": "Sandra Garnier"
+                    },
+                    {
+                        "key": "Vivien Boucher",
+                        "value": "Vivien Boucher"
+                    },
+                    {
+                        "key": "Maggie Bonmort",
+                        "value": "Maggie Bonmort"
+                    },
+                    {
+                        "key": "Jennifer Bourdenet",
+                        "value": "Jennifer Bourdenet"
+                    },
+                    {
+                        "key": "Mathilde Poirot",
+                        "value": "Mathilde Poirot"
+                    },
+                    {
+                        "key": "Autre 1",
+                        "value": "Autre 1"
+                    },
+                    {
+                        "key": "Autre 2",
+                        "value": "Autre 2"
+                    },
+                    {
+                        "key": "Autre 3",
+                        "value": "Autre 3"
+                    }
+                ],
+                "order": 2,
+                "required": true
+            },
+            {
+                "type": "text",
+                "key": "parc_eolien",
+                "label": "Parc éolien",
+                "required": true,
+                "order": 3
+            },
+            {
+                "type": "text",
+                "key": "numero_eolienne",
+                "label": "Numéro éolienne",
+                "required": true,
+                "order": 4
+            },
+            {
+                "type": "select",
+                "key": "type_cadavre",
+                "label": "Type de cadavre",
+                "options": [
+                    {
+                        "key": "Avifaune",
+                        "value": "Avifaune"
+                    },
+                    {
+                        "key": "Chiroptère",
+                        "value": "Chiroptère"
+                    }
+                ],
+                "order": 5,
+                "required": true
+            },
+            {
+                "type": "autocomplete",
+                "key": "nom_vernaculaire",
+                "label": "Nom vernaculaire",
+                "required": true,
+                "order": 6,
+                "protocol": "Mortalite",
+                "searchField": "vernaculaire"
+            },
+            {
+                "type": "text",
+                "key": "taxref_id",
+                "label": "taxref_id",
+                "value": "",
+                "required": false,
+                "order": 6,
+                "hide": true
+            },
+            {
+                "type": "time",
+                "key": "heure_decouverte",
+                "label": "Heure découverte",
+                "required": true,
+                "order": 7
+            },
+            {
+                "type": "number",
+                "key": "distance_mat",
+                "label": "Distance mât",
+                "value": false,
+                "required": true,
+                "order": 8
+            },
+            {
+                "type": "select",
+                "key": "orientation_mat",
+                "label": "Orientation mât",
+                "options": [
+                    {
+                        "key": "N",
+                        "value": "N"
+                    },
+                    {
+                        "key": "NE",
+                        "value": "NE"
+                    },
+                    {
+                        "key": "E",
+                        "value": "E"
+                    },
+                    {
+                        "key": "SE",
+                        "value": "SE"
+                    },
+                    {
+                        "key": "S",
+                        "value": "S"
+                    },
+                    {
+                        "key": "SO",
+                        "value": "SO"
+                    },
+                    {
+                        "key": "O",
+                        "value": "O"
+                    },
+                    {
+                        "key": "NO",
+                        "value": "NO"
+                    }
+                ],
+                "order": 9,
+                "required": true
+            },
+            {
+                "type": "select",
+                "key": "type_milieu",
+                "label": "Type de milieu",
+                "options": [
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    },
+                    {
+                        "key": "Cavité/Grotte",
+                        "value": "Cavité/Grotte"
+                    },
+                    {
+                        "key": "Cours d'eau permanent",
+                        "value": "Cours d'eau permanent"
+                    },
+                    {
+                        "key": "Cours d'eau temporaire",
+                        "value": "Cours d'eau temporaire"
+                    },
+                    {
+                        "key": "Culture extensive",
+                        "value": "Culture extensive"
+                    },
+                    {
+                        "key": "Culture intensive",
+                        "value": "Culture intensive"
+                    },
+                    {
+                        "key": "Etang/Mare/Marais",
+                        "value": "Etang/Mare/Marais"
+                    },
+                    {
+                        "key": "Forêt de conifères",
+                        "value": "Forêt de conifères"
+                    },
+                    {
+                        "key": "Forêt de feuillus",
+                        "value": "Forêt de feuillus"
+                    },
+                    {
+                        "key": "Forêt mixte",
+                        "value": "Forêt mixte"
+                    },
+                    {
+                        "key": "Friche/Lande",
+                        "value": "Friche/Lande"
+                    },
+                    {
+                        "key": "Haie",
+                        "value": "Haie"
+                    },
+                    {
+                        "key": "Maquis/Garrigue",
+                        "value": "Maquis/Garrigue"
+                    },
+                    {
+                        "key": "Mer/Océan",
+                        "value": "Mer/Océan"
+                    },
+                    {
+                        "key": "Milieu bocager",
+                        "value": "Milieu bocager"
+                    },
+                    {
+                        "key": "Milieu rupestre",
+                        "value": "Milieu rupestre"
+                    },
+                    {
+                        "key": "Milieu urbain/Bâtis",
+                        "value": "Milieu urbain/Bâtis"
+                    },
+                    {
+                        "key": "Pelouse naturelle",
+                        "value": "Pelouse naturelle"
+                    },
+                    {
+                        "key": "Plage/Vasière/Lagune",
+                        "value": "Plage/Vasière/Lagune"
+                    },
+                    {
+                        "key": "Plantation d'arbres",
+                        "value": "Plantation d'arbres"
+                    },
+                    {
+                        "key": "Plaine céréalière",
+                        "value": "Plaine céréalière"
+                    },
+                    {
+                        "key": "Prairie/Pâture",
+                        "value": "Prairie/Pâture"
+                    },
+                    {
+                        "key": "Ripisylve",
+                        "value": "Ripisylve"
+                    },
+                    {
+                        "key": "Rivière/Canal",
+                        "value": "Rivière/Canal"
+                    },
+                    {
+                        "key": "Roselière/Mégaphorbiaie",
+                        "value": "Roselière/Mégaphorbiaie"
+                    },
+                    {
+                        "key": "Tourbière",
+                        "value": "Tourbière"
+                    },
+                    {
+                        "key": "Verger/Vignoble",
+                        "value": "Verger/Vignoble"
+                    }
+                ],
+                "order": 9,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "etat_cadavre",
+                "label": "Etat du cadavre",
+                "options": [
+                    {
+                        "key": "Avancé",
+                        "value": "Avancé"
+                    },
+                    {
+                        "key": "Crâne",
+                        "value": "Crâne"
+                    },
+                    {
+                        "key": "En décomposition",
+                        "value": "En décomposition"
+                    },
+                    {
+                        "key": "Os/squelette",
+                        "value": "Os/squelette"
+                    },
+                    {
+                        "key": "Os et plumes",
+                        "value": "Os et plumes"
+                    },
+                    {
+                        "key": "Plumée",
+                        "value": "Plumée"
+                    },
+                    {
+                        "key": "Sec",
+                        "value": "Sec"
+                    },
+                    {
+                        "key": "Vivant",
+                        "value": "Vivant"
+                    }
+                ],
+                "required": false,
+                "order": 10
+            },
+            {
+                "type": "select",
+                "key": "cause_presumee",
+                "label": "Cause présumée",
+                "options": [
+                    {
+                        "key": "Collision",
+                        "value": "Collision"
+                    },
+                    {
+                        "key": "Barotraumatisme",
+                        "value": "Barotraumatisme"
+                    },
+                    {
+                        "key": "Inconnue",
+                        "value": "Inconnue"
+                    },
+                    {
+                        "key": "Autre",
+                        "value": "Autre"
+                    }
+                ],
+                "required": false,
+                "order": 11
+            },
+            {
+                "type": "select",
+                "key": "age",
+                "label": "Age",
+                "options": [
+                    {
+                        "key": "Adulte",
+                        "value": "Adulte"
+                    },
+                    {
+                        "key": "Juv/imm",
+                        "value": "Juv/imm"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 12,
+                "required": false
+            },
+            {
+                "type": "select",
+                "key": "sexe",
+                "label": "Sexe",
+                "options": [
+                    {
+                        "key": "Mâle",
+                        "value": "Mâle"
+                    },
+                    {
+                        "key": "Femelle",
+                        "value": "Femelle"
+                    },
+                    {
+                        "key": "Couple",
+                        "value": "Couple"
+                    },
+                    {
+                        "key": "Indéterminé",
+                        "value": "Indéterminé"
+                    }
+                ],
+                "order": 13,
+                "required": false
+            },
+            {
+                "type": "text",
+                "key": "point_protocole",
+                "label": "Point protocole",
+                "value": "",
+                "required": true,
+                "order": 14
+            },
+            {
+                "type": "text",
+                "key": "Comments",
+                "label": "Remarques",
+                "value": "",
+                "required": false,
+                "order": 15
+            },
+            {
+                "type": "text",
+                "key": "idCarto",
+                "label": "Id carto",
+                "value": "",
+                "required": false,
+                "order": 17
+            }
+        ]
     }
-]
-}
-
-
-
 ]

@@ -40,6 +40,7 @@ export class DynamicFormFieldComponent {
     
     let popover = this.modalCtrl.create(PopoverAutocompPage, { protocole : this.field['protocol'], searchField : this.field['searchField']},{cssClass: 'autocomp'});
     popover.onDidDismiss(data => {
+      console.log('popover');
       console.log(data);
       this.form.patchValue(data);
     })    

@@ -6,6 +6,7 @@ import { NavController, NavParams, Platform, AlertController } from 'ionic-angul
 //import "leaflet"
 import '../../assets/leaflet/leaflet.js'
 import '../../assets/leaflet-draw/leaflet.draw-src.js'
+import "leaflet-fullscreen/dist/Leaflet.fullscreen";
 import { ProjectsServiceProvider } from '../../providers/projects-service'
 import { MapModel } from '../../shared/map.model'
 import { Geolocation } from '@ionic-native/geolocation'
@@ -33,7 +34,7 @@ export class MapComponent {
   @Input() longitude
   @Input() projId*/
   @Input() mapParams: object = {}
-  @Output() fullsize = new EventEmitter()
+  //@Output() fullsize = new EventEmitter()
   @Output() latEvent = new EventEmitter()
   @Output() lonEvent = new EventEmitter()
   @Output() jsonEvent = new EventEmitter()
@@ -204,7 +205,7 @@ export class MapComponent {
   ngAfterViewInit() {
     this.initMap()
   }
-  displayfull() {
+  /*displayfull() {
     //this.renderer.setElementStyle(this.el.nativeElement.querySelector('.header'), 'display', 'none' );
     this.fullsize.emit(true);
     this.renderer.setElementStyle(this.el.nativeElement.querySelector('.map-container'), 'height', '100%');
@@ -228,7 +229,7 @@ export class MapComponent {
     this.renderer.setElementAttribute(this.el.nativeElement.querySelector('.smallmap'), 'isFull', 'false');
 
     this._map._onResize();
-  }
+  }*/
   onMapReady() {
 
     console.log(' map : ' + this.projId)
@@ -244,6 +245,14 @@ export class MapComponent {
 
     // disable zoom on double click
     this._map.doubleClickZoom.disable();
+
+    L.control["fullscreen"]({
+      position: "topright",
+      title: {
+        false: "View Fullscreen",
+        true: "Exit Fullscreen"
+          }
+    }).addTo(this._map);
 
 
 
