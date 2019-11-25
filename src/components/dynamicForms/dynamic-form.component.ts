@@ -34,6 +34,7 @@ export class DynamicFormComponent  {
   dateObs : any
   latitude : any = 0
   longitude : any = 0
+  precision : any = 0
   trace = ""
   public images = []
   
@@ -103,7 +104,8 @@ export class DynamicFormComponent  {
       projId : this.projId,
       latitude : 0,
       longitude : 0,
-      trace :''
+      trace :'',
+      precision : 0
     }
 
 
@@ -296,6 +298,11 @@ handleLonChange(lon){
   this.form.value.longitude = lon;
   this.longitude = lon;
 }
+handlePrecisionChange(precision){
+  precision = precision.toFixed(1);
+  this.precision = precision;
+
+}
 
 setImages(tab){
   this.form.value.images = tab;
@@ -467,6 +474,9 @@ handleTraceChange(json){
   this.trace = JSON.stringify(json) 
   this.mapParams.trace = JSON.stringify(json) 
 
+}
+updateGPS(){
+  this.child.updateGPS();
 }
 
 

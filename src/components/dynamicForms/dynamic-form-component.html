@@ -4,13 +4,16 @@
         <div [ngSwitch]="segment">
             <ion-list *ngSwitchCase="'localisation'" ngSelected="selected" >
                 <!--<map (fullsize)="handleMapSize($event)" (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)" [projId]="projId" [latitude]="latitude" [longitude]="longitude" [trace]="trace"></map>-->
-                <br/>
+
                 
-                <map  (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)"  [mapParams]="mapParams" ></map>
+                <map  (latEvent)="handleLatChange($event)" (lonEvent)="handleLonChange($event)" (jsonEvent)="handleTraceChange($event)"  (gpsPrecisionEvent)="handlePrecisionChange($event)" [mapParams]="mapParams" ></map>
                 
-                <br/>
+
                 <p><b>Date</b> : {{dateObs | date: 'dd/MM/yyyy'}} , <b>heure </b>: {{dateObs | date :'HH:mm'}}</p>
                 <p><b>Latitude </b>: {{latitude}} , <b>longitude </b>: {{longitude}}</p>
+                <P><b>Précision(m)</b>: {{precision}}</P>
+                <button ion-button color="light" (click)="updateGPS()">Actualiser le GPS</button>
+
     
     
     

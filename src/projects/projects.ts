@@ -397,6 +397,15 @@ export class ProjectsPage {
                           //this.data.saveObsById(obs[dt]['id'],obs[dt]);
                           obsListToUpdate.push({id:obs[dt]['id'], value : obs[dt]});
                           resolve(data['id']);
+                        }, error =>{
+                          
+                          // TODO
+                          /*
+                          obs[dt]['syncError']= true; 
+                          obsListToUpdate.push({id:obs[dt]['id'], value : obs[dt]});
+
+                          */
+
                         })
                       })
                       promises.push(p);

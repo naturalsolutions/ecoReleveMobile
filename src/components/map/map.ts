@@ -38,6 +38,7 @@ export class MapComponent {
   @Output() latEvent = new EventEmitter()
   @Output() lonEvent = new EventEmitter()
   @Output() jsonEvent = new EventEmitter()
+  @Output() gpsPrecisionEvent = new EventEmitter()
 
 
 
@@ -48,6 +49,7 @@ export class MapComponent {
   //private _bounds: any
   latitude: number = 34
   longitude: number = 5
+  precision: number = 0
   projId: any
   markers: any = []
   marker: any = null
@@ -62,6 +64,7 @@ export class MapComponent {
   style: any
   removeCtr: any
   drawControl: any
+  
 
 
   constructor(
@@ -77,6 +80,7 @@ export class MapComponent {
     public platform: Platform,
     private renderer: Renderer,
     private alertCtrl: AlertController,
+    
     //private protoDataService: ProtocolDataServiceProvider
 
     // private elRef:ElementRef
@@ -87,6 +91,7 @@ export class MapComponent {
   }
 
   ngOnInit() {
+
 
     console.log(L.Draw.Polygon.prototype, 'la')
     //oooo
@@ -251,7 +256,7 @@ export class MapComponent {
       title: {
         false: "View Fullscreen",
         true: "Exit Fullscreen"
-          }
+      }
     }).addTo(this._map);
 
 
@@ -282,11 +287,25 @@ export class MapComponent {
           }
         })
       }
-      this.geolocation.getCurrentPosition().then((position) => {
+
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+
+      this.geolocation.getCurrentPosition(options).then((position) => {
         this.latitude = position.coords.latitude
         this.longitude = position.coords.longitude
+        this.precision = position.coords.accuracy;
+        this.gpsPrecisionEvent.emit(this.precision);
+        this.latEvent.emit(this.latitude)
+        this.lonEvent.emit(this.longitude)
+
         this.onMapModelReady()
-      })
+      }).catch((error) => {
+        //alert('Erreur GPS');
+      });
 
     } else {
       this.onMapModelReady()
@@ -520,7 +539,7 @@ export class MapComponent {
 
     });
 
-    
+
 
     this._map.on('draw:drawstart', function (e) {
       //e.stopPropagation();
@@ -759,6 +778,27 @@ export class MapComponent {
       }
     }, 500)
 
+
+  }
+  updateGPS() {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    this.geolocation.getCurrentPosition(options).then((position) => {
+      this.latitude = position.coords.latitude
+      this.longitude = position.coords.longitude
+      this.precision = position.coords.accuracy;
+      this.gpsPrecisionEvent.emit(this.precision);
+      this.latEvent.emit(this.latitude);
+      this.lonEvent.emit(this.longitude);
+    }).catch((error) => {
+      //alert('Erreur GPS');
+    });
+
+  
 
   }
 
