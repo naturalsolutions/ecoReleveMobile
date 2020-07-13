@@ -10,6 +10,16 @@ import "leaflet-fullscreen/dist/Leaflet.fullscreen";
 import { ProjectsServiceProvider } from '../../providers/projects-service'
 import { MapModel } from '../../shared/map.model'
 import { Geolocation } from '@ionic-native/geolocation'
+// Import the SDK in addition to any desired interfaces:
+import BackgroundGeolocation, {
+  Location,
+  /*MotionChangeEvent,
+  MotionActivityEvent,
+  GeofenceEvent,
+  Geofence,
+  HttpEvent,
+  ConnectivityChangeEvent*/
+} from "cordova-background-geolocation"
 import { Storage } from '@ionic/storage'
 import { Network } from '@ionic-native/network'
 //import 'leaflet-draw';
@@ -87,8 +97,88 @@ export class MapComponent {
 
 
   ) {
-
+    platform.ready().then(this.configureBackgroundGeolocation.bind(this));
   }
+
+  configureBackgroundGeolocation() {
+    // 1. Listen to events (see the docs a list of all available events)
+    BackgroundGeolocation.onLocation(this.onLocation.bind(this));
+    /*BackgroundGeolocation.onMotionChange(this.onMotionChange.bind(this));
+    BackgroundGeolocation.onActivityChange(this.onActivityChange.bind(this));
+    BackgroundGeolocation.onGeofence(this.onGeofence.bind(this));
+    BackgroundGeolocation.onHttp(this.onHttp.bind(this));
+    BackgroundGeolocation.onEnabledChange(this.onEnabledChange.bind(this));
+    BackgroundGeolocation.onConnectivityChange(this.onConnectivityChange.bind(this));*/
+
+    // 2. Configure the plugin
+    BackgroundGeolocation.ready({
+      debug: false,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+      distanceFilter: 10,
+      stopOnTerminate: false,
+      startOnBoot: false,
+      url: 'http://your.server.com/locations',
+      autoSync: true,
+      params: {
+        foo: 'bar'
+      }
+    }, (state) => {
+      // Note:  the SDK persists its own state -- it will auto-start itself after being terminated
+      // in the enabled-state when configured with stopOnTerminate: false.
+      // - The #onEnabledChange event has fired.
+      // - The #onConnectivityChange event has fired.
+      // - The #onProviderChange has fired (so you can learn the current state of location-services).
+      
+      if (!state.enabled) {
+        // 3. Start the plugin.  In practice, you won't actually be starting the plugin in the #ready callback
+        // like this.  More likely, you'll respond to some app or UI which event triggers tracking.  "Starting an order"
+        // or "beginning a workout", for example.
+        BackgroundGeolocation.start();
+      } else {        
+        // If configured with stopOnTerminate: false, the plugin has already begun tracking now.        
+        // - The #onMotionChange location has been requested.  It will be arriving some time in the near future.        
+      }
+    });
+  }
+  onLocation(location:Location) {
+    //console.log('[location] -', location)
+      
+    //  console.log('latitude');
+    this.latitude = location.coords.latitude;
+    //console.log(location.coords.latitude);
+  
+    //console.log('longitude');
+    this.longitude = location.coords.longitude;
+    //console.log(location.coords.longitude);
+    //console.log('accuracy');
+    this.precision = location.coords.accuracy;
+    //console.log(location.coords.accuracy);
+    //alert('latitude :' + location.coords.latitude + ' , longitude:' + location.coords.longitude + ' , precision: '+ location.coords.accuracy);
+    
+    this.gpsPrecisionEvent.emit(this.precision);
+    this.latEvent.emit(this.latitude);
+    this.lonEvent.emit(this.longitude);
+    this.updatePosition(this.latitude, this.longitude);
+  }
+  /*onMotionChange(event:MotionChangeEvent) {
+    console.log('[motionchange] -', event.isMoving, event.location);
+  }
+  onActivityChange(event:MotionActivityEvent) {
+    console.log('[activitychange] -', event.activity, event.confidence);
+  }
+  onGeofence(event:GeofenceEvent) {
+    console.log('[geofence] -', event.action, event.identifier, event.location);
+  }
+  onHttp(event:HttpEvent) {
+    console.log('[http] -', event.success, event.status, event.responseText);
+  }
+  onEnabledChange(enabled:boolean) {
+    console.log('[enabledchange] - enabled? ', enabled);
+  }
+  onConnectivityChange(event:ConnectivityChangeEvent) {
+    console.log('[connectivitychange] - connected?', event.connected);
+  }*/
 
   ngOnInit() {
 
@@ -781,7 +871,8 @@ export class MapComponent {
 
   }
   updateGPS() {
-    var options = {
+    this.configureBackgroundGeolocation.bind(this);
+  /*  var options = {
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 0
@@ -796,7 +887,7 @@ export class MapComponent {
       this.lonEvent.emit(this.longitude);
     }).catch((error) => {
       //alert('Erreur GPS');
-    });
+    });*/
 
   
 
